@@ -7,15 +7,17 @@
 #include "column.h"
 
 
-/*
+
 
 COLUMN *create_colum(char* title){
-    COLUMN *column;
+    COLUMN *column = malloc (sizeof(COLUMN));
     column->tab = NULL;
     column->title = title;
+    column->ls = 0;
+    column->ps = 0;
     return column;
 }
-
+/*
 int insert_value(COLUMN* col, int val){
     int success = 0;
     if(col->ls == col->ps){

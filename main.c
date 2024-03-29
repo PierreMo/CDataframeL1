@@ -6,15 +6,17 @@
 
 int main(){
     printf("hello");
+
+    COLUMN *mycol = create_colum("My column");
+    printf("%s", mycol->title);
     /*
-    COLUMN *mycol = create_column("My column");
-    int val = 5;
-    if (insert_value(mycol, val)){
-        printf("Value added successfully to my column\n");
-    }
-    else{
-        printf("Error adding value to my column\n");
-    }
+   int val = 5;
+   if (insert_value(mycol, val)){
+       printf("Value added successfully to my column\n");
+   }
+   else{
+       printf("Error adding value to my column\n");
+   }
 */
     return 0;
 }
