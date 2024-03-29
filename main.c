@@ -5,18 +5,15 @@
 #include "cdataframe.h"
 
 int main(){
-    printf("hello");
+    COLUMN *mycol = create_column("My column");
 
-    COLUMN *mycol = create_colum("My column");
     printf("%s", mycol->title);
-    /*
-   int val = 5;
-   if (insert_value(mycol, val)){
+    int val = 5;
+    if (insert_value(mycol, val)){
        printf("Value added successfully to my column\n");
-   }
-   else{
+    }
+    else{
        printf("Error adding value to my column\n");
-   }
-*/
+    }
     return 0;
 }
