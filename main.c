@@ -143,20 +143,28 @@ int main(){
                     }
                     case 3: // Display the number of cells equal to x (x given as parameter)
                     {
-                        int value =0;
-                        printf("Enter the value to search in the data frame: ");
-                        scanf("%d", &value);
-                        printf("There are %d cells with the value %d.\n", equal(dataframe, value), value);
+                        int value =0, cpt=0;
+                        value = input_number();
+                        if (cpt = equal(dataframe, value)){// return 1 if value is in the dataframe
+                            printf("There are %d cells with the value %d.\n", cpt, value);
+                        }
+                        else{
+                            printf("The value %d is not in the dataframe.");
+                        }
                         break;
                     }
                     case 4: // Display the number of cells containing a value greater than a chosen value
                     {
-                        //action
+                        int value =0;
+                        value = input_number();
+                        printf("There are %d cells with greater values than %d.\n",greater(dataframe, value), value);
                         break;
                     }
                     case 5: // Display the number of cells containing a value less than a chosen value
                     {
-                        //action
+                        int value =0;
+                        value = input_number();
+                        printf("There are %d cells with smaller values than %d.\n",smaller(dataframe, value), value);
                         break;
                     }
 

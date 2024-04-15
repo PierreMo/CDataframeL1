@@ -91,13 +91,12 @@ void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col){
 }
 
 int valid_input(int val){
-    int choice=0;
-    int  type;
+    int choice=0, type;
     do{
         printf("\nChoose a value between 1 and %d: ", val);
         type = scanf("%d",&choice);//if the type is int type=1
         if (type != 1 || choice < 1 || choice > val) {
-            printf("Invalid input.", val);
+            printf("Invalid input.");
             while (getchar() != '\n'); // to clear out the input buffer
         }
 
@@ -116,6 +115,19 @@ DATAFRAME* is_dataframe(DATAFRAME* dataframe){
     return dataframe;
 }
 
+int input_number(){
+    int choice=0, type;
+    do{
+        printf("\nChoose a value:");
+        type = scanf("%d",&choice);//if the type is int type=1
+        if (type != 1) {
+            printf("Invalid input.");
+            while (getchar() != '\n'); // to clear out the input buffer
+        }
+    }while (type!=1);
+    return choice;
+
+}
 int equal(DATAFRAME* dataframe, int value){
     int cpt=0;
     for(int i =0; i<dataframe->ls; i++){
@@ -125,6 +137,7 @@ int equal(DATAFRAME* dataframe, int value){
             }
         }
     }
+
     return cpt;
 }
 

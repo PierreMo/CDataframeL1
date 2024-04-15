@@ -56,6 +56,7 @@ int valid_input(int val);
  */
 int longest_col(DATAFRAME* dataframe);
 
+int input_number();
 /**
  * Create a dataframe if the dataframe is NULL
  * @param1 : pointer on the dataframe to check
