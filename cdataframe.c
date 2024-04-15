@@ -64,26 +64,43 @@ int longest_col(DATAFRAME* dataframe){
     }
     return max;
 }
-void display_dataframe(DATAFRAME* dataframe){
-    for(int i = 0; i < dataframe->ls; i++) {
+
+void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col){
+    // if the user want to display all the dataframe
+    if (nb_lines==0){
+        //the number of lines to print is the logical size of longest column
+        nb_lines = longest_col(dataframe);
+    }
+    if (nb_col==0){
+        nb_col = dataframe->ls;
+    }
+    //display titles
+    for(int i = 0; i < nb_col; i++) {
         printf("%s\t", dataframe->col[i]->title);
     }
     printf("\n");
-    for(int i = 0; i < longest_col(dataframe); i++) {
-        for(int j = 0;j < dataframe->ls; j++) {
+    //display values with index
+    for(int i = 0; i < nb_lines; i++) {
+        for(int j = 0;j < nb_col; j++) {
             printf("[%d] %d\t", i, dataframe->col[j]->tab[i]);
 
         }
         printf("\n");
     }
-        //print_col(dataframe->col[i]);
+    printf("\n");
 }
 
 int valid_input(int val){
-    int choice =0;
+    int choice =0, cpt=0;
     do{
-        printf("\nChoose a value : ");
+        if (cpt){
+            printf("\nEnter another value: ");
+        }
+        else{
+            printf("\nChoose a value: ");
+        }
         scanf("%d",&choice);
+        cpt++;
     }while ((choice > val) || (choice<1));
     return choice;
 }

@@ -34,7 +34,7 @@ int main(){
                     }
                     case 2: // Filling in the CDataframe with an input
                     {
-                        is_dataframe(dataframe);
+                        is_dataframe(dataframe);//check if the dataframe has allocated memory
                         fill_dataframe(dataframe);
                         break;
                     }
@@ -54,17 +54,23 @@ int main(){
                 switch (choice) {
                     case 1: // Display the entire CDataframe
                     {
-                        display_dataframe(dataframe);
+                        display_dataframe(dataframe, 0,0);
                         break;
                     }
                     case 2: // Display a part of the CDataframe rows according to a chosen limit
                     {
-                        //action
+                        int nb_lines = 0;
+                        printf("How many lines do you want to display?");
+                        nb_lines = valid_input(longest_col(dataframe));
+                        display_dataframe(dataframe, nb_lines, 0);
                         break;
                     }
                     case 3: // Display a part of the columns of the CDataframe according to a limit supplied by the user
                     {
-                        //action
+                        int nb_col = 0;
+                        printf("How many columns do you want to display?");
+                        nb_col = valid_input(longest_col(dataframe));
+                        display_dataframe(dataframe, 0, nb_col);
                         break;
                     }
 
