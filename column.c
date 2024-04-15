@@ -50,49 +50,12 @@ void print_col(COLUMN* col){
     }
 }
 
-int occurrence(COLUMN* col, int value){
-    int occ=0;
-    for(int i=0; i<col->ls; i++){
-        if(col->tab[i]==value){
-            occ++;
-        }
-    }
-    return occ;
-}
-
 int value_at_index(COLUMN* col, int index){
     return col->tab[index];
 }
 
-int sup(COLUMN* col, int value){
-    int cpt=0;
-    for(int i=0; i<col->ls; i++){
-        if(col->tab[i]>value){
-            cpt++;
-        }
-    }
-    return cpt;
-}
 
-int inf(COLUMN* col, int value){
-    int cpt=0;
-    for(int i=0; i<col->ls; i++){
-        if(col->tab[i]<value){
-            cpt++;
-        }
-    }
-    return cpt;
-}
 
-int equal(COLUMN* col, int value){
-    int cpt=0;
-    for(int i=0; i<col->ls; i++){
-        if(col->tab[i]==value){
-            cpt++;
-        }
-    }
-    return cpt;
-}
 
 
 

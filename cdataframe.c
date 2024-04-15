@@ -91,21 +91,21 @@ void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col){
 }
 
 int valid_input(int val){
-    int choice =0, cpt=0;
+    int choice=0;
+    int  type;
     do{
-        if (cpt){
-            printf("\nEnter another value: ");
+        printf("\nChoose a value between 1 and %d: ", val);
+        type = scanf("%d",&choice);//if the type is int type=1
+        if (type != 1 || choice < 1 || choice > val) {
+            printf("Invalid input.", val);
+            while (getchar() != '\n'); // to clear out the input buffer
         }
-        else{
-            printf("\nChoose a value: ");
-        }
-        scanf("%d",&choice);
-        cpt++;
-    }while ((choice > val) || (choice<1));
+
+    }while (type!=1||(choice > val) || (choice<1));
     return choice;
 }
 
-void is_dataframe(DATAFRAME* dataframe){
+DATAFRAME* is_dataframe(DATAFRAME* dataframe){
     if (dataframe ==NULL){
         printf("Let's first create a dataframe: ");
         int phys_size;
@@ -113,6 +113,42 @@ void is_dataframe(DATAFRAME* dataframe){
         phys_size = valid_input(REALOC_SIZE);
         dataframe = create_dataframe(phys_size);
     }
+    return dataframe;
+}
+
+int equal(DATAFRAME* dataframe, int value){
+    int cpt=0;
+    for(int i =0; i<dataframe->ls; i++){
+        for(int j=0; j<dataframe->col[i]->ls; j++){
+            if(dataframe->col[i]->tab[j]==value){
+                cpt++;
+            }
+        }
+    }
+    return cpt;
+}
+
+int greater(DATAFRAME* dataframe, int value){
+    int cpt=0;
+    for(int i =0; i<dataframe->ls; i++){
+        for(int j=0; j<dataframe->col[i]->ls; j++){
+            if(dataframe->col[i]->tab[j]>value){
+                cpt++;
+            }
+        }
+    }
+    return cpt;
+}
+int smaller(DATAFRAME* dataframe, int value){
+    int cpt=0;
+    for(int i =0; i<dataframe->ls; i++){
+        for(int j=0; j<dataframe->col[i]->ls; j++){
+            if(dataframe->col[i]->tab[j]<value){
+                cpt++;
+            }
+        }
+    }
+    return cpt;
 }
 
 

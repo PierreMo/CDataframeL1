@@ -52,6 +52,7 @@ int valid_input(int val);
 /**
  * Find the column with the highest number of value
  * @param1 : pointer on the dataframe
+ * @return : integer that is the nb of lines of the dataframe
  */
 int longest_col(DATAFRAME* dataframe);
 
@@ -59,7 +60,33 @@ int longest_col(DATAFRAME* dataframe);
  * Create a dataframe if the dataframe is NULL
  * @param1 : pointer on the dataframe to check
  */
-void is_dataframe(DATAFRAME* dataframe);
+DATAFRAME* is_dataframe(DATAFRAME* dataframe);
+
+/**
+* @brief: Find how many cells are either equal to a given value in the dataframe
+* @param1: Pointer to the dataframe
+* @param2: integer to compare other values with
+* @return: return the number of value equal to @param2
+*/
+int equal(DATAFRAME* dataframe, int value);
+
+/**
+* @brief: Find how many cells are either greater than a given value in the dataframe
+* @param1: Pointer to the dataframe
+* @param2: integer to compare other values with
+* @return: return the number of value greater than @param2
+*/
+int greater(DATAFRAME* dataframe, int value);
+/**
+* @brief: Find how many cells are either smaller than a given value in the dataframe
+* @param1: Pointer to the dataframe
+* @param2: integer to compare other values with
+* @return: return the number of value smaller than @param2
+*/
+int smaller(DATAFRAME* dataframe, int value);
+
+
+
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
 
