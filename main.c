@@ -4,7 +4,9 @@
 #include "column.h"
 #include "cdataframe.h"
 
+
 int main(){
+    /*
     COLUMN *mycol = create_column("My column");
     insert_value(mycol, 52);
     insert_value(mycol, 44);

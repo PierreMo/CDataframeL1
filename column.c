@@ -44,6 +44,7 @@ void delete_column(COLUMN **col){
 }
 
 void print_col(COLUMN* col){
+    printf("%s\n", col->title);
     for(int i=0; i<col->ls; i++){
         printf("[%d] %d\n", i,col->tab[i]);
     }
