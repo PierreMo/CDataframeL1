@@ -204,7 +204,6 @@ int add_column(DATAFRAME* dataframe, char* title){
     if(dataframe->col != NULL || success){
         int nb_val =0;
         dataframe->col[dataframe->ls] = create_column(title);
-        printf("la dernière colomne %s",dataframe->col[dataframe->ls]->title);
         printf("How many value do you want in your column?");
         nb_val= valid_input(1,REALOC_SIZE);
         for(int i=0; i<nb_val; i++){
@@ -282,7 +281,6 @@ void rename_col_dataframe(DATAFRAME* dataframe, int index){
     }while(title_in_dataframe(dataframe, title)!=-1);
     free(dataframe->col[index]->title);
     dataframe->col[index]->title = title;
-    printf("%s", dataframe->col[index]->title);
 }
 
 void access_replace(DATAFRAME* dataframe){

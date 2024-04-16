@@ -117,7 +117,7 @@
       <workItem from="1713248458254" duration="4308000" />
       <workItem from="1713255140881" duration="9539000" />
       <workItem from="1713264735548" duration="428000" />
-      <workItem from="1713265457495" duration="17846000" />
+      <workItem from="1713265457495" duration="18617000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Test">
       <option name="closed" value="true" />
@@ -263,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713285438416</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Rename column (arrêt du programme après cette action!)">
+      <option name="closed" value="true" />
+      <created>1713288757562</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1713288757562</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

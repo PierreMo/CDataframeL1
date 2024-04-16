@@ -18,7 +18,7 @@ int main() {
     DATAFRAME *dataframe = NULL;
     do {
         printf("\n-- Principal menu --\n");
-        printf("\n1. Filling\n2. Displaying\n3. Usual operations \n4. Analysis and statistics\n5. Exit\n");
+        printf("\n1. Filling\n2. Displaying\n3. Usual operations \n4. Analysis and statistics\n-1. Exit\n");
         choice = valid_input(1, 5);
         if (choice != 1 && dataframe == NULL) {
             choice = 0;
@@ -109,8 +109,14 @@ int main() {
                     case 3: // Add a column to the CDataframe
                     {
                         int result;
-                        char* title;
-                        choose_title(title);
+                        char* title = (char*)malloc(100*sizeof(char));
+                        //faire une fonction check_title
+                        do{
+                            choose_title(title);
+                            if (title_in_dataframe(dataframe, title)!=-1){
+                                printf("This title is already in the dataframe!\n");
+                            }
+                        }while(title_in_dataframe(dataframe, title)!=-1);
                         result = add_column(dataframe, title);
                         if(result){
                             printf("Column successfully added.\n");
@@ -125,7 +131,6 @@ int main() {
                         int index_col_title;
                         printf("Which column do you want to delete?\n");
                         display_dataframe(dataframe, 0, 0);
-                        choose_title(title);
                         index_col_title = title_in_dataframe(dataframe, title);
                         if (index_col_title!=-1){
                             delete_col_dataframe(dataframe,index_col_title);
@@ -234,6 +239,6 @@ int main() {
                 break;
             }
         }
-    }while (choice != 5);
+    }while (choice != -1);
     return 0;
 }
