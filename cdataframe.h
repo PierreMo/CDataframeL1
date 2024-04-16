@@ -168,5 +168,11 @@ COORD* search_value_index(DATAFRAME* dataframe, int value, COORD* tab);
  */
 void rename_col_dataframe(DATAFRAME* dataframe, int index);
 
+/*
+ * @brief: give the value of a given index and ask if you want to replace it
+ * @param1: pointer on the dataframe on which we operate
+ */
+void access_replace(DATAFRAME* dataframe);
+
 #endif //CDATAFRAMEL1_CDATAFRAME_H
 

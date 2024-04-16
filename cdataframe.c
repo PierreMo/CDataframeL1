@@ -105,13 +105,12 @@ void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col){
 int valid_input(int lower_bound, int upper_bound){
     int choice=0, type;
     do{
-        printf("\nChoose a value between 1 and %d:", upper_bound);
+        printf("\nChoose a value between %d and %d:",lower_bound, upper_bound);
         type = scanf("%d",&choice);//if the type is int type=1
         if (type != 1 || choice < lower_bound || choice > upper_bound) {
             printf("Invalid input.");
             while (getchar() != '\n'); // to clear out the input buffer
         }
-
     }while (type!=1||(choice > upper_bound) || (choice<lower_bound));
     return choice;
 }
@@ -286,7 +285,26 @@ void rename_col_dataframe(DATAFRAME* dataframe, int index){
     printf("%s", dataframe->col[index]->title);
 }
 
-
+void access_replace(DATAFRAME* dataframe){
+    display_dataframe(dataframe,0,0);
+    int column, row;
+    printf("Enter the index of the column:");
+    column = valid_input(0,dataframe->ls-1);
+    printf("Enter the index of the row:");
+    row = valid_input(0,dataframe->col[column]->ls-1);
+    printf("The value at this position is %d.",dataframe->col[column]->tab[row]);
+    int answer;
+    do {
+        printf("Do you want to replace it? 1 for yes 0 for no");
+        scanf("%d", &answer);
+        if(answer==1){
+            int value;
+            printf("\nEnter the value to put instead: ");
+            scanf("%d", &value);
+            dataframe->col[column]->tab[row] = value;
+        }
+    }while(answer!=1 && answer != 0);
+}
 
 
 
