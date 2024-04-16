@@ -231,29 +231,28 @@ int is_string_equal(char* a, char* b){
 }
 
 int title_in_dataframe(DATAFRAME* dataframe, char*title){
-    int cpt=0;
-    for(int i=0; i<dataframe->ls; i++){
-        if (is_string_equal(title, dataframe->col[i]->title)){
-            cpt++;
-        }
+    int i=0, in=0;
+    while(in==0 && i<dataframe->ls ){
+        in = is_string_equal(title, dataframe->col[i]->title);
+        i++;
     }
-    if (cpt){
-        return 1;
+    if (i != dataframe->ls){
+        return i-1;
     }
     else{
         return 0;
     }
 }
 
-int delete_col_dataframe(DATAFRAME* dataframe, char* title){
-    for(int i=0; i<dataframe->ls; i++){
-        if(is_string_equal(title, dataframe->col[i]->title)){
-            free(dataframe->col[i]->title);
-            free(dataframe->col[i]->tab);
-            free(dataframe->col[i]);
-        }
+int delete_col_dataframe(DATAFRAME* dataframe, int index){
+    free(dataframe->col[index]->title);
+    free(dataframe->col[index]->tab);
+    free(dataframe->col[index]);
+    for(int j=index; j<(dataframe->ls)-1; j++){
+        dataframe->col[j] = dataframe->col[j+1];
     }
-
+    dataframe->ls--;
+    return 0;
 }
 
 

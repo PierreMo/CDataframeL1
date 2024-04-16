@@ -113,15 +113,28 @@ int main() {
                         choose_title(title);
                         result = add_column(dataframe, title);
                         if(result){
-                            printf("Column successfully added\n");
+                            printf("Column successfully added.\n");
                         }else{
-                            printf("Can't add a column: no more place in memory\n");
+                            printf("Can't add a column: no more place in memory.\n");
                         }
                         break;
                     }
                     case 4: // Delete a column from the CDataframe
                     {
-                        //delete_col_dataframe();
+                        char* title;
+                        int index_col_title = 0;
+                        printf("Which column do you want to delete?\n");
+                        display_dataframe(dataframe, 0, 0);
+                        choose_title(title);
+                        printf("%s", title);
+                        index_col_title = title_in_dataframe(dataframe, title);
+                        printf("INDEX : %d", index_col_title);
+                        if (index_col_title){
+                            delete_col_dataframe(dataframe,index_col_title);
+                        }
+                        else{
+                            printf("This column is column is not in the dataframe.");
+                        }
                         break;
                     }
                     case 5: // Rename the title of a column in the CDataframe

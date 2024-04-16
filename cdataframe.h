@@ -120,10 +120,10 @@ int add_column(DATAFRAME* dataframe, char* title);
 /**
  * @brief: delete a column to the dataframe
  * @param1: Pointer to the dataframe
- * @param2: title of the column to delete
+ * @param2: index of the column to delete
  * @return: 1 if the line is delete and else 0
 */
-int delete_col_dataframe(DATAFRAME* dataframe, char* title);
+int delete_col_dataframe(DATAFRAME* dataframe, int index);
 
 /**
  * @brief: compare two strings
@@ -137,7 +137,7 @@ int is_string_equal(char* a, char* b);
  * @brief: search an input string in the dataframe
  * @param1: pointer on the dataframe
  * @param2: string
- * @return: 1 if the title is already used else 0
+ * @return: the index of the column where the title is already used else 0
  */
 int title_in_dataframe(DATAFRAME* dataframe, char* title);
 //void print_col_names(DATAFRAME* dataframe);
