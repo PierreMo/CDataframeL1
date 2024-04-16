@@ -14,7 +14,7 @@ int main() {
     print_col(mycol);
     delete_column(&mycol);
     */
-    int choice = 0;
+    int choice;
     DATAFRAME *dataframe = NULL;
     do {
         printf("\n-- Principal menu --\n");
@@ -69,7 +69,7 @@ int main() {
                     }
                     case 2: // Display a part of the CDataframe rows according to a chosen limit
                     {
-                        int nb_lines = 0;
+                        int nb_lines;
                         printf("How many lines do you want to display?");
                         nb_lines = valid_input(1, longest_col(dataframe));
                         display_dataframe(dataframe, nb_lines, 0);
@@ -77,7 +77,7 @@ int main() {
                     }
                     case 3: // Display a part of the columns of the CDataframe according to a limit supplied by the user
                     {
-                        int nb_col = 0;
+                        int nb_col;
                         printf("How many columns do you want to display?");
                         nb_col = valid_input(1, longest_col(dataframe));
                         display_dataframe(dataframe, 0, nb_col);
@@ -122,12 +122,12 @@ int main() {
                     case 4: // Delete a column from the CDataframe
                     {
                         char* title;
-                        int index_col_title = 0;
+                        int index_col_title;
                         printf("Which column do you want to delete?\n");
                         display_dataframe(dataframe, 0, 0);
                         choose_title(title);
                         index_col_title = title_in_dataframe(dataframe, title);
-                        if (index_col_title){
+                        if (index_col_title!=-1){
                             delete_col_dataframe(dataframe,index_col_title);
                         }
                         else{
@@ -137,7 +137,19 @@ int main() {
                     }
                     case 5: // Rename the title of a column in the CDataframe
                     {
-                        //action
+                        char* title=(char *)malloc(100*sizeof(char));
+                        int index_col_title;
+                        printf("Which column do you want to rename?\n");
+                        display_dataframe(dataframe, 0, 0);
+                        choose_title(title);
+                        index_col_title = title_in_dataframe(dataframe, title);
+                        printf("--%d--\n",index_col_title);
+                        if (index_col_title!=-1){
+                            rename_col_dataframe(dataframe, index_col_title);
+                        }
+                        else{
+                            printf("This title is not in the dataframe.\n");
+                        }
                         break;
                     }
                     case 6: // Check the existence of a value (search) in the CDataframe
@@ -167,7 +179,7 @@ int main() {
                         print_col_names(dataframe);
                         break;
                     }
-                    case 9: {
+                    case 9:{
                         break;
                     }
                 }
@@ -190,7 +202,7 @@ int main() {
                     }
                     case 3: // Display the number of cells equal to x (x given as parameter)
                     {
-                        int value = 0, cpt = 0;
+                        int value, cpt;
                         value = input_number();
                         if (cpt = equal(dataframe, value)) {// return 1 if value is in the dataframe
                             printf("There are %d cells with the value %d.\n", cpt, value);
@@ -201,15 +213,14 @@ int main() {
                     }
                     case 4: // Display the number of cells containing a value greater than a chosen value
                     {
-                        int value = 0;
+                        int value;
                         value = input_number();
-                        printf("There are %d cells with greater values than %d.\n", greater(dataframe, value),
-                               value);
+                        printf("There are %d cells with greater values than %d.\n", greater(dataframe, value),value);
                         break;
                     }
                     case 5: // Display the number of cells containing a value less than a chosen value
                     {
-                        int value = 0;
+                        int value;
                         value = input_number();
                         printf("There are %d cells with smaller values than %d.\n", smaller(dataframe, value),
                                value);
@@ -221,7 +232,6 @@ int main() {
 
                 }
                 break;
-
             }
         }
     }while (choice != 5);

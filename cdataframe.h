@@ -143,7 +143,7 @@ int is_string_equal(char* a, char* b);
  * @brief: search an input string in the dataframe
  * @param1: pointer on the dataframe
  * @param2: string
- * @return: the index of the column where the title is already used else 0
+ * @return: the index of the column where the title is already used else -1
  */
 int title_in_dataframe(DATAFRAME* dataframe, char* title);
 
@@ -153,7 +153,20 @@ int title_in_dataframe(DATAFRAME* dataframe, char* title);
  */
 void print_col_names(DATAFRAME* dataframe);
 
-int* search_value_index(DATAFRAME* dataframe, int value, COORD* tab);
+/**
+ * @brief: search all the index of a value
+ * @param1: pointer on dataframe
+ * @param2: integer that is the value to search
+ * @param3: list of all coordinates of "value"
+ * @return: the tab of coord
+ */
+COORD* search_value_index(DATAFRAME* dataframe, int value, COORD* tab);
+
+/**
+ * @brief:
+ * @param1:
+ */
+void rename_col_dataframe(DATAFRAME* dataframe, int index);
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
 

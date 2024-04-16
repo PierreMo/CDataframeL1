@@ -7,7 +7,7 @@
 
 void choose_title(char* title){
     printf("Choose the title of the column:");
-    scanf(" %s",title);
+    scanf("%s",title);
 }
 
 DATAFRAME* create_dataframe(int size){
@@ -17,13 +17,13 @@ DATAFRAME* create_dataframe(int size){
     dataframe->ps = size;
     dataframe->ls = 0;
     for(int i=0; i<size; i++){
-        char* title = (char *)malloc(size*sizeof(char));
+        char* title = (char *)malloc(100*sizeof(char));
         do{
             choose_title(title);
-            if (title_in_dataframe(dataframe, title)){
+            if (title_in_dataframe(dataframe, title)!=-1){
                 printf("This title is already in the dataframe!\n");
             }
-        }while(title_in_dataframe(dataframe, title));
+        }while(title_in_dataframe(dataframe, title)!=-1);
         dataframe->col[i] = create_column(title);
         dataframe->ls ++;
     }
@@ -165,6 +165,7 @@ int greater(DATAFRAME* dataframe, int value){
     }
     return cpt;
 }
+
 int smaller(DATAFRAME* dataframe, int value){
     int cpt=0;
     for(int i =0; i<dataframe->ls; i++){
@@ -232,15 +233,15 @@ int is_string_equal(char* a, char* b){
 
 int title_in_dataframe(DATAFRAME* dataframe, char*title){
     int i=0, in=0;
-    while(in==0 && i<dataframe->ls ){
+    while(in==0 && i<dataframe->ls){
         in = is_string_equal(title, dataframe->col[i]->title);
         i++;
     }
-    if (i != dataframe->ls){
+    if (i != dataframe->ls){//in the dataframe
         return i-1;
     }
     else{
-        return 0;
+        return -1;
     }
 }
 
@@ -262,7 +263,7 @@ void print_col_names(DATAFRAME* dataframe){
     printf("\n");
 }
 
-int* search_value_index(DATAFRAME* dataframe,int value, COORD* tab){
+COORD* search_value_index(DATAFRAME* dataframe,int value, COORD* tab){
     for(int i =0; i<dataframe->ls; i++){
         for(int j=0; j<dataframe->col[i]->ls; j++){
             if(dataframe->col[i]->tab[j]==value){
@@ -277,6 +278,19 @@ int* search_value_index(DATAFRAME* dataframe,int value, COORD* tab){
         }
     }
     return tab;
+}
+
+void rename_col_dataframe(DATAFRAME* dataframe, int index){
+    char* title = (char *)malloc(100*sizeof(char));
+    do{
+        printf("Choose the new title of the column:");
+        scanf("%s",title);
+        if (title_in_dataframe(dataframe, title)!=-1){
+            printf("This title is already in the dataframe!\n");
+        }
+    }while(title_in_dataframe(dataframe, title)!=-1);
+    dataframe->col[index]->title = title;
+    printf("%s", dataframe->col[index]->title);
 }
 
 
