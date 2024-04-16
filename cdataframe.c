@@ -7,7 +7,7 @@
 
 void choose_title(char* title){
     printf("Choose the title of the column:");
-    scanf("%s",title);
+    scanf(" %s",title);
 }
 
 DATAFRAME* create_dataframe(int size){
@@ -106,7 +106,7 @@ void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col){
 int valid_input(int lower_bound, int upper_bound){
     int choice=0, type;
     do{
-        printf("\nChoose a value between 1 and %d: ", upper_bound);
+        printf("\nChoose a value between 1 and %d:", upper_bound);
         type = scanf("%d",&choice);//if the type is int type=1
         if (type != 1 || choice < lower_bound || choice > upper_bound) {
             printf("Invalid input.");

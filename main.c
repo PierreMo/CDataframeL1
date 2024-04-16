@@ -17,7 +17,7 @@ int main() {
     int choice = 0;
     DATAFRAME *dataframe = NULL;
     do {
-        printf("-- Principal menu --\n");
+        printf("\n-- Principal menu --\n");
         printf("\n1. Filling\n2. Displaying\n3. Usual operations \n4. Analysis and statistics\n5. Exit\n");
         choice = valid_input(1, 5);
         if (choice != 1 && dataframe == NULL) {
@@ -126,14 +126,12 @@ int main() {
                         printf("Which column do you want to delete?\n");
                         display_dataframe(dataframe, 0, 0);
                         choose_title(title);
-                        printf("%s", title);
                         index_col_title = title_in_dataframe(dataframe, title);
-                        printf("INDEX : %d", index_col_title);
                         if (index_col_title){
                             delete_col_dataframe(dataframe,index_col_title);
                         }
                         else{
-                            printf("This column is column is not in the dataframe.");
+                            printf("This column is column is not in the dataframe.\n");
                         }
                         break;
                     }
