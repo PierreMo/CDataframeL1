@@ -18,7 +18,12 @@ DATAFRAME* create_dataframe(int size){
     dataframe->ls = 0;
     for(int i=0; i<size; i++){
         char* title = (char *)malloc(size*sizeof(char));
-        choose_title(title);
+        do{
+            choose_title(title);
+            if (title_in_dataframe(dataframe, title)){
+                printf("This title is already in the dataframe!\n");
+            }
+        }while(title_in_dataframe(dataframe, title));
         dataframe->col[i] = create_column(title);
         dataframe->ls ++;
     }
@@ -225,6 +230,21 @@ int is_string_equal(char* a, char* b){
     }
 }
 
+int title_in_dataframe(DATAFRAME* dataframe, char*title){
+    int cpt=0;
+    for(int i=0; i<dataframe->ls; i++){
+        if (is_string_equal(title, dataframe->col[i]->title)){
+            cpt++;
+        }
+    }
+    if (cpt){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
 int delete_col_dataframe(DATAFRAME* dataframe, char* title){
     for(int i=0; i<dataframe->ls; i++){
         if(is_string_equal(title, dataframe->col[i]->title)){
@@ -233,6 +253,7 @@ int delete_col_dataframe(DATAFRAME* dataframe, char* title){
             free(dataframe->col[i]);
         }
     }
+
 }
 
 

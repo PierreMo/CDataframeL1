@@ -126,13 +126,20 @@ int add_column(DATAFRAME* dataframe, char* title);
 int delete_col_dataframe(DATAFRAME* dataframe, char* title);
 
 /**
- * @brief: search an input string
- * @param1: string to search
+ * @brief: compare two strings
+ * @param1: string
  * @param2: the string to compare with param1
  * @return: 1 if it's the same string else 0
  */
 int is_string_equal(char* a, char* b);
 
+/**
+ * @brief: search an input string in the dataframe
+ * @param1: pointer on the dataframe
+ * @param2: string
+ * @return: 1 if the title is already used else 0
+ */
+int title_in_dataframe(DATAFRAME* dataframe, char* title);
 //void print_col_names(DATAFRAME* dataframe);
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
