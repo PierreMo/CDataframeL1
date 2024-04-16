@@ -1,0 +1,3 @@
+C:/Users/Aube/CLionProjects/CDataframeL1/cmake-build-debug/CMakeFiles/CDataframeL1.dir
+C:/Users/Aube/CLionProjects/CDataframeL1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Aube/CLionProjects/CDataframeL1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
