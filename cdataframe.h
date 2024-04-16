@@ -54,7 +54,6 @@ int valid_input(int lower_bound, int upper_bound);
 /**
  * Find the column with the highest number of value
  * @param1 : pointer on the dataframe
- * @return : integer that is the nb of lines of the dataframe
  */
 int longest_col(DATAFRAME* dataframe);
 
@@ -70,6 +69,7 @@ int input_number();
  * Create a dataframe if the dataframe is NULL
  * @param1 : pointer on the dataframe to check
  */
+<<<<<<< HEAD
 DATAFRAME* is_dataframe(DATAFRAME* dataframe);
 
 /**
@@ -134,6 +134,9 @@ int delete_col_dataframe(DATAFRAME* dataframe, char* title);
 int is_string_equal(char* a, char* b);
 
 //void print_col_names(DATAFRAME* dataframe);
+=======
+void is_dataframe(DATAFRAME* dataframe);
+>>>>>>> parent of a274db9 (Verif the type of the input)
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
 

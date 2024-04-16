@@ -24,6 +24,7 @@
 0	99	7348858213835285	CMakeFiles/CDataframeL1.dir/cdataframe.c.obj	c0795100fc2da542
 1	83	7348858454988369	CMakeFiles/CDataframeL1.dir/main.c.obj	5d33c4f88aaad5f0
 83	203	7348858456186808	CDataframeL1.exe	670feb2ba07ba61
+<<<<<<< HEAD
 8	104	7348861928504780	CMakeFiles/CDataframeL1.dir/main.c.obj	5d33c4f88aaad5f0
 1	107	7348861928519624	CMakeFiles/CDataframeL1.dir/cdataframe.c.obj	c0795100fc2da542
 107	228	7348861929728634	CDataframeL1.exe	670feb2ba07ba61
@@ -96,3 +97,5 @@
 111	226	7349651793606084	CDataframeL1.exe	670feb2ba07ba61
 1	102	7349655000229221	CMakeFiles/CDataframeL1.dir/cdataframe.c.obj	c0795100fc2da542
 102	224	7349655001415150	CDataframeL1.exe	670feb2ba07ba61
+=======
+>>>>>>> parent of a274db9 (Verif the type of the input)

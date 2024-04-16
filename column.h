@@ -40,6 +40,14 @@ int insert_value(COLUMN* col, int value);
 void delete_value(COLUMN *col, int index);
 
 /**
+* @brief: Count the occurrence of a value
+* @param1: Pointer to a column
+* @param2: integer
+* @return: return the occurrence
+*/
+int occurrence(COLUMN* col, int value);
+
+/**
 * @brief: Find the value on a given index
 * @param1: Pointer to a column
 * @param2: integer
@@ -47,6 +55,28 @@ void delete_value(COLUMN *col, int index);
 */
 int value_at_index(COLUMN* col, int index);
 
+/**
+* @brief: Find how many value are higher than a given one
+* @param1: Pointer to a column
+* @param2: integer
+* @return: return the number of higher value
+*/
+int sup(COLUMN* col, int value);
 
+/**
+* @brief: Find how many value are smaller than a given one
+* @param1: Pointer to a column
+* @param2: integer
+* @return: return the number of smaller value
+*/
+int inf(COLUMN* col, int value);
+
+/**
+* @brief: Find how many value are equal to a given one
+* @param1: Pointer to a column
+* @param2: integer
+* @return: return the number of values equal to param2
+*/
+int equal(COLUMN* col, int value);
 
 #endif //CDATAFRAMEL1_COLUMN_H

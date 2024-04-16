@@ -98,6 +98,7 @@ void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col){
     printf("\n");
 }
 
+<<<<<<< HEAD
 int valid_input(int lower_bound, int upper_bound){
     int choice=0, type;
     do{
@@ -109,10 +110,24 @@ int valid_input(int lower_bound, int upper_bound){
         }
 
     }while (type!=1||(choice > upper_bound) || (choice<lower_bound));
+=======
+int valid_input(int val){
+    int choice =0, cpt=0;
+    do{
+        if (cpt){
+            printf("\nEnter another value: ");
+        }
+        else{
+            printf("\nChoose a value: ");
+        }
+        scanf("%d",&choice);
+        cpt++;
+    }while ((choice > val) || (choice<1));
+>>>>>>> parent of a274db9 (Verif the type of the input)
     return choice;
 }
 
-DATAFRAME* is_dataframe(DATAFRAME* dataframe){
+void is_dataframe(DATAFRAME* dataframe){
     if (dataframe ==NULL){
         printf("Let's first create a dataframe: ");
         int phys_size;
@@ -120,6 +135,7 @@ DATAFRAME* is_dataframe(DATAFRAME* dataframe){
         phys_size = valid_input(1,REALOC_SIZE);
         dataframe = create_dataframe(phys_size);
     }
+<<<<<<< HEAD
     return dataframe;
 }
 
@@ -170,6 +186,8 @@ int smaller(DATAFRAME* dataframe, int value){
         }
     }
     return cpt;
+=======
+>>>>>>> parent of a274db9 (Verif the type of the input)
 }
 
 void add_line_dataframe(DATAFRAME* dataframe){
