@@ -255,9 +255,29 @@ int delete_col_dataframe(DATAFRAME* dataframe, int index){
     return 0;
 }
 
+void print_col_names(DATAFRAME* dataframe){
+    for(int i=0; i<dataframe->ls; i++){
+        printf("%s\t", dataframe->col[i]->title);
+    }
+    printf("\n");
+}
 
-
-
+int* search_value_index(DATAFRAME* dataframe,int value, COORD* tab){
+    for(int i =0; i<dataframe->ls; i++){
+        for(int j=0; j<dataframe->col[i]->ls; j++){
+            if(dataframe->col[i]->tab[j]==value){
+                if(tab==NULL){
+                    tab = (COORD*)malloc(REALOC_SIZE*sizeof(COORD));
+                    tab->ls = 0;
+                }
+                tab[tab->ls].col = i;
+                tab[tab->ls].line = j;
+                tab->ls++;
+            }
+        }
+    }
+    return tab;
+}
 
 
 

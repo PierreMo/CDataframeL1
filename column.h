@@ -39,14 +39,6 @@ int insert_value(COLUMN* col, int value);
 */
 void delete_value(COLUMN *col, int index);
 
-/**
-* @brief: Find the value on a given index
-* @param1: Pointer to a column
-* @param2: integer
-* @return: return the value
-*/
-int value_at_index(COLUMN* col, int index);
-
 
 
 #endif //CDATAFRAMEL1_COLUMN_H

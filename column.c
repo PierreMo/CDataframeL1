@@ -47,9 +47,6 @@ void delete_value(COLUMN *col, int index){
     col->ls--;
 }
 
-int value_at_index(COLUMN* col, int index){
-    return col->tab[index];
-}
 
 
 

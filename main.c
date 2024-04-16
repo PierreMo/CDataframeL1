@@ -142,7 +142,19 @@ int main() {
                     }
                     case 6: // Check the existence of a value (search) in the CDataframe
                     {
-                        //action
+                        COORD* tab_index=NULL;
+                        tab_index = search_value_index(dataframe, input_number(), tab_index);
+                        if (tab_index){
+                            printf("The value is in the dataframe at the following position(s):");
+                            for(int i=0; i<tab_index->ls;i++ ){
+                                printf("(%d,%d), ", tab_index[i].line,tab_index[i].col);
+                            }
+                            printf("\n");
+                        }
+                        else{
+                            printf("The value is not in the dataframe.\n");
+                        }
+                        free(tab_index);
                         break;
                     }
                     case 7: // Access/replace the value in a CDataframe cell using its row and column number
@@ -152,7 +164,7 @@ int main() {
                     }
                     case 8: // Display column names
                     {
-                        //print_col_names(dataframe);
+                        print_col_names(dataframe);
                         break;
                     }
                     case 9: {

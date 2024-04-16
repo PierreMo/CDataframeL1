@@ -12,6 +12,12 @@ typedef struct{
     int ps;
 }DATAFRAME;
 
+typedef struct{
+    int line;
+    int col;
+    int ls;
+}COORD;
+
 /**
  * Create a dataframe
  * @param1 : Pointer on column
@@ -140,7 +146,14 @@ int is_string_equal(char* a, char* b);
  * @return: the index of the column where the title is already used else 0
  */
 int title_in_dataframe(DATAFRAME* dataframe, char* title);
-//void print_col_names(DATAFRAME* dataframe);
+
+/**
+ * @brief: display the title of all columns of the dataframe
+ * @param1: pointer on the dataframe
+ */
+void print_col_names(DATAFRAME* dataframe);
+
+int* search_value_index(DATAFRAME* dataframe, int value, COORD* tab);
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
 
