@@ -1,0 +1,54 @@
+Index: cdataframe.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by Aube on 29/03/2024.\r\n//\r\n#include <stdio.h>\r\n#include <stdlib.h>\r\n#include \"cdataframe.h\"\r\n\r\nvoid choose_title(char* title){\r\n    printf(\"Choose the title of the column:\");\r\n    scanf(\"%s\",title);\r\n}\r\n\r\nDATAFRAME* create_dataframe(int size){\r\n    DATAFRAME* dataframe = (DATAFRAME*)malloc(sizeof(DATAFRAME));\r\n\r\n    dataframe->col = (COLUMN*)malloc(size*sizeof(COLUMN));\r\n    dataframe->ps = size;\r\n    dataframe->ls = 0;\r\n    for(int i=0; i<size; i++){\r\n        char* title = (char *)malloc(size*sizeof(char));\r\n        choose_title(title);\r\n        dataframe->col[i] = create_column(title);\r\n        dataframe->ls ++;\r\n    }\r\n    return dataframe;\r\n}\r\n\r\nvoid fill_dataframe(DATAFRAME* dataframe){\r\n    for(int i = 0; i < dataframe->ls; i++){\r\n        int nbr_val;\r\n        printf(\"How many value do you want in the %s column\", dataframe->col[i]->title);\r\n        scanf(\"%d\", &nbr_val);\r\n        for(int j=0; j< nbr_val; j++){\r\n            int value;\r\n            printf(\"\\nEnter the value to insert: \");\r\n            scanf(\"%d\", &value);\r\n            insert_value(dataframe->col[i],value);\r\n        }\r\n    }\r\n}\r\n\r\nvoid hard_fill_dataframe(DATAFRAME * dataframe){\r\n    for(int i = 0; i < dataframe->ls; i++){\r\n        int nbr_val = 5;\r\n        for(int j=0; j< nbr_val; j++){;\r\n            insert_value(dataframe->col[i],j);\r\n        }\r\n    }\r\n}\r\n/*\r\nint still_in_frame(DATAFRAME* dataframe;int i){\r\n    int bool = 0;\r\n    for(int j = 0; j < dataframe->ls; j++){\r\n\r\n    }\r\n}\r\n*/\r\nint longest_col(DATAFRAME* dataframe){\r\n    int max=0;\r\n    for(int i=0; i<dataframe->ls;i++){\r\n        if (dataframe->col[i]->ls> max){\r\n            max = dataframe->col[i]->ls;\r\n        }\r\n    }\r\n    return max;\r\n}\r\nint smallest_col(DATAFRAME* dataframe){\r\n    int min = dataframe->col[0]->ls;\r\n    for(int i=1; i<dataframe->ls;i++){\r\n        if (dataframe->col[i]->ls <min){\r\n            min = dataframe->col[i]->ls;\r\n        }\r\n    }\r\n    return min;\r\n}\r\nvoid display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col){\r\n    // if the user want to display all the dataframe\r\n    if (nb_lines==0){\r\n        //the number of lines to print is the logical size of longest column\r\n        nb_lines = longest_col(dataframe);\r\n    }\r\n    if (nb_col==0){\r\n        nb_col = dataframe->ls;\r\n    }\r\n    //display titles\r\n    for(int i = 0; i < nb_col; i++) {\r\n        printf(\"%s\\t\", dataframe->col[i]->title);\r\n    }\r\n    printf(\"\\n\");\r\n    //display values with index\r\n    for(int i = 0; i < nb_lines; i++) {\r\n        for(int j = 0;j < nb_col; j++) {\r\n            printf(\"[%d] %d\\t\", i, dataframe->col[j]->tab[i]);\r\n\r\n        }\r\n        printf(\"\\n\");\r\n    }\r\n    printf(\"\\n\");\r\n}\r\n\r\nint valid_input(int lower_bound, int upper_bound){\r\n    int choice=0, type;\r\n    do{\r\n        printf(\"\\nChoose a value between 1 and %d: \", upper_bound);\r\n        type = scanf(\"%d\",&choice);//if the type is int type=1\r\n        if (type != 1 || choice < lower_bound || choice > upper_bound) {\r\n            printf(\"Invalid input.\");\r\n            while (getchar() != '\\n'); // to clear out the input buffer\r\n        }\r\n\r\n    }while (type!=1||(choice > upper_bound) || (choice<lower_bound));\r\n    return choice;\r\n}\r\n\r\nDATAFRAME* is_dataframe(DATAFRAME* dataframe){\r\n    if (dataframe ==NULL){\r\n        printf(\"Let's first create a dataframe: \");\r\n        int phys_size;\r\n        printf(\"How many columns do you want in the Dataframe? (max %d)\", REALOC_SIZE);\r\n        phys_size = valid_input(1,REALOC_SIZE);\r\n        dataframe = create_dataframe(phys_size);\r\n    }\r\n    return dataframe;\r\n}\r\n\r\nint input_number(){\r\n    int choice=0, type;\r\n    do{\r\n        printf(\"\\nChoose a value:\");\r\n        type = scanf(\"%d\",&choice);//if the type is int type=1\r\n        if (type != 1) {\r\n            printf(\"Invalid input.\");\r\n            while (getchar() != '\\n'); // to clear out the input buffer\r\n        }\r\n    }while (type!=1);\r\n    return choice;\r\n\r\n}\r\nint equal(DATAFRAME* dataframe, int value){\r\n    int cpt=0;\r\n    for(int i =0; i<dataframe->ls; i++){\r\n        for(int j=0; j<dataframe->col[i]->ls; j++){\r\n            if(dataframe->col[i]->tab[j]==value){\r\n                cpt++;\r\n            }\r\n        }\r\n    }\r\n\r\n    return cpt;\r\n}\r\n\r\nint greater(DATAFRAME* dataframe, int value){\r\n    int cpt=0;\r\n    for(int i =0; i<dataframe->ls; i++){\r\n        for(int j=0; j<dataframe->col[i]->ls; j++){\r\n            if(dataframe->col[i]->tab[j]>value){\r\n                cpt++;\r\n            }\r\n        }\r\n    }\r\n    return cpt;\r\n}\r\nint smaller(DATAFRAME* dataframe, int value){\r\n    int cpt=0;\r\n    for(int i =0; i<dataframe->ls; i++){\r\n        for(int j=0; j<dataframe->col[i]->ls; j++){\r\n            if(dataframe->col[i]->tab[j]<value){\r\n                cpt++;\r\n            }\r\n        }\r\n    }\r\n    return cpt;\r\n}\r\n\r\nvoid add_line_dataframe(DATAFRAME* dataframe){\r\n    for(int i= 0;i < dataframe->ls;i++){\r\n        printf(\"Insert the new value for %s\", dataframe->col[i]->title);\r\n        insert_value(dataframe->col[i], input_number());\r\n    }\r\n}\r\n\r\nvoid delete_line_dataframe(DATAFRAME* dataframe, int index){\r\n    for(int i =0; i<dataframe->ls; i++){\r\n        delete_value(dataframe->col[i], index);\r\n    }\r\n}\r\n\r\nint add_column(DATAFRAME* dataframe, char* title){\r\n    int success = 0;\r\n    if(dataframe->ls == dataframe->ps){\r\n        COLUMN** new;\r\n        // adding a new block of size REALOC_SIZE to the already existing blocks\r\n        new = realloc(dataframe->col, (dataframe->ps/REALOC_SIZE +1)*REALOC_SIZE * sizeof(COLUMN*));\r\n        if (new != NULL){\r\n            free(dataframe->col);\r\n            dataframe->col = new;\r\n            success = 1;\r\n            dataframe->ps = (dataframe->ps/REALOC_SIZE +1)*REALOC_SIZE;\r\n        }\r\n    }\r\n    if(dataframe->col != NULL || success){\r\n        int nb_val =0;\r\n        dataframe->col[dataframe->ls] = create_column(title);\r\n        printf(\"la dernière colomne %s\",dataframe->col[dataframe->ls]->title);\r\n        printf(\"How many value do you want in your column?\");\r\n        nb_val= valid_input(1,REALOC_SIZE);\r\n        for(int i=0; i<nb_val; i++){\r\n            insert_value(dataframe->col[dataframe->ls],input_number());\r\n        }\r\n        dataframe-> ls++;\r\n        return 1;\r\n    }\r\n    return 0;\r\n}\r\n\r\nint is_string_equal(char* a, char* b){\r\n    int i=0;\r\n    while(a[i]!='\\0' && b[i]!='\\0' && a[i]==b[i]){\r\n        i++;\r\n    }\r\n    if(a[i]== '\\0' && b[i]=='\\0'){\r\n        return 1;\r\n    }else{\r\n        return 0;\r\n    }\r\n}\r\n\r\nint delete_col_dataframe(DATAFRAME* dataframe, char* title){\r\n    for(int i=0; i<dataframe->ls; i++){\r\n        if(is_string_equal(title, dataframe->col[i]->title)){\r\n            free(dataframe->col[i]->title);\r\n            free(dataframe->col[i]->tab);\r\n            free(dataframe->col[i]);\r\n        }\r\n    }\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/cdataframe.c b/cdataframe.c
+--- a/cdataframe.c	(revision 692897ad3e41d351b1be00743e5edaa5fc44b0af)
++++ b/cdataframe.c	(date 1713263634410)
+@@ -13,8 +13,8 @@
+ DATAFRAME* create_dataframe(int size){
+     DATAFRAME* dataframe = (DATAFRAME*)malloc(sizeof(DATAFRAME));
+ 
+-    dataframe->col = (COLUMN*)malloc(size*sizeof(COLUMN));
+-    dataframe->ps = size;
++    dataframe->col = (COLUMN*)malloc(REALOC_SIZE*sizeof(COLUMN));
++    dataframe->ps = REALOC_SIZE;
+     dataframe->ls = 0;
+     for(int i=0; i<size; i++){
+         char* title = (char *)malloc(size*sizeof(char));
+Index: column.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by Aube on 29/03/2024.\r\n//\r\n#include <stdio.h>\r\n#include <stdlib.h>\r\n#include \"column.h\"\r\n\r\n\r\n\r\nCOLUMN *create_column(char* title){\r\n    COLUMN *column = malloc (sizeof(COLUMN));\r\n    column->tab = NULL;\r\n    column->title = title;\r\n    column->ls = 0;\r\n    column->ps = 0;\r\n    return column;\r\n}\r\n\r\nint insert_value(COLUMN* col, int val){\r\n    int success = 0;\r\n    if(col->ls == col->ps){\r\n        if(col->ps==0){\r\n            col->tab = (int*)malloc(REALOC_SIZE * sizeof(int));\r\n        }else{\r\n            int* new;\r\n            new = realloc(col->tab,REALOC_SIZE * sizeof(int));\r\n            if (new != NULL){\r\n                free(col->tab);\r\n                col->tab = new;\r\n                success = 1;\r\n            }\r\n        }\r\n    }\r\n    if(col->tab != NULL || success){\r\n        col->tab[col->ls] = val;\r\n        col-> ls = col->ls+1;\r\n        return 1;\r\n    }\r\n    return 0;\r\n}\r\n\r\nvoid delete_value(COLUMN *col, int index){\r\n    int i=0;\r\n    for(i=index; i<col->ls;i++){\r\n        col->tab[i] = col->tab[i+1];\r\n    }\r\n    col->ls--;\r\n}\r\n\r\nint value_at_index(COLUMN* col, int index){\r\n    return col->tab[index];\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/column.c b/column.c
+--- a/column.c	(revision 692897ad3e41d351b1be00743e5edaa5fc44b0af)
++++ b/column.c	(date 1713260716888)
+@@ -7,7 +7,7 @@
+ 
+ 
+ 
+-COLUMN *create_column(char* title){
++COLUMN* create_column(char* title){
+     COLUMN *column = malloc (sizeof(COLUMN));
+     column->tab = NULL;
+     column->title = title;
+@@ -23,11 +23,12 @@
+             col->tab = (int*)malloc(REALOC_SIZE * sizeof(int));
+         }else{
+             int* new;
+-            new = realloc(col->tab,REALOC_SIZE * sizeof(int));
++            new = realloc(col->tab, (col->ps/REALOC_SIZE+1)*REALOC_SIZE * sizeof(int));
+             if (new != NULL){
+                 free(col->tab);
+                 col->tab = new;
+                 success = 1;
++                col->ps = (col->ps/REALOC_SIZE+1)*REALOC_SIZE;
+             }
+         }
+     }
