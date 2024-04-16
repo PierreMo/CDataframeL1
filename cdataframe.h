@@ -46,15 +46,24 @@ void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col);
 
 /**
  * Allow to enter a value between 0 and val
- * @param1 : val upper bound
+ * @param1 : val lower bound
+ * @param2 : val upper bound
+ * @return : the chosen value by the user between param1 et 2
  */
-int valid_input(int val);
+int valid_input(int lower_bound, int upper_bound);
 /**
  * Find the column with the highest number of value
  * @param1 : pointer on the dataframe
  * @return : integer that is the nb of lines of the dataframe
  */
 int longest_col(DATAFRAME* dataframe);
+
+/**
+ * Find the column with the smallest number of value
+ * @param1 : pointer on the dataframe
+ * @return : integer that is the nb of full lines
+ */
+int smallest_col(DATAFRAME* dataframe);
 
 int input_number();
 /**
@@ -87,7 +96,44 @@ int greater(DATAFRAME* dataframe, int value);
 int smaller(DATAFRAME* dataframe, int value);
 
 
+/**
+ * @brief: Add a row of values to the dataframe
+ * @param1: Pointer to the dataframe
+ */
+void add_line_dataframe(DATAFRAME* dataframe);
 
+/**
+ * @brief: delete a row of values to the dataframe
+ * @param1: Pointer to the dataframe
+ * @param2: index at which we want delete a row
+ */
+void delete_line_dataframe(DATAFRAME* dataframe, int index);
+
+/**
+ * @brief: add a column to the dataframe
+ * @param1: Pointer to the dataframe
+ * @param2: title of the new column
+ * @return: 1 if the line is added and else 0
+*/
+int add_column(DATAFRAME* dataframe, char* title);
+
+/**
+ * @brief: delete a column to the dataframe
+ * @param1: Pointer to the dataframe
+ * @param2: title of the column to delete
+ * @return: 1 if the line is delete and else 0
+*/
+int delete_col_dataframe(DATAFRAME* dataframe, char* title);
+
+/**
+ * @brief: search an input string
+ * @param1: string to search
+ * @param2: the string to compare with param1
+ * @return: 1 if it's the same string else 0
+ */
+int is_string_equal(char* a, char* b);
+
+//void print_col_names(DATAFRAME* dataframe);
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
 

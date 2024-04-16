@@ -39,15 +39,12 @@ int insert_value(COLUMN* col, int val){
     return 0;
 }
 
-void delete_column(COLUMN **col){
-    free(*col);
-}
-
-void print_col(COLUMN* col){
-    printf("%s\n", col->title);
-    for(int i=0; i<col->ls; i++){
-        printf("[%d] %d\n", i,col->tab[i]);
+void delete_value(COLUMN *col, int index){
+    int i=0;
+    for(i=index; i<col->ls;i++){
+        col->tab[i] = col->tab[i+1];
     }
+    col->ls--;
 }
 
 int value_at_index(COLUMN* col, int index){

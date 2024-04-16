@@ -35,14 +35,9 @@ int insert_value(COLUMN* col, int value);
 /**
 * @brief : Free allocated memory
 * @param1 : Pointer to a column
+*@param2 : integer
 */
-void delete_column(COLUMN **col);
-
-/**
-* @brief: Print a column content
-* @param1: Pointer to a column
-*/
-void print_col(COLUMN* col);
+void delete_value(COLUMN *col, int index);
 
 /**
 * @brief: Find the value on a given index
