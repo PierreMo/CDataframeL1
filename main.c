@@ -48,7 +48,7 @@ int main() {
                     }
                     case 3: // Hard filling of the CDataframe
                     {
-                        is_dataframe(dataframe);
+                        dataframe = is_dataframe(dataframe);
                         hard_fill_dataframe(dataframe);
                         break;
                     }
@@ -157,17 +157,16 @@ int main() {
                 switch (choice) {
                     case 1: // Display the number of rows
                     {
-                        //action
+                        printf("There are %d rows in the dataframe.\n", longest_col(dataframe));
                         break;
                     }
                     case 2: // Display the number of columns
                     {
-                        //action
+                        printf("There are %d columns in the dataframe.\n", dataframe->ls);
                         break;
                     }
                     case 3: // Display the number of cells equal to x (x given as parameter)
                     {
-<<<<<<< HEAD
                         int value = 0, cpt = 0;
                         value = input_number();
                         if (cpt = equal(dataframe, value)) {// return 1 if value is in the dataframe
@@ -175,9 +174,6 @@ int main() {
                         } else {
                             printf("The value %d is not in the dataframe.");
                         }
-=======
-                        //action
->>>>>>> parent of a274db9 (Verif the type of the input)
                         break;
                     }
                     case 4: // Display the number of cells containing a value greater than a chosen value
@@ -203,7 +199,7 @@ int main() {
                 }
                 break;
 
-                }
+            }
         }
     }while (choice != 5);
     return 0;
