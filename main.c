@@ -143,7 +143,6 @@ int main() {
                         display_dataframe(dataframe, 0, 0);
                         choose_title(title);
                         index_col_title = title_in_dataframe(dataframe, title);
-                        printf("--%d--\n",index_col_title);
                         if (index_col_title!=-1){
                             rename_col_dataframe(dataframe, index_col_title);
                         }
@@ -204,7 +203,8 @@ int main() {
                     {
                         int value, cpt;
                         value = input_number();
-                        if (cpt = equal(dataframe, value)) {// return 1 if value is in the dataframe
+                        cpt = equal(dataframe, value);
+                        if (cpt) {
                             printf("There are %d cells with the value %d.\n", cpt, value);
                         } else {
                             printf("The value %d is not in the dataframe.");
