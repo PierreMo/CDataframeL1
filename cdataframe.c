@@ -5,9 +5,24 @@
 #include <stdlib.h>
 #include "cdataframe.h"
 
-void choose_title(char* title){
+void choose_title_not_inside(DATAFRAME* dataframe, char* title){
+    do{
     printf("Choose the title of the column:");
     scanf("%s",title);
+        if (title_in_dataframe(dataframe, title)!=-1){
+            printf("This title is already in the dataframe!\n");
+        }
+    }while(title_in_dataframe(dataframe, title)!=-1);
+}
+
+void choose_title_inside(DATAFRAME* dataframe, char* title){
+    do{
+        printf("Choose the title of the column:");
+        scanf("%s",title);
+        if (title_in_dataframe(dataframe, title)==-1){
+            printf("This title is not in the dataframe!\n");
+        }
+    }while(title_in_dataframe(dataframe, title)==-1);
 }
 
 DATAFRAME* create_dataframe(int size){
@@ -17,12 +32,7 @@ DATAFRAME* create_dataframe(int size){
     dataframe->ls = 0;
     for(int i=0; i<size; i++){
         char* title = (char *)malloc(100*sizeof(char));
-        do{
-            choose_title(title);
-            if (title_in_dataframe(dataframe, title)!=-1){
-                printf("This title is already in the dataframe!\n");
-            }
-        }while(title_in_dataframe(dataframe, title)!=-1);
+        choose_title_not_inside(dataframe, title);
         dataframe->col[i] = create_column(title);
         dataframe->ls ++;
     }
@@ -68,6 +78,7 @@ int longest_col(DATAFRAME* dataframe){
     }
     return max;
 }
+
 int smallest_col(DATAFRAME* dataframe){
     int min = dataframe->col[0]->ls;
     for(int i=1; i<dataframe->ls;i++){
@@ -77,6 +88,7 @@ int smallest_col(DATAFRAME* dataframe){
     }
     return min;
 }
+
 void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col){
     // if the user want to display all the dataframe
     if (nb_lines==0){
@@ -95,7 +107,6 @@ void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col){
     for(int i = 0; i < nb_lines; i++) {
         for(int j = 0;j < nb_col; j++) {
             printf("[%d] %d\t", i, dataframe->col[j]->tab[i]);
-
         }
         printf("\n");
     }
@@ -273,12 +284,7 @@ COORD* search_value_index(DATAFRAME* dataframe,int value, COORD* tab){
 
 void rename_col_dataframe(DATAFRAME* dataframe, int index){
     char* title=(char*)malloc(100*sizeof(char));
-    do{
-        choose_title(title);
-        if (title_in_dataframe(dataframe, title)!=-1){
-            printf("This title is already in the dataframe!\n");
-        }
-    }while(title_in_dataframe(dataframe, title)!=-1);
+    choose_title_not_inside(dataframe, title);
     free(dataframe->col[index]->title);
     dataframe->col[index]->title = title;
 }
@@ -290,10 +296,10 @@ void access_replace(DATAFRAME* dataframe){
     column = valid_input(0,dataframe->ls-1);
     printf("Enter the index of the row:");
     row = valid_input(0,dataframe->col[column]->ls-1);
-    printf("The value at this position is %d.",dataframe->col[column]->tab[row]);
+    printf("The value at this position is %d. ",dataframe->col[column]->tab[row]);
     int answer;
     do {
-        printf("Do you want to replace it? 1 for yes 0 for no");
+        printf("Do you want to replace it? 1 for yes 0 for no: ");
         scanf("%d", &answer);
         if(answer==1){
             int value;

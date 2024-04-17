@@ -25,10 +25,19 @@ typedef struct{
  */
 DATAFRAME* create_dataframe(int size);
 /**
- * Allow the user to choose a title
- * @param1 : Pointer on the title
+ * @breif: Allow the user to choose a title not already in the dataframe
+ * @param1 : pointer on dataframe
+ * @param2 : Pointer on the title
  */
-void choose_title(char* title);
+void choose_title_not_inside(DATAFRAME*dataframe, char* title);
+
+
+/**
+ * @brief: Allow the user to choose a title in the dataframe
+ * @param1 : pointer on dataframe
+ * @param2 : Pointer on the title
+ */
+void choose_title_inside(DATAFRAME* dataframe, char* title);
 
 /**
  * Allow the user to fill the dataframe

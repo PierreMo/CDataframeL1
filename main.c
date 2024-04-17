@@ -18,13 +18,22 @@ int main() {
     DATAFRAME *dataframe = NULL;
     do {
         printf("\n-- Principal menu --\n");
-        printf("\n1. Filling\n2. Displaying\n3. Usual operations \n4. Analysis and statistics\n-1. Exit\n");
+        printf("\n1. Filling\n2. Displaying\n3. Usual operations \n4. Analysis and statistics\n0. Exit\n");
         choice = valid_input(1, 5);
         if (choice != 1 && dataframe == NULL) {
-            choice = 0;
+            choice = -1;
+        }
+        else{
+            if (choice == 1 && dataframe != NULL) {
+                choice = -2;
+            }
         }
         switch (choice) {
-            case 0: {
+            case -2: {
+                printf("You have already created a dataframe!\n");
+                break;
+            }
+            case -1: {
                 printf("You must create a dataframe first!\n");
                 break;
             }
@@ -110,13 +119,7 @@ int main() {
                     {
                         int result;
                         char* title = (char*)malloc(100*sizeof(char));
-                        //faire une fonction check_title
-                        do{
-                            choose_title(title);
-                            if (title_in_dataframe(dataframe, title)!=-1){
-                                printf("This title is already in the dataframe!\n");
-                            }
-                        }while(title_in_dataframe(dataframe, title)!=-1);
+                        choose_title_not_inside(dataframe, title);
                         result = add_column(dataframe, title);
                         if(result){
                             printf("Column successfully added.\n");
@@ -127,17 +130,13 @@ int main() {
                     }
                     case 4: // Delete a column from the CDataframe
                     {
-                        char* title;
+                        char* title = (char*)malloc(100*sizeof(char));
                         int index_col_title;
                         printf("Which column do you want to delete?\n");
+                        choose_title_inside(dataframe,title);
                         display_dataframe(dataframe, 0, 0);
                         index_col_title = title_in_dataframe(dataframe, title);
-                        if (index_col_title!=-1){
-                            delete_col_dataframe(dataframe,index_col_title);
-                        }
-                        else{
-                            printf("This column is column is not in the dataframe.\n");
-                        }
+                        delete_col_dataframe(dataframe,index_col_title);
                         break;
                     }
                     case 5: // Rename the title of a column in the CDataframe
@@ -146,14 +145,9 @@ int main() {
                         int index_col_title;
                         printf("Which column do you want to rename?\n");
                         display_dataframe(dataframe, 0, 0);
-                        choose_title(title);
+                        choose_title_inside(dataframe, title);
                         index_col_title = title_in_dataframe(dataframe, title);
-                        if (index_col_title!=-1){
-                            rename_col_dataframe(dataframe, index_col_title);
-                        }
-                        else{
-                            printf("This title is not in the dataframe.\n");
-                        }
+                        rename_col_dataframe(dataframe, index_col_title);
                         break;
                     }
                     case 6: // Check the existence of a value (search) in the CDataframe
@@ -212,7 +206,7 @@ int main() {
                         if (cpt) {
                             printf("There are %d cells with the value %d.\n", cpt, value);
                         } else {
-                            printf("The value %d is not in the dataframe.");
+                            printf("The value %d is not in the dataframe.", value);
                         }
                         break;
                     }
@@ -227,8 +221,7 @@ int main() {
                     {
                         int value;
                         value = input_number();
-                        printf("There are %d cells with smaller values than %d.\n", smaller(dataframe, value),
-                               value);
+                        printf("There are %d cells with smaller values than %d.\n", smaller(dataframe, value), value);
                         break;
                     }
                     case 6: {
@@ -239,6 +232,6 @@ int main() {
                 break;
             }
         }
-    }while (choice != -1);
+    }while (choice != 0);
     return 0;
 }
