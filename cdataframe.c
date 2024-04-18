@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "cdataframe.h"
-
+/*
 void choose_title_not_inside(DATAFRAME* dataframe, char* title){
     do{
     printf("Choose the title of the column:");
@@ -68,7 +68,7 @@ int still_in_frame(DATAFRAME* dataframe;int i){
 
     }
 }
-*/
+
 int longest_col(DATAFRAME* dataframe){
     int max=0;
     for(int i=0; i<dataframe->ls;i++){
@@ -313,7 +313,7 @@ void access_replace(DATAFRAME* dataframe){
         }
     }while(answer!=1 && answer != 0);
 }
-
+*/
 
 
 

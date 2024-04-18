@@ -9,9 +9,21 @@ int main() {
     COLUMN *mycol = create_column(CHAR, "My column");
     char a = 'A', c = 'C';
     insert_value(mycol, &a);
-    insert_value(mycol, NULL);
+    //insert_value(mycol, NULL);
     insert_value(mycol, &c);
-
+    printf("%s\n", mycol->title);
+    for (int i = 0; i < mycol->size; i++) {
+        printf("-%c-\n", *((char *)mycol->data[i]));
+    }
+    printf("--------");
+    COLUMN *mycol1 = create_column(INT, "New column");
+    for(int i = 0 ; i < 10 ; i++){
+        insert_value(mycol1, &i);
+    }
+    printf("\n%s\n", mycol1->title);
+    for(int i = 0 ; i < 10; i++){
+        printf("%d\t", *((int *)(mycol1->data[i])));
+    }
     /*
     int choice;
     DATAFRAME *dataframe = NULL;
