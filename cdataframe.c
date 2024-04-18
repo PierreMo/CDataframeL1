@@ -106,7 +106,11 @@ void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col){
     //display values with index
     for(int i = 0; i < nb_lines; i++) {
         for(int j = 0;j < nb_col; j++) {
-            printf("[%d] %d\t", i, dataframe->col[j]->tab[i]);
+            if(i < dataframe->col[j]->ls){
+                printf("[%d] %d\t", i, dataframe->col[j]->tab[i]);
+            }else{
+                printf("[%d] ∅\t", i);
+            }
         }
         printf("\n");
     }

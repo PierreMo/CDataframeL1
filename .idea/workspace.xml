@@ -20,17 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="Rename column ok">
+    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="fct choose_title_inside and choose_title_not_inside">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cdataframe.c" beforeDir="false" afterPath="$PROJECT_DIR$/cdataframe.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdataframe.h" beforeDir="false" afterPath="$PROJECT_DIR$/cdataframe.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CDataframeL1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CDataframeL1.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/cdataframe.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/cdataframe.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/main.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,11 +79,6 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="CDataframeL1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CDataframeL1" TARGET_NAME="CDataframeL1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CDataframeL1" RUN_TARGET_NAME="CDataframeL1">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -119,7 +107,8 @@
       <workItem from="1713248458254" duration="4308000" />
       <workItem from="1713255140881" duration="9539000" />
       <workItem from="1713264735548" duration="428000" />
-      <workItem from="1713265457495" duration="20713000" />
+      <workItem from="1713265457495" duration="20771000" />
+      <workItem from="1713445276281" duration="992000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Test">
       <option name="closed" value="true" />
@@ -297,7 +286,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713299395767</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fct choose_title_inside and choose_title_not_inside">
+      <option name="closed" value="true" />
+      <created>1713338185901</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1713338185901</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,6 +319,7 @@
     <MESSAGE value="Update" />
     <MESSAGE value="Rename column (arrêt du programme après cette action!)" />
     <MESSAGE value="Rename column ok" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rename column ok" />
+    <MESSAGE value="fct choose_title_inside and choose_title_not_inside" />
+    <option name="LAST_COMMIT_MESSAGE" value="fct choose_title_inside and choose_title_not_inside" />
   </component>
 </project>
