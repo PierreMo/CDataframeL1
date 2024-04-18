@@ -7,7 +7,7 @@
 
 
 
-COLUMN *create_column(char* title){
+COLUMN *create_column(ENUM_TYPE type,char* title){
     COLUMN *column = malloc (sizeof(COLUMN));
     column->tab = NULL;
     column->title = title;
@@ -38,7 +38,7 @@ int insert_value(COLUMN* col, int val){
     }
     return 0;
 }
-
+*/
 void delete_value(COLUMN *col, int index){
     int i=0;
     for(i=index; i<col->ls;i++){

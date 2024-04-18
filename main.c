@@ -6,14 +6,13 @@
 
 
 int main() {
+    COLUMN *mycol = create_column(CHAR, "My column");
+    char a = 'A', c = 'C';
+    insert_value(mycol, &a);
+    insert_value(mycol, NULL);
+    insert_value(mycol, &c);
+
     /*
-    COLUMN *mycol = create_column("My column");
-    insert_value(mycol, 52);
-    insert_value(mycol, 44);
-    insert_value(mycol, 15);
-    print_col(mycol);
-    delete_column(&mycol);
-    */
     int choice;
     DATAFRAME *dataframe = NULL;
     do {
@@ -233,5 +232,7 @@ int main() {
             }
         }
     }while (choice != 0);
+
+    */
     return 0;
 }
