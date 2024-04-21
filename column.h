@@ -51,11 +51,33 @@ COLUMN *create_column(ENUM_TYPE type, char* title);
 int insert_value(COLUMN* col, void* value);
 
 /**
+* @brief: Free the space allocated by a column
+* @param1: Pointer to the column
+*/
+void delete_column(COLUMN **col);
+
+/**
+* @brief: Convert a value into a string
+* @param1: Pointer to the column
+* @param2: Position of the value in the data array
+* @param3: The string in which the value will be written
+* @param4: Maximum size of the string
+*/
+void convert_value(COLUMN *col, unsigned long long int i, char *str, int size);
+
+/**
+* @brief: Display the content of a column
+* @param: Pointer to the column to display
+*/
+void print_col(COLUMN* col);
+
+/**
 * @brief : Free allocated memory
 * @param1 : Pointer to a column
 *@param2 : intege
 */
 void delete_value(COLUMN *col, int index);
+
 
 
 

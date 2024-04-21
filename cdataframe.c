@@ -61,7 +61,7 @@ void hard_fill_dataframe(DATAFRAME * dataframe){
         }
     }
 }
-/*
+
 int still_in_frame(DATAFRAME* dataframe;int i){
     int bool = 0;
     for(int j = 0; j < dataframe->ls; j++){
@@ -313,7 +313,6 @@ void access_replace(DATAFRAME* dataframe){
         }
     }while(answer!=1 && answer != 0);
 }
+
 */
-
-
 

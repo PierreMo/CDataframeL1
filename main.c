@@ -6,14 +6,21 @@
 
 
 int main() {
+    char str[5];
     COLUMN *mycol = create_column(CHAR, "My column");
-    char a = 'A', c = 'C';
+    char a = 'A', b = 'B', c = 'C', d = 'D';
     insert_value(mycol, &a);
-    //insert_value(mycol, NULL);
+    insert_value(mycol, &b);
+    insert_value(mycol, NULL);
     insert_value(mycol, &c);
+    insert_value(mycol, &d);
+    print_col(mycol);
+    delete_column(&mycol);
+
+    /* TEST 1
     printf("%s\n", mycol->title);
     for (int i = 0; i < mycol->size; i++) {
-        printf("-%c-\n", *((char *)mycol->data[i]));
+        printf("-%c-\n", *((char *)mycol->data[i])); //convert back
     }
     printf("--------");
     COLUMN *mycol1 = create_column(INT, "New column");
@@ -23,7 +30,7 @@ int main() {
     printf("\n%s\n", mycol1->title);
     for(int i = 0 ; i < 10; i++){
         printf("%d\t", *((int *)(mycol1->data[i])));
-    }
+    }*/
     /*
     int choice;
     DATAFRAME *dataframe = NULL;
