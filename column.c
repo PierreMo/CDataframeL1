@@ -3,6 +3,7 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "column.h"
 
 
@@ -86,7 +87,7 @@ void delete_column(COLUMN** col){
 
 void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
     if(i>=col->size){
-        printf("This index is out of the list");
+        printf("This index is out of the list\n");
         return;
     }
     switch(col->column_type){
@@ -162,10 +163,66 @@ void print_col(COLUMN* col){
     }
 }
 
+void sort(COLUMN* col, int sort_dir){
+    int j;
+    int compare;
+    char str1[REALOC_SIZE], str2[REALOC_SIZE];
+    unsigned long long int tmp_index;
+    col->index = (unsigned long long int*) malloc (col->size *sizeof(unsigned long long int));
+    if(col->valid_index == -1){//partially sorted
+        for(int i=0; i<col->size; i++) { //initialize index list
+            col->index[i]=i;
+        }
+        if (sort_dir == ASC){
+            for(int i=1; i<col->size; i++) {
+                tmp_index = col->index[i];
+                j = i - 1;
+                //convert_value(col, j, str1, REALOC_SIZE);
+                //convert_value(col, tmp_index, str1, REALOC_SIZE);
+                // strcmp <0 : str1>str2, strcmp>0 : str1<str2, else equal
+                //remplacer *(..) par strcmp(str1,str2)<0
+                while (j >= 0 && *((int*)col->data[col->index[j]])>*((int*)col->data[tmp_index])) {
+                    col->index[j + 1] = col->index[j];
+                    j--;
+                }
+                col->index[j + 1] = tmp_index;
 
+            }
+        }
+        else{
+            for(int i=1; i<col->size; i++) {
+                tmp_index = col->index[i];
+                j = i - 1;
+                //convert_value(col, i, str1, REALOC_SIZE);
+                //convert_value(col, tmp_index, str1, REALOC_SIZE);
+                // compare <0 : str1>str2, compare>0 : str1<str2, else equal
+                //compare = strcmp(str1,str2);
+                while (j >= 0 && *((int*)col->data[col->index[j]])<*((int*)col->data[tmp_index])) {
+                    col->index[j + 1] = col->index[j];
+                    j--;
+                }
+                col->index[j + 1] = tmp_index;
 
+            }
+        }
+    }
+}
 
-
-
-
+void print_col_by_index(COLUMN* col){
+    char str[REALOC_SIZE];
+    int j;
+    for(int i=0; i<col->size; i++){
+        j=0;
+        while(col->index[j]!=i) {
+            j++;
+        }
+        if(col->data[j]==NULL){
+            printf("[%d] NULL\n",i);
+        }
+        else{
+            convert_value(col, j,str, col->size);
+            printf("[%d] %s\n", i, str);
+        }
+    }
+}
 

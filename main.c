@@ -7,15 +7,20 @@
 
 int main() {
     char str[5];
-    COLUMN *mycol = create_column(CHAR, "My column");
-    char a = 'A', b = 'B', c = 'C', d = 'D';
+    COLUMN *mycol = create_column(INT, "My column");
+    int a = 10, b = 15, c = 20, d = 6;
+    insert_value(mycol, &c);
     insert_value(mycol, &a);
     insert_value(mycol, &b);
-    insert_value(mycol, NULL);
-    insert_value(mycol, &c);
     insert_value(mycol, &d);
+    mycol->valid_index = -1;
+    printf("Column content before sorting : \n");
     print_col(mycol);
+    sort(mycol,DESC);
+    printf("Column content after sorting : \n");
+    print_col_by_index(mycol);
     delete_column(&mycol);
+
 
     /* TEST 1
     printf("%s\n", mycol->title);

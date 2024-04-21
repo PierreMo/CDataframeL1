@@ -5,6 +5,8 @@
 #ifndef CDATAFRAMEL1_COLUMN_H
 #define CDATAFRAMEL1_COLUMN_H
 #define REALOC_SIZE 256
+#define ASC 0
+#define DESC 1
 
 #include <stdlib.h>
 
@@ -31,6 +33,15 @@ struct column {
     ENUM_TYPE column_type;
     COL_TYPE** data; // array of pointers to stored data
     unsigned long long int *index; // array of integers
+    // index valid
+    // 0 : no index
+    // -1 : invalid index
+    // 1 : valid index
+    int valid_index;
+    // direction de tri Ascendant ou Déscendant
+    // 0 : ASC
+    // 1 : DESC
+    int sort_dir;
 };
 typedef struct column COLUMN;
 
@@ -70,6 +81,19 @@ void convert_value(COLUMN *col, unsigned long long int i, char *str, int size);
 * @param: Pointer to the column to display
 */
 void print_col(COLUMN* col);
+
+/**
+* @brief: Sort a column according to a given order
+* @param1: Pointer to the column to sort
+* @param2: Sort type (ASC or DESC)
+*/
+void sort(COLUMN* col, int sort_dir);
+
+/**
+* @brief: Display the content of a sorted column
+* @param1: Pointer to a column
+*/
+void print_col_by_index(COLUMN *col);
 
 /**
 * @brief : Free allocated memory
