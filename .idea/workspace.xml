@@ -20,11 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="sort pour une colonne partiellement triée (tri par insertion)">
+    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/column.c" beforeDir="false" afterPath="$PROJECT_DIR$/column.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/column.h" beforeDir="false" afterPath="$PROJECT_DIR$/column.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <list id="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" name="Changes by pierr" comment="">
       <change beforePath="$PROJECT_DIR$/column.c" beforeDir="false" afterPath="$PROJECT_DIR$/column.c" afterDir="false" />
@@ -50,23 +50,47 @@
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/column.h">
-      <ranges>
-        <range start1="36" end1="39" start2="36" end2="39" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
-        <range start1="104" end1="104" start2="104" end2="134" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-      </ranges>
-    </file>
     <file path="$PROJECT_DIR$/column.c">
       <ranges>
         <range start1="19" end1="19" start2="19" end2="20" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
-        <range start1="114" end1="114" start2="115" end2="116" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
-        <range start1="120" end1="148" start2="122" end2="126" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="165" end1="166" start2="143" end2="195" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="170" end1="186" start2="199" end2="242" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="187" end1="202" start2="243" end2="285" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="203" end1="204" start2="286" end2="288" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="205" end1="206" start2="289" end2="297" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="207" end1="208" start2="298" end2="314" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="80" end1="80" start2="81" end2="82" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="83" end1="84" start2="85" end2="85" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="85" end1="85" start2="86" end2="87" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="110" end1="111" start2="112" end2="113" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="114" end1="114" start2="116" end2="117" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
+        <range start1="135" end1="136" start2="138" end2="139" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="150" end1="167" start2="153" end2="229" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="169" end1="170" start2="231" end2="309" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="174" end1="188" start2="313" end2="318" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="189" end1="190" start2="319" end2="319" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="192" end1="193" start2="321" end2="322" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="194" end1="196" start2="323" end2="323" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="197" end1="198" start2="324" end2="325" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="231" end1="231" start2="358" end2="366" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="232" end1="233" start2="367" end2="368" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="234" end1="235" start2="369" end2="370" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="275" end1="275" start2="410" end2="411" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="276" end1="277" start2="412" end2="413" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="278" end1="279" start2="414" end2="415" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="283" end1="283" start2="419" end2="420" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="286" end1="287" start2="423" end2="423" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="292" end1="292" start2="428" end2="429" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="294" end1="295" start2="431" end2="432" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="297" end1="297" start2="434" end2="435" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="298" end1="299" start2="436" end2="437" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="301" end1="308" start2="439" end2="440" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="309" end1="309" start2="441" end2="442" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="310" end1="312" start2="443" end2="443" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="319" end1="319" start2="450" end2="451" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="326" end1="327" start2="458" end2="459" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/column.h">
+      <ranges>
+        <range start1="9" end1="10" start2="9" end2="9" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="36" end1="39" start2="35" end2="38" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
+        <range start1="107" end1="108" start2="106" end2="106" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="109" end1="110" start2="107" end2="108" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
       </ranges>
     </file>
   </component>
@@ -89,26 +113,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;CMake Application.CDataframeL1.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;part2&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aube/CLionProjects/CDataframe-part1&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "CMake Application.CDataframeL1.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "part2",
+    "last_opened_file_path": "C:/Users/Aube/CLionProjects/CDataframe-part1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "structure.view.defaults.are.configured": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="CDataframeL1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CDataframeL1" TARGET_NAME="CDataframeL1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CDataframeL1" RUN_TARGET_NAME="CDataframeL1">
       <method v="2">
@@ -148,7 +172,8 @@
       <workItem from="1713606218826" duration="5534000" />
       <workItem from="1713679153755" duration="19802000" />
       <workItem from="1713727475449" duration="290000" />
-      <workItem from="1714115580885" duration="7168000" />
+      <workItem from="1714115580885" duration="7263000" />
+      <workItem from="1714137164633" duration="12968000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Test">
       <option name="closed" value="true" />
@@ -374,7 +399,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713702412108</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="update">
+      <option name="closed" value="true" />
+      <created>1714123098155</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1714123098155</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,7 +426,6 @@
     <MESSAGE value="Display part done" />
     <MESSAGE value="Verif the type of the input" />
     <MESSAGE value="Analysis and stats part" />
-    <MESSAGE value="update" />
     <MESSAGE value="Not the same title" />
     <MESSAGE value="Delete column" />
     <MESSAGE value="Update" />
@@ -404,6 +436,7 @@
     <MESSAGE value="insert value" />
     <MESSAGE value="convert_value, delete_col,print_col" />
     <MESSAGE value="sort pour une colonne partiellement triée (tri par insertion)" />
-    <option name="LAST_COMMIT_MESSAGE" value="sort pour une colonne partiellement triée (tri par insertion)" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>

@@ -7,7 +7,6 @@
 #define REALOC_SIZE 256
 #define ASC 0
 #define DESC 1
-
 #include <stdlib.h>
 
 enum enum_type{
@@ -105,9 +104,8 @@ void delete_value(COLUMN *col, int index);
 /**
  * @brief: sort a column by insertion
  * @param1: pointer to the column to sort
- * @param2: indicator of sorting direction
  */
-void sort_insertion_col(COLUMN* col, int sort_dir);
+void sort_insertion_col(COLUMN* col);
 
 /**
  * @brief:
