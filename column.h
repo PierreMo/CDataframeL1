@@ -102,6 +102,36 @@ void print_col_by_index(COLUMN *col);
 */
 void delete_value(COLUMN *col, int index);
 
+/**
+ * @brief: sort a column by insertion
+ * @param1: pointer to the column to sort
+ * @param2: indicator of sorting direction
+ */
+void sort_insertion_col(COLUMN* col, int sort_dir);
+
+/**
+ * @brief:
+ * @param p1
+ * @param p2
+ */
+void swap(int* p1, int* p2);
+
+/**
+ * @brief:
+ * @param arr
+ * @param low
+ * @param high
+ * @return
+ */
+int partition(COLUMN* col, int low, int high);
+
+/**
+ * @brief:
+ * @param arr
+ * @param low
+ * @param high
+ */
+void quickSort(COLUMN* col, int low, int high);
 
 
 
