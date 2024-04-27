@@ -8,7 +8,7 @@
 int main() {
     char str[5];
     COLUMN *mycol = create_column(STRING, "My column");
-    char a[6]= "Hello", b[] = "Hi!", c[] = "AAA", d[] = "zz";
+    char a[]= "Bravo", b[] = "Tango", c[] = "Zulu", d[] = "Lima";
     // when the string is bigger than 4 character there is
     // a special character
     insert_value(mycol, b);
@@ -18,7 +18,7 @@ int main() {
     mycol->valid_index = 0;
     printf("Column content before sorting : \n");
     print_col(mycol);
-    sort(mycol,DESC);
+    sort(mycol,ASC);
     printf("Column content after sorting : \n");
     print_col_by_index(mycol);
     delete_column(&mycol);

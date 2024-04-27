@@ -57,8 +57,11 @@ int insert_value(COLUMN *col, void *value) {
                 break;
             }
             case STRING: {
-                col->data[col->size] = (char **) malloc(sizeof(char *));
-                *((char **) col->data[col->size]) = *((char **) value);
+                char* str = (char*) value;
+                int str_size = strlen(str);
+                // memory allocation of the size of the string +1 to add '\0'
+                col->data[col->size] = malloc((str_size +1)*sizeof(char));
+                strcpy((char *) col->data[col->size], str);
                 break;
             }
             case STRUCTURE: {
@@ -212,12 +215,13 @@ int partition(COLUMN* col, int left, int rigth){
                 break;
             }
             case (STRING): {
-                char str[REALOC_SIZE];
-                convert_value(col,col->index[rigth], str, REALOC_SIZE);
-                char* pivot = *((char **) col->data[col->index[rigth]]);
+                char pivot[REALOC_SIZE], str[REALOC_SIZE];
+                convert_value(col,col->index[rigth], pivot, REALOC_SIZE);
                 i = (left - 1);
                 for (int j = left; j <= rigth-1; j++) {
-                    if (*((char **) col->data[col->index[j]]) < pivot){
+                    convert_value(col,col->index[j], str, REALOC_SIZE);
+                    // strcmp > 0 => str < pivot
+                    if (strcmp(str,pivot)>0){
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
@@ -290,12 +294,13 @@ int partition(COLUMN* col, int left, int rigth){
                 break;
             }
             case (STRING): {
-                char str[REALOC_SIZE];
-                convert_value(col,col->index[rigth], str, REALOC_SIZE);
-                char* pivot = *((char **) col->data[col->index[rigth]]);
+                char pivot[REALOC_SIZE], str[REALOC_SIZE];
+                convert_value(col,col->index[rigth], pivot, REALOC_SIZE);
                 i = (left - 1);
                 for (int j = left; j <= rigth; j++) {
-                    if (*((char **) col->data[col->index[j]]) > pivot){
+                    convert_value(col,col->index[j], str, REALOC_SIZE);
+                    // strcmp < 0 => str > pivot
+                    if (strcmp(str,pivot)<0){
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
