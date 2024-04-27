@@ -171,10 +171,10 @@ int partition(COLUMN* col, int left, int right){
                 for (int j = left; j <= right-1; j++) {
                     if (*((int *) col->data[col->index[j]]) < pivot){
                         i++;
-                        swap(&col->index[i], &col->index[j]);
+                        swap((int *) &col->index[i], (int *) &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[right]);
+                swap((int *) &col->index[i + 1], (int *) &col->index[right]);
                 break;
             }
             case (FLOAT): {
@@ -183,10 +183,10 @@ int partition(COLUMN* col, int left, int right){
                 for (int j = left; j <= right-1; j++) {
                     if (*((float *) col->data[col->index[j]]) < pivot){
                         i++;
-                        swap(&col->index[i], &col->index[j]);
+                        swap((int *) &col->index[i], (int *) &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[right]);
+                swap((int *) &col->index[i + 1], (int *) &col->index[right]);
                 break;
             }
             case (DOUBLE): {
@@ -195,10 +195,10 @@ int partition(COLUMN* col, int left, int right){
                 for (int j = left; j <= right-1; j++) {
                     if (*((double *) col->data[col->index[j]]) < pivot){
                         i++;
-                        swap(&col->index[i], &col->index[j]);
+                        swap((int *) &col->index[i], (int *) &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[right]);
+                swap((int *) &col->index[i + 1], (int *) &col->index[right]);
                 break;
             }
             case (CHAR): {
@@ -207,10 +207,10 @@ int partition(COLUMN* col, int left, int right){
                 for (int j = left; j <= right-1; j++) {
                     if (*((char *) col->data[col->index[j]]) < pivot){
                         i++;
-                        swap(&col->index[i], &col->index[j]);
+                        swap((int *) &col->index[i], (int *) &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[right]);
+                swap((int *) &col->index[i + 1], (int *) &col->index[right]);
                 break;
             }
             case (STRING): {
@@ -427,6 +427,7 @@ void sort_insertion_col(COLUMN* col){
     }
 }
 
+
 void sort(COLUMN* col, int sort_dir){
     switch(check_index(col)){
         case(0):{ //not sorted
@@ -436,7 +437,7 @@ void sort(COLUMN* col, int sort_dir){
                 col->index[i]=i;
             }
             col->sort_dir = sort_dir;
-            quickSort(col, 0, (col->size)-1);
+            quickSort(col, 0, col->size - 1);
             break;
         }
         case(-1):{ // almost sorted
@@ -458,7 +459,7 @@ void print_col_by_index(COLUMN* col){
     for(int i=0; i<col->size; i++){
         j=0;
         // to display the sorted col according to the index order
-        while(col->index[j]!=i) {
+        while(col->index[i]!=j) {
             j++;
         }
         if(col->data[j]==NULL){

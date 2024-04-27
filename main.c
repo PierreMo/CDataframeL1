@@ -6,15 +6,14 @@
 
 
 int main() {
-    /*char str[5];
     COLUMN *mycol = create_column(STRING, "My column");
     char a[]= "Bravo", b[] = "Tango", c[] = "Zulu", d[] = "Lima", e[]="Yuzu";
     insert_value(mycol, b);
     insert_value(mycol, c);
     insert_value(mycol, a);
-    insert_value(mycol, d);
+    insert_value(mycol, e);
     // should NULL always be at the end of the list?
-    insert_value(mycol, NULL);
+    insert_value(mycol, d);
     mycol->valid_index = 0;
     printf("Column content before sorting : \n");
     print_col(mycol);
@@ -32,10 +31,11 @@ int main() {
     printf("Column content after an add + sorting : \n");
     print_col_by_index(mycol);
     delete_column(&mycol);
-*/
-    //TEST with number
+
+    /*
+    //TEST with number ok
     COLUMN *mycol = create_column(INT, "My column");
-    int a = 1, b = 2,c = 5, d = 50, e = 0;
+    int a = 1, b = 2,c = 5, d = 7, e = 0;
     insert_value(mycol, &b);
     insert_value(mycol, &c);
     insert_value(mycol, &a);
@@ -47,8 +47,7 @@ int main() {
     print_col(mycol);
     sort(mycol, ASC);
     // if the direction of sorting change then valid_index = -1 ?
-    printf("\n");
-
+    printf("\n");;
     printf("Column content after sorting : \n");
     print_col_by_index(mycol);
 
@@ -58,9 +57,9 @@ int main() {
     printf("\n");
     printf("Column content after an add + sorting : \n");
     print_col_by_index(mycol);
-    delete_column(&mycol);
+    delete_column(&mycol);*/
 
-    /* TEST 1
+    /* part1
     printf("%s\n", mycol->title);
     for (int i = 0; i < mycol->size; i++) {
         printf("-%c-\n", *((char *)mycol->data[i])); //convert back

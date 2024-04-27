@@ -20,7 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="quicksort ok with string">
+    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="update (sorting pb)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
@@ -29,7 +29,6 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/main.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/column.c" beforeDir="false" afterPath="$PROJECT_DIR$/column.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/column.h" beforeDir="false" afterPath="$PROJECT_DIR$/column.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <list id="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" name="Changes by pierr" comment="">
@@ -56,72 +55,21 @@
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/column.h">
-      <ranges>
-        <range start1="35" end1="38" start2="35" end2="38" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
-        <range start1="110" end1="113" start2="110" end2="113" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="117" end1="122" start2="117" end2="122" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="123" end1="124" start2="123" end2="124" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="126" end1="130" start2="126" end2="130" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="131" end1="132" start2="131" end2="132" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="133" end1="133" start2="133" end2="138" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="134" end1="134" start2="139" end2="153" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-      </ranges>
-    </file>
     <file path="$PROJECT_DIR$/column.c">
       <ranges>
         <range start1="19" end1="19" start2="19" end2="20" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
-        <range start1="88" end1="89" start2="89" end2="89" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="92" end1="93" start2="92" end2="93" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="118" end1="118" start2="118" end2="119" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
-        <range start1="152" end1="153" start2="153" end2="154" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="157" end1="158" start2="158" end2="159" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="159" end1="160" start2="160" end2="161" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="165" end1="166" start2="166" end2="167" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="169" end1="170" start2="170" end2="171" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="171" end1="172" start2="172" end2="175" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="177" end1="178" start2="180" end2="181" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="181" end1="182" start2="184" end2="185" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="183" end1="184" start2="186" end2="187" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="189" end1="190" start2="192" end2="193" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="193" end1="194" start2="196" end2="197" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="195" end1="196" start2="198" end2="199" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="201" end1="202" start2="204" end2="205" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="205" end1="206" start2="208" end2="209" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="207" end1="208" start2="210" end2="211" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="213" end1="214" start2="216" end2="217" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="218" end1="219" start2="221" end2="222" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="220" end1="221" start2="223" end2="224" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="228" end1="229" start2="231" end2="232" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="236" end1="237" start2="239" end2="240" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="238" end1="239" start2="241" end2="242" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="244" end1="245" start2="247" end2="248" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="248" end1="249" start2="251" end2="252" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="250" end1="251" start2="253" end2="254" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="256" end1="257" start2="259" end2="260" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="260" end1="261" start2="263" end2="264" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="262" end1="263" start2="265" end2="266" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="268" end1="269" start2="271" end2="272" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="272" end1="273" start2="275" end2="276" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="274" end1="275" start2="277" end2="278" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="280" end1="281" start2="283" end2="284" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="284" end1="285" start2="287" end2="288" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="286" end1="287" start2="289" end2="290" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="292" end1="293" start2="295" end2="296" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="297" end1="298" start2="300" end2="301" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="299" end1="300" start2="302" end2="303" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="307" end1="308" start2="310" end2="311" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="315" end1="318" start2="318" end2="321" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="320" end1="321" start2="323" end2="324" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="361" end1="362" start2="364" end2="365" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="431" end1="437" start2="434" end2="436" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="438" end1="439" start2="437" end2="438" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="442" end1="442" start2="441" end2="442" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="443" end1="443" start2="443" end2="449" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="444" end1="445" start2="450" end2="454" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="446" end1="446" start2="455" end2="456" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="467" end1="467" start2="477" end2="484" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="468" end1="468" start2="485" end2="507" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="117" end1="117" start2="118" end2="119" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
+        <range start1="173" end1="174" start2="175" end2="176" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="176" end1="177" start2="178" end2="179" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="185" end1="186" start2="187" end2="188" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="188" end1="189" start2="190" end2="191" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="197" end1="198" start2="199" end2="200" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="200" end1="201" start2="202" end2="203" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="209" end1="210" start2="211" end2="212" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="212" end1="213" start2="214" end2="215" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="429" end1="429" start2="431" end2="432" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="438" end1="439" start2="441" end2="442" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="460" end1="461" start2="463" end2="464" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
       </ranges>
     </file>
   </component>
@@ -154,7 +102,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "part2",
-    "last_opened_file_path": "C:/Users/Aube/CLionProjects/CDataframe-part1",
+    "last_opened_file_path": "C:/Users/Aube/CLionProjects/CDataframeL1-0eb9c08b47ceb69848e813c9cdc397298018296e",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -205,7 +153,7 @@
       <workItem from="1713727475449" duration="290000" />
       <workItem from="1714115580885" duration="7263000" />
       <workItem from="1714137164633" duration="13105000" />
-      <workItem from="1714206574225" duration="12964000" />
+      <workItem from="1714206574225" duration="17173000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Test">
       <option name="closed" value="true" />
@@ -455,7 +403,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714223783421</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="update (sorting pb)">
+      <option name="closed" value="true" />
+      <created>1714236006083</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1714236006083</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -487,6 +443,7 @@
     <MESSAGE value="update" />
     <MESSAGE value="sort (2 ways) nb and char ok, string in test" />
     <MESSAGE value="quicksort ok with string" />
-    <option name="LAST_COMMIT_MESSAGE" value="quicksort ok with string" />
+    <MESSAGE value="update (sorting pb)" />
+    <option name="LAST_COMMIT_MESSAGE" value="update (sorting pb)" />
   </component>
 </project>
