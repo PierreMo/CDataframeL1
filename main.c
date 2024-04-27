@@ -26,7 +26,11 @@ int main() {
 
     insert_value(mycol,e);
     update_index(mycol);
+    printf("\n");
     sort(mycol, DESC);
+    for(int i=0; i<mycol->size;i++){
+        printf("%d\n",mycol->index[i]);
+    }
     printf("\n");
     printf("Column content after an add + sorting : \n");
     print_col_by_index(mycol);

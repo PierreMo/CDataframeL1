@@ -421,12 +421,11 @@ void sort_insertion_col(COLUMN* col){
                     }
                     break;
                 }
-                    col->index[j + 1] = tmp_index;
             }
+            col->index[j + 1] = tmp_index;
         }
     }
 }
-
 
 void sort(COLUMN* col, int sort_dir){
     switch(check_index(col)){
@@ -441,6 +440,7 @@ void sort(COLUMN* col, int sort_dir){
             break;
         }
         case(-1):{ // almost sorted
+            printf("size : %d\n", col->size);
             col->sort_dir = sort_dir;
             sort_insertion_col(col);
             break;
@@ -496,7 +496,7 @@ int check_index(COLUMN* col){
 }
 
 void update_index(COLUMN* col){
-    if (col->index[col->size] == col->index[col->max_size]) {
+    if (col->index[col->size] >= col->index[col->max_size]) {
         col->index = realloc(col->index, (col->max_size + REALOC_SIZE) * sizeof(void *));
     }
     col->index[col->size-1]=col->size-1;

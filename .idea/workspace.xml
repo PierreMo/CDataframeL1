@@ -20,13 +20,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="update (sorting pb)">
+    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CDataframeL1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CDataframeL1.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/column.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/column.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/main.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/column.c" beforeDir="false" afterPath="$PROJECT_DIR$/column.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
@@ -59,17 +54,11 @@
       <ranges>
         <range start1="19" end1="19" start2="19" end2="20" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
         <range start1="117" end1="117" start2="118" end2="119" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
-        <range start1="173" end1="174" start2="175" end2="176" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="176" end1="177" start2="178" end2="179" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="185" end1="186" start2="187" end2="188" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="188" end1="189" start2="190" end2="191" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="197" end1="198" start2="199" end2="200" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="200" end1="201" start2="202" end2="203" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="209" end1="210" start2="211" end2="212" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="212" end1="213" start2="214" end2="215" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="429" end1="429" start2="431" end2="432" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="438" end1="439" start2="441" end2="442" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
-        <range start1="460" end1="461" start2="463" end2="464" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="423" end1="424" start2="425" end2="425" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="425" end1="425" start2="426" end2="427" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="428" end1="429" start2="430" end2="430" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="443" end1="443" start2="444" end2="445" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="498" end1="499" start2="500" end2="501" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
       </ranges>
     </file>
   </component>
@@ -92,26 +81,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "CMake Application.CDataframeL1.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "part2",
-    "last_opened_file_path": "C:/Users/Aube/CLionProjects/CDataframeL1-0eb9c08b47ceb69848e813c9cdc397298018296e",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "structure.view.defaults.are.configured": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CMake Application.CDataframeL1.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;part2&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aube/CLionProjects/CDataframeL1-0eb9c08b47ceb69848e813c9cdc397298018296e&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="CDataframeL1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CDataframeL1" TARGET_NAME="CDataframeL1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CDataframeL1" RUN_TARGET_NAME="CDataframeL1">
       <method v="2">
@@ -153,7 +142,9 @@
       <workItem from="1713727475449" duration="290000" />
       <workItem from="1714115580885" duration="7263000" />
       <workItem from="1714137164633" duration="13105000" />
-      <workItem from="1714206574225" duration="17173000" />
+      <workItem from="1714206574225" duration="17208000" />
+      <workItem from="1714243750103" duration="26000" />
+      <workItem from="1714243793409" duration="2790000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Test">
       <option name="closed" value="true" />
@@ -411,7 +402,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714236006083</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="update">
+      <option name="closed" value="true" />
+      <created>1714242753187</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1714242753187</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -440,10 +439,10 @@
     <MESSAGE value="insert value" />
     <MESSAGE value="convert_value, delete_col,print_col" />
     <MESSAGE value="sort pour une colonne partiellement triée (tri par insertion)" />
-    <MESSAGE value="update" />
     <MESSAGE value="sort (2 ways) nb and char ok, string in test" />
     <MESSAGE value="quicksort ok with string" />
     <MESSAGE value="update (sorting pb)" />
-    <option name="LAST_COMMIT_MESSAGE" value="update (sorting pb)" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>
