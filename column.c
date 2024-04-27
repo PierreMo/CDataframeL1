@@ -86,11 +86,10 @@ void delete_column(COLUMN** col){
     free((*col)->data);
     free((*col)->title);
     *col=NULL;
-    free(col);
 }
 
 void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
-    if(i>=col->size){
+    if(i >= col->size){
         printf("This index is out of the list\n");
         return;
     }
@@ -150,75 +149,75 @@ void swap(int* p1, int* p2){
     *p2 = temp;
 }
 
-int partition(COLUMN* col, int left, int rigth){
+int partition(COLUMN* col, int left, int right){
     int i;
     if (col->sort_dir == ASC){ // ascending order
         switch(col->column_type) {
             case (UINT): {
-                unsigned int pivot = *((unsigned int*) col->data[col->index[rigth]]);
+                unsigned int pivot = *((unsigned int*) col->data[col->index[right]]);
                 i = (left - 1);
-                for (int j = left; j <= rigth-1; j++) {
+                for (int j = left; j <= right-1; j++) {
                     if (*((unsigned int *) col->data[col->index[j]]) < pivot){
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
             case (INT): {
-                int pivot = *((int *) col->data[col->index[rigth]]);
+                int pivot = *((int *) col->data[col->index[right]]);
                 i = (left - 1);
-                for (int j = left; j <= rigth-1; j++) {
+                for (int j = left; j <= right-1; j++) {
                     if (*((int *) col->data[col->index[j]]) < pivot){
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
             case (FLOAT): {
-                float pivot = *((float *) col->data[col->index[rigth]]);
+                float pivot = *((float *) col->data[col->index[right]]);
                 i = (left - 1);
-                for (int j = left; j <= rigth-1; j++) {
+                for (int j = left; j <= right-1; j++) {
                     if (*((float *) col->data[col->index[j]]) < pivot){
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
             case (DOUBLE): {
-                double pivot = *((double *) col->data[col->index[rigth]]);
+                double pivot = *((double *) col->data[col->index[right]]);
                 i = (left - 1);
-                for (int j = left; j <= rigth-1; j++) {
+                for (int j = left; j <= right-1; j++) {
                     if (*((double *) col->data[col->index[j]]) < pivot){
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
             case (CHAR): {
-                char pivot = *((char *) col->data[col->index[rigth]]);
+                char pivot = *((char *) col->data[col->index[right]]);
                 i = (left - 1);
-                for (int j = left; j <= rigth-1; j++) {
+                for (int j = left; j <= right-1; j++) {
                     if (*((char *) col->data[col->index[j]]) < pivot){
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
             case (STRING): {
                 char pivot[REALOC_SIZE], str[REALOC_SIZE];
-                convert_value(col,col->index[rigth], pivot, REALOC_SIZE);
+                convert_value(col,col->index[right], pivot, REALOC_SIZE);
                 i = (left - 1);
-                for (int j = left; j <= rigth-1; j++) {
+                for (int j = left; j <= right-1; j++) {
                     convert_value(col,col->index[j], str, REALOC_SIZE);
                     // strcmp > 0 => str < pivot
                     if (strcmp(str,pivot)>0){
@@ -226,7 +225,7 @@ int partition(COLUMN* col, int left, int rigth){
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
         }
@@ -234,70 +233,70 @@ int partition(COLUMN* col, int left, int rigth){
     else{// decreasing order
         switch(col->column_type) {
             case (INT): {
-                int pivot = *((int *) col->data[col->index[rigth]]);
+                int pivot = *((int *) col->data[col->index[right]]);
                 i = (left - 1);
-                for (int j = left; j <= rigth; j++) {
+                for (int j = left; j <= right; j++) {
                     if (*((int *) col->data[col->index[j]]) > pivot) {
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
             case (FLOAT): {
-                float pivot = *((float *) col->data[col->index[rigth]]);
+                float pivot = *((float *) col->data[col->index[right]]);
                 i = (left - 1);
-                for (int j = left; j <= rigth; j++) {
+                for (int j = left; j <= right; j++) {
                     if (*((float *) col->data[col->index[j]]) > pivot) {
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
             case (UINT): {
-                unsigned int pivot = *((unsigned int*) col->data[col->index[rigth]]);
+                unsigned int pivot = *((unsigned int*) col->data[col->index[right]]);
                 i = (left - 1);
-                for (int j = left; j <= rigth; j++) {
+                for (int j = left; j <= right; j++) {
                     if (*((unsigned int*) col->data[col->index[j]]) > pivot) {
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
             case (DOUBLE): {
-                double pivot = *((double *) col->data[col->index[rigth]]);
+                double pivot = *((double *) col->data[col->index[right]]);
                 i = (left - 1);
-                for (int j = left; j <= rigth; j++) {
+                for (int j = left; j <= right; j++) {
                     if (*((double *) col->data[col->index[j]]) > pivot) {
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
             case (CHAR): {
-                char pivot = *((char *) col->data[col->index[rigth]]);
+                char pivot = *((char *) col->data[col->index[right]]);
                 i = (left - 1);
-                for (int j = left; j <= rigth; j++) {
+                for (int j = left; j <= right; j++) {
                     if (*((char *) col->data[col->index[j]]) > pivot){
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
             case (STRING): {
                 char pivot[REALOC_SIZE], str[REALOC_SIZE];
-                convert_value(col,col->index[rigth], pivot, REALOC_SIZE);
+                convert_value(col,col->index[right], pivot, REALOC_SIZE);
                 i = (left - 1);
-                for (int j = left; j <= rigth; j++) {
+                for (int j = left; j <= right; j++) {
                     convert_value(col,col->index[j], str, REALOC_SIZE);
                     // strcmp < 0 => str > pivot
                     if (strcmp(str,pivot)<0){
@@ -305,7 +304,7 @@ int partition(COLUMN* col, int left, int rigth){
                         swap(&col->index[i], &col->index[j]);
                     }
                 }
-                swap(&col->index[i + 1], &col->index[rigth]);
+                swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
         }
@@ -313,12 +312,12 @@ int partition(COLUMN* col, int left, int rigth){
     return (i + 1);
 }
 
-void quickSort(COLUMN* col, int left, int rigth){
-    if (left < rigth) {
-        int pi = partition(col, left, rigth);
+void quickSort(COLUMN* col, int left, int right){
+    if (left < right) {
+        int pi = partition(col, left, right);
         // recursion recall
         quickSort(col, left, pi - 1);
-        quickSort(col, pi + 1, rigth);
+        quickSort(col, pi + 1, right);
     }
 }
 
@@ -359,7 +358,7 @@ void sort_insertion_col(COLUMN* col){
                     break;
                 }
                 case(CHAR):{
-                    while (j >= 0 && *((char **)col->data[col->index[j]])>*((char **)col->data[tmp_index])) {
+                    while (j >= 0 && *((char **)col->data[col->index[j]])>*((char **)col->data[tmp_index])){
                         col->index[j + 1] = col->index[j];
                         j--;
                     }
@@ -429,21 +428,28 @@ void sort_insertion_col(COLUMN* col){
 }
 
 void sort(COLUMN* col, int sort_dir){
-    col->sort_dir = sort_dir;
-    if (col->valid_index !=1){
-        if(col->valid_index == -1){//partially sorted
-            sort_insertion_col(col);
-        }
-        else{ //not sorted
+    switch(check_index(col)){
+        case(0):{ //not sorted
             //initialize index list
-            col->index = (unsigned long long int*) malloc (col->size *sizeof(unsigned long long int));
+            col->index = (unsigned long long int*) malloc (col->max_size *sizeof(unsigned long long int));
             for(int i=0; i<col->size; i++) {
                 col->index[i]=i;
             }
+            col->sort_dir = sort_dir;
             quickSort(col, 0, (col->size)-1);
+            break;
         }
-        col->valid_index = 1;
+        case(-1):{ // almost sorted
+            col->sort_dir = sort_dir;
+            sort_insertion_col(col);
+            break;
+        }
+        case(1):{ // sorted
+            printf("The column %s is already sorted.", col->title);
+            break;
+        }
     }
+    col->valid_index = 1;
 }
 
 void print_col_by_index(COLUMN* col){
@@ -465,3 +471,33 @@ void print_col_by_index(COLUMN* col){
     }
 }
 
+void erase_index(COLUMN* col){
+    for(int i=0; i<col->size; i++){
+        free((unsigned long long int*)col->index[i]);
+    }
+    col->index = NULL;
+    col->valid_index = 0;
+}
+
+int check_index(COLUMN* col){
+    if(col->valid_index == 0){ //no index
+        return 0;
+    }
+    else{
+        //invalid index (index but not sorted)
+        if(col->valid_index ==-1){
+            return -1;
+        }
+        else{ // valid index
+            return 1;
+        }
+    }
+}
+
+void update_index(COLUMN* col){
+    if (col->index[col->size] == col->index[col->max_size]) {
+        col->index = realloc(col->index, (col->max_size + REALOC_SIZE) * sizeof(void *));
+    }
+    col->index[col->size-1]=col->size-1;
+    col->valid_index = -1;
+}

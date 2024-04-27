@@ -6,20 +6,57 @@
 
 
 int main() {
-    char str[5];
+    /*char str[5];
     COLUMN *mycol = create_column(STRING, "My column");
-    char a[]= "Bravo", b[] = "Tango", c[] = "Zulu", d[] = "Lima";
-    // when the string is bigger than 4 character there is
-    // a special character
+    char a[]= "Bravo", b[] = "Tango", c[] = "Zulu", d[] = "Lima", e[]="Yuzu";
     insert_value(mycol, b);
     insert_value(mycol, c);
     insert_value(mycol, a);
     insert_value(mycol, d);
+    // should NULL always be at the end of the list?
+    insert_value(mycol, NULL);
     mycol->valid_index = 0;
     printf("Column content before sorting : \n");
     print_col(mycol);
-    sort(mycol,ASC);
+    sort(mycol, DESC);
+    // if the direction of sorting change then valid_index = -1 ?
+    printf("\n");
+
     printf("Column content after sorting : \n");
+    print_col_by_index(mycol);
+
+    insert_value(mycol,e);
+    update_index(mycol);
+    sort(mycol, DESC);
+    printf("\n");
+    printf("Column content after an add + sorting : \n");
+    print_col_by_index(mycol);
+    delete_column(&mycol);
+*/
+    //TEST with number
+    COLUMN *mycol = create_column(INT, "My column");
+    int a = 1, b = 2,c = 5, d = 50, e = 0;
+    insert_value(mycol, &b);
+    insert_value(mycol, &c);
+    insert_value(mycol, &a);
+    insert_value(mycol, &d);
+    // should NULL always be at the end of the list?
+    //insert_value(mycol, NULL);
+    mycol->valid_index = 0;
+    printf("Column content before sorting : \n");
+    print_col(mycol);
+    sort(mycol, ASC);
+    // if the direction of sorting change then valid_index = -1 ?
+    printf("\n");
+
+    printf("Column content after sorting : \n");
+    print_col_by_index(mycol);
+
+    insert_value(mycol,&e);
+    update_index(mycol);
+    sort(mycol, ASC);
+    printf("\n");
+    printf("Column content after an add + sorting : \n");
     print_col_by_index(mycol);
     delete_column(&mycol);
 

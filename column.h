@@ -108,29 +108,48 @@ void delete_value(COLUMN *col, int index);
 void sort_insertion_col(COLUMN* col);
 
 /**
- * @brief:
- * @param p1
- * @param p2
+ * @brief: swap the position of to pointers in a list
+ * @param1: pointer (on a value in the index list)
+ * @param2: pointer (on a value in the index list)
  */
 void swap(int* p1, int* p2);
 
 /**
- * @brief:
- * @param arr
- * @param low
- * @param high
- * @return
+ * @brief: partition the column to sort the index list
+ * @param1: pointer on the column to sort
+ * @param2: integer at the left of the index list
+ * @param3: integer at the right of the index list
+ * @return: the final position of the pivot
  */
-int partition(COLUMN* col, int low, int high);
+int partition(COLUMN* col, int left, int right);
 
 /**
- * @brief:
- * @param arr
- * @param low
- * @param high
+ * @brief: sort index list according to the linked column by recursive call
+ * @param1: pointer on the column
+ * @param2: integer at the left of the index list
+ * @param3: integer at the right of the index list
  */
-void quickSort(COLUMN* col, int low, int high);
+void quickSort(COLUMN* col, int left, int right);
 
+/**
+* @brief: Remove the index of a column
+* @param1: Pointer to the column
+*/
+void erase_index(COLUMN *col);
 
+/**
+* @brief: Check if an index is correct
+* @param1: Pointer to the column
+* @return: 0: index not existing,
+          -1: the index exists but invalid,
+           1: the index is correct
+*/
+int check_index(COLUMN *col);
+
+/**
+* @brief: Update the index after an add of value
+* @param1: Pointer to the column
+*/
+void update_index(COLUMN *col);
 
 #endif //CDATAFRAMEL1_COLUMN_H
