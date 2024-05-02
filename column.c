@@ -12,11 +12,13 @@ COLUMN *create_column(ENUM_TYPE type,char* title){
     COLUMN *column = malloc (sizeof(COLUMN));
     if(column!=NULL) {
         column->data = NULL;
+        column->title = (char*) malloc(sizeof(char*));
         column->title = title;
         column->size = 0;
         column->max_size = 0;
         column->column_type = type;
         column->index = NULL;
+        column->valid_index = 0;
     }
     return column;
 }
@@ -115,6 +117,7 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
             break;
         }
         case STRUCTURE:{
+            // here we have to do a switch for the different structures
             //snprintf(str, size, "%s", *((void**)col->data[i]));
             break;
         }
@@ -131,6 +134,7 @@ void delete_value(COLUMN *col, int index) {
 
 void print_col(COLUMN* col){
     char str[REALOC_SIZE];//buffer
+    printf("%s\n", col->title);
     for(int i=0; i<col->size;i++){
         if(col->data[i]==NULL){
             printf("[%d] NULL\n",i);
@@ -440,7 +444,6 @@ void sort(COLUMN* col, int sort_dir){
             break;
         }
         case(-1):{ // almost sorted
-            printf("size : %d\n", col->size);
             col->sort_dir = sort_dir;
             sort_insertion_col(col);
             break;
@@ -456,6 +459,7 @@ void sort(COLUMN* col, int sort_dir){
 void print_col_by_index(COLUMN* col){
     char str[REALOC_SIZE];
     int j;
+    printf("%s\n", col->title);
     for(int i=0; i<col->size; i++){
         j=0;
         // to display the sorted col according to the index order
@@ -496,7 +500,7 @@ int check_index(COLUMN* col){
 }
 
 void update_index(COLUMN* col){
-    if (col->index[col->size] >= col->index[col->max_size]) {
+    if (col->index[col->size-1] == col->index[col->max_size]) {
         col->index = realloc(col->index, (col->max_size + REALOC_SIZE) * sizeof(void *));
     }
     col->index[col->size-1]=col->size-1;
