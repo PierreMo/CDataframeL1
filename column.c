@@ -370,14 +370,14 @@ void sort_insertion_col(COLUMN* col){
                 }
                 case(STRING):{
                     char str1[REALOC_SIZE], str2[REALOC_SIZE];
-                    convert_value(col, j, str1, REALOC_SIZE);
-                    convert_value(col, tmp_index, str2, REALOC_SIZE);
+                    convert_value(col, col->index[j], str1, REALOC_SIZE);
+                    convert_value(col, col->index[tmp_index], str2, REALOC_SIZE);
                     // strcmp <0 : str1>str2, strcmp>0 : str1<str2, else equal
                     while (j >= 0 && strcmp(str1,str2)<0) {
                         col->index[j + 1] = col->index[j];
                         j--;
                         if (j>=0){
-                            convert_value(col, j, str1, REALOC_SIZE);
+                            convert_value(col, col->index[j], str1, REALOC_SIZE);
                         }
                     }
                     break;
@@ -424,14 +424,14 @@ void sort_insertion_col(COLUMN* col){
                 }
                 case (STRING): {
                     char str1[REALOC_SIZE], str2[REALOC_SIZE];
-                    convert_value(col, j, str1, REALOC_SIZE);
-                    convert_value(col, tmp_index, str2, REALOC_SIZE);
+                    convert_value(col, col->index[j], str1, REALOC_SIZE);
+                    convert_value(col, col->index[tmp_index], str2, REALOC_SIZE);
                     // strcmp <0 : str1>str2, strcmp>0 : str1<str2, else equal
                     while (j >= 0 && strcmp(str1, str2) > 0) {
                         col->index[j + 1] = col->index[j];
                         j--;
                         if (j>=0){
-                            convert_value(col, j, str1, REALOC_SIZE);
+                            convert_value(col, col->index[j], str1, REALOC_SIZE);
                         }
                     }
                     break;
@@ -555,5 +555,4 @@ int search_value_in_column(COLUMN *col, void *val){
             return 1;
         }
     }
-
 }

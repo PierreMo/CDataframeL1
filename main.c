@@ -6,6 +6,8 @@
 
 
 int main() {
+
+    // should NULL always be at the end of the list?
     /*
     //TEST WITH STRING
     COLUMN *mycol = create_column(STRING, "My column");
@@ -16,7 +18,6 @@ int main() {
     insert_value(mycol, b);
     insert_value(mycol, c);
     insert_value(mycol, a);
-    // should NULL always be at the end of the list?
     insert_value(mycol, d);
     mycol->valid_index = 0;
     printf("Column content before sorting : \n");
@@ -69,6 +70,7 @@ int main() {
     int r = 100;
     printf(" found -> 1 ? - %d\n", search_value_in_column(mycol, &d));
     printf("not found -> 0 ?  %d", search_value_in_column(mycol, &r));
+
     /* part1
     printf("%s\n", mycol->title);
     for (int i = 0; i < mycol->size; i++) {
