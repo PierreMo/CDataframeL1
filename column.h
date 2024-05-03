@@ -44,6 +44,23 @@ struct column {
 };
 typedef struct column COLUMN;
 
+typedef struct{
+    int month;
+    int day;
+    int year;
+}DATE;
+
+typedef struct{
+    char name[30];
+    char firstname[30];
+    DATE dateBirth;
+}PERSON;
+
+typedef struct{
+    int x;
+    int y;
+}COORD;
+
 /**
 * Create a column
 * @param1 : Column type
