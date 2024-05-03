@@ -51,7 +51,7 @@ int main() {
     // should NULL always be at the end of the list?
     //insert_value(mycol, NULL);
     mycol->valid_index = 0;
-    printf(" not sorted -> -1 ? : %d\n", search_value_in_column(mycol, &d));
+    printf("not sorted (YES:-1) ? : %d\n", search_value_in_column(mycol, &d));
     printf("Column content before sorting : \n");
     print_col(mycol);
     sort(mycol, ASC);
@@ -66,10 +66,10 @@ int main() {
     printf("\n");
     printf("Column content after an add + sorting : \n");
     print_col_by_index(mycol);
-    delete_column(&mycol);
+
     int r = 100;
-    printf(" found -> 1 ? - %d\n", search_value_in_column(mycol, &d));
-    printf("not found -> 0 ?  %d", search_value_in_column(mycol, &r));
+    printf("\nfound 7 in col (YES : 1) ? : %d\n", search_value_in_column(mycol, &d));
+    printf("not found 100 in col (NO: 0) ? : %d", search_value_in_column(mycol, &r));
 
     /* part1
     printf("%s\n", mycol->title);

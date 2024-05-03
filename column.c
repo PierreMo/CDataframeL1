@@ -519,8 +519,8 @@ void update_index(COLUMN* col){
 }
 
 int search_value_in_column(COLUMN *col, void *val){
-    int pos;
-    if(col == NULL || col->valid_index != 1){ // the column is not sorted
+    int in = -1;
+    if(col->valid_index != 1){ // the column is not sorted
         return -1;
     }
     else{
@@ -531,28 +531,30 @@ int search_value_in_column(COLUMN *col, void *val){
                 do {
                     // compute the middle of the list;
                     m = (h + l) /2 ;
-                    if(val == col->data[m]) {
-                        stop =1 ; pos = m;
+                    if(*(int*)val == *(int*)col->data[col->index[m]]) {
+                        stop = 1 ;
+                        in = 1;
                     }
                     else {
-                        if((int*)val > (int*)col->data[col->index[m]]) {
+                        if(*(int*)val > *(int*)col->data[col->index[m]]) {
                             l = m + 1; // go to the top half
                         }
                         else{
                             h = m -1 ; // go to the lower half
                         }
                         if(l > h) {
-                            stop =1 ; pos = -1;}
+                            stop = 1 ;
+                        }
                     }
                 }while(stop != 1);
                 break;
             }
         }
-        if(pos == -1){ // value not found
-            return 0;
-        }
-        else{ // value found
+        if(in != -1){ // value found
             return 1;
+        }
+        else{ // value not found
+            return 0;
         }
     }
 }
