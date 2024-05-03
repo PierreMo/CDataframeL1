@@ -6,12 +6,16 @@
 
 
 int main() {
+    /*
+    //TEST WITH STRING
     COLUMN *mycol = create_column(STRING, "My column");
     char a[]= "Bravo", b[] = "Tango", c[] = "Zulu", d[] = "Lima", e[]="Yuzu";
+
+    //COLUMN *mycol = create_column(CHAR, "My column");
+    //char a = 'A', b = 'Z', c= 'Y', d = 'E', e='L';
     insert_value(mycol, b);
     insert_value(mycol, c);
     insert_value(mycol, a);
-    insert_value(mycol, e);
     // should NULL always be at the end of the list?
     insert_value(mycol, d);
     mycol->valid_index = 0;
@@ -26,20 +30,19 @@ int main() {
 
     insert_value(mycol,e);
     update_index(mycol);
-    printf("\n");
     sort(mycol, DESC);
-    /*for(int i=0; i<mycol->size;i++){
-        printf("%d\n",mycol->index[i]);
-    }*/
+    //for(int i=0; i<mycol->size;i++){
+        //printf("%d\n",mycol->index[i]);
+    //}
     printf("\n");
     printf("Column content after an add + sorting : \n");
     print_col_by_index(mycol);
-    delete_column(&mycol);
+    delete_column(&mycol);*/
 
-    /*
+
     //TEST with number ok
     COLUMN *mycol = create_column(INT, "My column");
-    int a = 1, b = 2,c = 5, d = 7, e = 0;
+    int a = 1, b = 2,c = 5, d = 7, e = 4;
     insert_value(mycol, &b);
     insert_value(mycol, &c);
     insert_value(mycol, &a);
@@ -47,6 +50,7 @@ int main() {
     // should NULL always be at the end of the list?
     //insert_value(mycol, NULL);
     mycol->valid_index = 0;
+    printf(" not sorted -> -1 ? : %d\n", search_value_in_column(mycol, &d));
     printf("Column content before sorting : \n");
     print_col(mycol);
     sort(mycol, ASC);
@@ -61,8 +65,10 @@ int main() {
     printf("\n");
     printf("Column content after an add + sorting : \n");
     print_col_by_index(mycol);
-    delete_column(&mycol);*/
-
+    delete_column(&mycol);
+    int r = 100;
+    printf(" found -> 1 ? - %d\n", search_value_in_column(mycol, &d));
+    printf("not found -> 0 ?  %d", search_value_in_column(mycol, &r));
     /* part1
     printf("%s\n", mycol->title);
     for (int i = 0; i < mycol->size; i++) {

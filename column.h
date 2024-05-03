@@ -152,4 +152,14 @@ int check_index(COLUMN *col);
 */
 void update_index(COLUMN *col);
 
+/**
+* @brief: Check if a value exists in a column
+* @param1: Pointer to the column
+* @param2: Pointer to the value to search for
+* @return: -1: column not sorted,
+0: value not found
+1: value found
+*/
+int search_value_in_column(COLUMN *col, void *val);
+
 #endif //CDATAFRAMEL1_COLUMN_H

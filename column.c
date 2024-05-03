@@ -376,7 +376,9 @@ void sort_insertion_col(COLUMN* col){
                     while (j >= 0 && strcmp(str1,str2)<0) {
                         col->index[j + 1] = col->index[j];
                         j--;
-                        convert_value(col, j, str1, REALOC_SIZE);
+                        if (j>=0){
+                            convert_value(col, j, str1, REALOC_SIZE);
+                        }
                     }
                     break;
                 }
@@ -413,7 +415,14 @@ void sort_insertion_col(COLUMN* col){
                         j--;
                     }
                 }
-                case (CHAR): {
+                case(CHAR):{
+                    while (j >= 0 && *((char **)col->data[col->index[j]]) < *((char **)col->data[tmp_index])){
+                        col->index[j + 1] = col->index[j];
+                        j--;
+                    }
+                    break;
+                }
+                case (STRING): {
                     char str1[REALOC_SIZE], str2[REALOC_SIZE];
                     convert_value(col, j, str1, REALOC_SIZE);
                     convert_value(col, tmp_index, str2, REALOC_SIZE);
@@ -421,7 +430,9 @@ void sort_insertion_col(COLUMN* col){
                     while (j >= 0 && strcmp(str1, str2) > 0) {
                         col->index[j + 1] = col->index[j];
                         j--;
-                        convert_value(col, j, str1, REALOC_SIZE);
+                        if (j>=0){
+                            convert_value(col, j, str1, REALOC_SIZE);
+                        }
                     }
                     break;
                 }
@@ -505,4 +516,44 @@ void update_index(COLUMN* col){
     }
     col->index[col->size-1]=col->size-1;
     col->valid_index = -1;
+}
+
+int search_value_in_column(COLUMN *col, void *val){
+    int pos;
+    if(col == NULL || col->valid_index != 1){ // the column is not sorted
+        return -1;
+    }
+    else{
+        switch (col->column_type) {
+            case(INT):{
+                int m, l = 0, stop;
+                int h = col->size - 1;
+                do {
+                    // compute the middle of the list;
+                    m = (h + l) /2 ;
+                    if(val == col->data[m]) {
+                        stop =1 ; pos = m;
+                    }
+                    else {
+                        if((int*)val > (int*)col->data[col->index[m]]) {
+                            l = m + 1; // go to the top half
+                        }
+                        else{
+                            h = m -1 ; // go to the lower half
+                        }
+                        if(l > h) {
+                            stop =1 ; pos = -1;}
+                    }
+                }while(stop != 1);
+                break;
+            }
+        }
+        if(pos == -1){ // value not found
+            return 0;
+        }
+        else{ // value found
+            return 1;
+        }
+    }
+
 }
