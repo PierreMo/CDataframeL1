@@ -519,15 +519,16 @@ void update_index(COLUMN* col){
 }
 
 int search_value_in_column(COLUMN *col, void *val){
-    int in = -1;
     if(col->valid_index != 1){ // the column is not sorted
         return -1;
     }
     else{
+        int in = -1;
+        int m, l = 0, stop;
+        int h = col->size - 1;
         switch (col->column_type) {
             case(INT):{
-                int m, l = 0, stop;
-                int h = col->size - 1;
+
                 do {
                     // compute the middle of the list;
                     m = (h + l) /2 ;
@@ -549,7 +550,121 @@ int search_value_in_column(COLUMN *col, void *val){
                 }while(stop != 1);
                 break;
             }
+            case(FLOAT):{
+                do {
+                    // compute the middle of the list;
+                    m = (h + l) /2 ;
+                    if(*(float*)val == *(float*)col->data[col->index[m]]) {
+                        stop = 1 ;
+                        in = 1;
+                    }
+                    else {
+                        if(*(float*)val > *(float*)col->data[col->index[m]]) {
+                            l = m + 1; // go to the top half
+                        }
+                        else{
+                            h = m -1 ; // go to the lower half
+                        }
+                        if(l > h) {
+                            stop = 1 ;
+                        }
+                    }
+                }while(stop != 1);
+                break;
+            }
+            case(DOUBLE):{
+                do {
+                    // compute the middle of the list;
+                    m = (h + l) /2 ;
+                    if(*(double*)val == *(double*)col->data[col->index[m]]) {
+                        stop = 1 ;
+                        in = 1;
+                    }
+                    else {
+                        if(*(double*)val > *(double*)col->data[col->index[m]]) {
+                            l = m + 1; // go to the top half
+                        }
+                        else{
+                            h = m -1 ; // go to the lower half
+                        }
+                        if(l > h) {
+                            stop = 1 ;
+                        }
+                    }
+                }while(stop != 1);
+                break;
+            }
+            case(UINT):{
+                do {
+                    // compute the middle of the list;
+                    m = (h + l) /2 ;
+                    if(*(unsigned int*)val == *(unsigned int*)col->data[col->index[m]]) {
+                        stop = 1 ;
+                        in = 1;
+                    }
+                    else {
+                        if(*(unsigned int*)val > *(unsigned int*)col->data[col->index[m]]) {
+                            l = m + 1; // go to the top half
+                        }
+                        else{
+                            h = m -1 ; // go to the lower half
+                        }
+                        if(l > h) {
+                            stop = 1 ;
+                        }
+                    }
+                }while(stop != 1);
+                break;
+            }
+            case(CHAR):{
+                do {
+                    // compute the middle of the list;
+                    m = (h + l) /2 ;
+                    if(*(char **)val == *(char**)col->data[col->index[m]]) {
+                        stop = 1 ;
+                        in = 1;
+                    }
+                    else {
+                        if(*(char **)val > *(char **)col->data[col->index[m]]) {
+                            l = m + 1; // go to the top half
+                        }
+                        else{
+                            h = m -1 ; // go to the lower half
+                        }
+                        if(l > h) {
+                            stop = 1 ;
+                        }
+                    }
+                }while(stop != 1);
+                break;
+            }
+            case(STRING):{/* use strcmp and convert_value
+                do {
+                    // compute the middle of the list;
+                    m = (h + l) /2 ;
+                    if(*(unsigned int*)val == *(unsigned int*)col->data[col->index[m]]) {
+                        stop = 1 ;
+                        in = 1;
+                    }
+                    else {
+                        if(*(unsigned int*)val > *(unsigned int*)col->data[col->index[m]]) {
+                            l = m + 1; // go to the top half
+                        }
+                        else{
+                            h = m -1 ; // go to the lower half
+                        }
+                        if(l > h) {
+                            stop = 1 ;
+                        }
+                    }
+                }while(stop != 1);*/
+                break;
+            }
+            case(STRUCTURE):{
+                break;
+            }
         }
+
         if(in != -1){ // value found
             return 1;
         }

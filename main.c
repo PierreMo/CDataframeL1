@@ -7,7 +7,6 @@
 
 int main() {
 
-    // should NULL always be at the end of the list?
     /*
     //TEST WITH STRING
     COLUMN *mycol = create_column(STRING, "My column");
