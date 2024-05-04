@@ -20,14 +20,27 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="structures">
+    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="search value">
+      <change afterPath="$PROJECT_DIR$/list.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/list.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sort.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sort.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdataframe.c" beforeDir="false" afterPath="$PROJECT_DIR$/cdataframe.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdataframe.h" beforeDir="false" afterPath="$PROJECT_DIR$/cdataframe.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-e19760894f3ffde80efa.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-CDataframeL1-Debug-baade09de0ff3d81345d.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CDataframeL1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CDataframeL1.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/cdataframe.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/cdataframe.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/column.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/column.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/main.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/column.c" beforeDir="false" afterPath="$PROJECT_DIR$/column.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/column.h" beforeDir="false" afterPath="$PROJECT_DIR$/column.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
@@ -58,7 +71,8 @@
     <file path="$PROJECT_DIR$/column.h">
       <ranges>
         <range start1="35" end1="38" start2="35" end2="38" changelist="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" />
-        <range start1="57" end1="62" start2="57" end2="57" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="94" end1="101" start2="94" end2="94" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
+        <range start1="114" end1="144" start2="107" end2="107" changelist="38b0c17d-8f80-433c-ae69-06a800faf3c0" />
       </ranges>
     </file>
   </component>
@@ -102,6 +116,11 @@
   }
 }]]></component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CDataframeL1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CDataframeL1" TARGET_NAME="CDataframeL1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CDataframeL1" RUN_TARGET_NAME="CDataframeL1">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -149,7 +168,7 @@
       <workItem from="1714720535009" duration="21000" />
       <workItem from="1714721009873" duration="8000" />
       <workItem from="1714721072412" duration="1199000" />
-      <workItem from="1714744984769" duration="13133000" />
+      <workItem from="1714744984769" duration="20057000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Test">
       <option name="closed" value="true" />
@@ -471,7 +490,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714771346591</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="search value">
+      <option name="closed" value="true" />
+      <created>1714815577971</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1714815577971</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -483,7 +510,6 @@
     <isAutomaticReloadCMake value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test2" />
     <MESSAGE value="add value fct" />
     <MESSAGE value="Changes by pierr" />
     <MESSAGE value="Display part done" />
@@ -508,6 +534,7 @@
     <MESSAGE value="search val ok for INT" />
     <MESSAGE value="search val" />
     <MESSAGE value="structures" />
-    <option name="LAST_COMMIT_MESSAGE" value="structures" />
+    <MESSAGE value="search value" />
+    <option name="LAST_COMMIT_MESSAGE" value="search value" />
   </component>
 </project>

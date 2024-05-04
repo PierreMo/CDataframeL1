@@ -94,13 +94,6 @@ void convert_value(COLUMN *col, unsigned long long int i, char *str, int size);
 void print_col(COLUMN* col);
 
 /**
-* @brief: Sort a column according to a given order
-* @param1: Pointer to the column to sort
-* @param2: Sort type (ASC or DESC)
-*/
-void sort(COLUMN* col, int sort_dir);
-
-/**
 * @brief: Display the content of a sorted column
 * @param1: Pointer to a column
 */
@@ -112,36 +105,6 @@ void print_col_by_index(COLUMN *col);
 *@param2 : intege
 */
 void delete_value(COLUMN *col, int index);
-
-/**
- * @brief: sort a column by insertion
- * @param1: pointer to the column to sort
- */
-void sort_insertion_col(COLUMN* col);
-
-/**
- * @brief: swap the position of to pointers in a list
- * @param1: pointer (on a value in the index list)
- * @param2: pointer (on a value in the index list)
- */
-void swap(int* p1, int* p2);
-
-/**
- * @brief: partition the column to sort the index list
- * @param1: pointer on the column to sort
- * @param2: integer at the left of the index list
- * @param3: integer at the right of the index list
- * @return: the final position of the pivot
- */
-int partition(COLUMN* col, int left, int right);
-
-/**
- * @brief: sort index list according to the linked column by recursive call
- * @param1: pointer on the column
- * @param2: integer at the left of the index list
- * @param3: integer at the right of the index list
- */
-void quickSort(COLUMN* col, int left, int right);
 
 /**
 * @brief: Remove the index of a column

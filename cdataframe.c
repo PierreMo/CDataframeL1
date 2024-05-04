@@ -4,6 +4,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "cdataframe.h"
+#include "list.h"
+#include "column.h"
+
+void choose_title(char* title){
+    printf("Choose the title of the column:");
+    scanf("%s",title);
+}
+CDATAFRAME *create_cdataframe(ENUM_TYPE *cdftype, int size){
+    CDATAFRAME * dataframe = (CDATAFRAME *) lst_create_list();
+    for(int i = 0; i<size; i++){
+        char* title = (char *)malloc(100*sizeof(char));
+        choose_title(title);
+        COLUMN* col = (COLUMN *) create_column(cdftype[i], title);
+        lnode* ptr_col = lst_create_lnode(col);
+        lst_insert_tail((list *) dataframe, ptr_col);
+    }
+    dataframe->size = size;
+    return dataframe;
+}
+
+void delete_cdataframe(CDATAFRAME **cdf){
+    LNODE* tmp_node = (*cdf)->head;
+    int count = 0;
+    while(count <= (*cdf)->size){
+        delete_column(tmp_node->data);
+        tmp_node = tmp_node->next;
+        count++;
+    }
+    lst_delete_list((list *) *cdf);
+}
 /*
 void choose_title_not_inside(DATAFRAME* dataframe, char* title){
     do{

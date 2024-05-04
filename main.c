@@ -1,12 +1,18 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "column.h"
 #include "cdataframe.h"
+#include "sort.h"
+#include "list.h"
 
 
 int main() {
 
+    ENUM_TYPE cdftype [] = {INT,CHAR,INT};
+    CDATAFRAME *cdf = create_cdataframe(cdftype, 3);
+    delete_cdataframe(&cdf);
+
+    /*
     //TEST WITH STRING
     COLUMN *mycol = create_column(STRING, "My column");
     char a[]= "Bravo", b[] = "Tango", c[] = "Zulu", d[] = "Lima", e[]="Yuzu";
@@ -42,6 +48,8 @@ int main() {
     printf("'Bravo' in col (YES : 1) ? : %d\n", search_value_in_column(mycol, &a));
     printf("'OK' in col (NO: 0) ? : %d", search_value_in_column(mycol, &r));
     delete_column(&mycol);
+    */
+
     /*
     //TEST with number ok
     COLUMN *mycol = create_column(INT, "My column");

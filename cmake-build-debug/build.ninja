@@ -70,6 +70,20 @@ build CMakeFiles/CDataframeL1.dir/main.c.obj: C_COMPILER__CDataframeL1_unscanned
   OBJECT_DIR = CMakeFiles\CDataframeL1.dir
   OBJECT_FILE_DIR = CMakeFiles\CDataframeL1.dir
 
+build CMakeFiles/CDataframeL1.dir/list.c.obj: C_COMPILER__CDataframeL1_unscanned_Debug C$:/Users/Aube/CLionProjects/CDataframeL1/list.c || cmake_object_order_depends_target_CDataframeL1
+  DEP_FILE = CMakeFiles\CDataframeL1.dir\list.c.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Aube/CLionProjects/CDataframeL1/.
+  OBJECT_DIR = CMakeFiles\CDataframeL1.dir
+  OBJECT_FILE_DIR = CMakeFiles\CDataframeL1.dir
+
+build CMakeFiles/CDataframeL1.dir/sort.c.obj: C_COMPILER__CDataframeL1_unscanned_Debug C$:/Users/Aube/CLionProjects/CDataframeL1/sort.c || cmake_object_order_depends_target_CDataframeL1
+  DEP_FILE = CMakeFiles\CDataframeL1.dir\sort.c.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Aube/CLionProjects/CDataframeL1/.
+  OBJECT_DIR = CMakeFiles\CDataframeL1.dir
+  OBJECT_FILE_DIR = CMakeFiles\CDataframeL1.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target CDataframeL1
@@ -78,7 +92,7 @@ build CMakeFiles/CDataframeL1.dir/main.c.obj: C_COMPILER__CDataframeL1_unscanned
 #############################################
 # Link the executable CDataframeL1.exe
 
-build CDataframeL1.exe: C_EXECUTABLE_LINKER__CDataframeL1_Debug CMakeFiles/CDataframeL1.dir/cdataframe.c.obj CMakeFiles/CDataframeL1.dir/column.c.obj CMakeFiles/CDataframeL1.dir/main.c.obj
+build CDataframeL1.exe: C_EXECUTABLE_LINKER__CDataframeL1_Debug CMakeFiles/CDataframeL1.dir/cdataframe.c.obj CMakeFiles/CDataframeL1.dir/column.c.obj CMakeFiles/CDataframeL1.dir/main.c.obj CMakeFiles/CDataframeL1.dir/list.c.obj CMakeFiles/CDataframeL1.dir/sort.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\CDataframeL1.dir
