@@ -118,7 +118,6 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
         }
         case STRUCTURE:{
             // here we have to do a switch for the different structures
-            //snprintf(str, size, "%s", *((void**)col->data[i]));
             break;
         }
     }
@@ -396,24 +395,28 @@ void sort_insertion_col(COLUMN* col){
                         col->index[j + 1] = col->index[j];
                         j--;
                     }
+                    break;
                 }
                 case (FLOAT): {
                     while (j >= 0 && *((float *) col->data[col->index[j]]) < *((float *) col->data[tmp_index])) {
                         col->index[j + 1] = col->index[j];
                         j--;
                     }
+                    break;
                 }
                 case (UINT): {
                     while (j >= 0 && *((unsigned *) col->data[col->index[j]]) < *((unsigned *) col->data[tmp_index])) {
                         col->index[j + 1] = col->index[j];
                         j--;
                     }
+                    break;
                 }
                 case (DOUBLE): {
                     while (j >= 0 && *((double *) col->data[col->index[j]]) < *((double *) col->data[tmp_index])) {
                         col->index[j + 1] = col->index[j];
                         j--;
                     }
+                    break;
                 }
                 case(CHAR):{
                     while (j >= 0 && *((char **)col->data[col->index[j]]) < *((char **)col->data[tmp_index])){
@@ -434,6 +437,9 @@ void sort_insertion_col(COLUMN* col){
                             convert_value(col, col->index[j], str1, REALOC_SIZE);
                         }
                     }
+                    break;
+                }
+                case(STRUCTURE):{
                     break;
                 }
             }
@@ -528,7 +534,6 @@ int search_value_in_column(COLUMN *col, void *val){
         int h = col->size - 1;
         switch (col->column_type) {
             case(INT):{
-
                 do {
                     // compute the middle of the list;
                     m = (h + l) /2 ;
@@ -638,16 +643,20 @@ int search_value_in_column(COLUMN *col, void *val){
                 }while(stop != 1);
                 break;
             }
-            case(STRING):{/* use strcmp and convert_value
+            case(STRING):{
+                char str[REALOC_SIZE];
                 do {
                     // compute the middle of the list;
                     m = (h + l) /2 ;
-                    if(*(unsigned int*)val == *(unsigned int*)col->data[col->index[m]]) {
+                    convert_value(col, col->index[m], str, REALOC_SIZE);
+                    // strcmp = 0 => val = str
+                    if(strcmp(val, str) == 0) {
                         stop = 1 ;
                         in = 1;
                     }
                     else {
-                        if(*(unsigned int*)val > *(unsigned int*)col->data[col->index[m]]) {
+                        // strcmp > 0 => val > str
+                        if(strcmp(val, str)>0) {
                             l = m + 1; // go to the top half
                         }
                         else{
@@ -657,7 +666,7 @@ int search_value_in_column(COLUMN *col, void *val){
                             stop = 1 ;
                         }
                     }
-                }while(stop != 1);*/
+                }while(stop != 1);
                 break;
             }
             case(STRUCTURE):{

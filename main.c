@@ -7,7 +7,6 @@
 
 int main() {
 
-    /*
     //TEST WITH STRING
     COLUMN *mycol = create_column(STRING, "My column");
     char a[]= "Bravo", b[] = "Tango", c[] = "Zulu", d[] = "Lima", e[]="Yuzu";
@@ -37,9 +36,13 @@ int main() {
     printf("\n");
     printf("Column content after an add + sorting : \n");
     print_col_by_index(mycol);
-    delete_column(&mycol);*/
 
-
+    printf("\ntest search value\n");
+    char r[] ="OK" ;
+    printf("'Bravo' in col (YES : 1) ? : %d\n", search_value_in_column(mycol, &a));
+    printf("'OK' in col (NO: 0) ? : %d", search_value_in_column(mycol, &r));
+    delete_column(&mycol);
+    /*
     //TEST with number ok
     COLUMN *mycol = create_column(INT, "My column");
     int a = 1, b = 2,c = 5, d = 7, e = 4;
@@ -69,6 +72,9 @@ int main() {
     int r = 100;
     printf("\nfound 7 in col (YES : 1) ? : %d\n", search_value_in_column(mycol, &d));
     printf("not found 100 in col (NO: 0) ? : %d", search_value_in_column(mycol, &r));
+
+    delete_column(&mycol);
+    */
 
     /* part1
     printf("%s\n", mycol->title);

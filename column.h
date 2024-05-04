@@ -56,11 +56,6 @@ typedef struct{
     DATE dateBirth;
 }PERSON;
 
-typedef struct{
-    int x;
-    int y;
-}COORD;
-
 /**
 * Create a column
 * @param1 : Column type
