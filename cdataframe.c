@@ -48,6 +48,7 @@ void delete_cdataframe(CDATAFRAME **cdf){
 }
 
 void delete_column_by_name(CDATAFRAME *cdf, char *col_name){
+    int deleted = 0;
     LNODE* tmp = cdf->head;
     int size = get_cdataframe_cols_size(cdf);
     for(int i =0; i < size ; i++){
@@ -55,10 +56,52 @@ void delete_column_by_name(CDATAFRAME *cdf, char *col_name){
         if( strcmp(((COLUMN*)tmp->data)->title, col_name) == 0){
             delete_column(tmp->data);
             lst_delete_lnode((list*)cdf,(lnode*)tmp);
-            printf("The column %s has been deleted.\n", col_name);
+            deleted = 1;
         }
         tmp = tmp->next;
     }
+    if(deleted){
+        printf("The column %s has been deleted.\n", col_name);
+    }
+    else{
+        printf("There is column named %s.\n", col_name);
+    }
+}
+
+void hard_fill_dataframe(CDATAFRAME * cdf){
+    LNODE* tmp_lnode = cdf->head;
+    int size = get_cdataframe_cols_size(cdf);
+    for(int i = 0; i < size; i++){
+        int nbr_val = 5;
+        for(int j=0; j< nbr_val; j++){;
+            insert_value(tmp_lnode->data, &j);
+        }
+        tmp_lnode = tmp_lnode->next;
+    }
+}
+
+void display_dataframe(CDATAFRAME* cdf){
+
+    //display titles
+    int size = get_cdataframe_cols_size(cdf);
+    LNODE * tmp = (LNODE *) cdf->head;
+    for (int i=0; i<size; i++){
+        printf("%s\t", ((COLUMN*)tmp->data)->title);
+        tmp = tmp->next;
+    }
+    printf("\n");
+    //display values with index
+    char str[REALOC_SIZE];//buffer
+    for(int i = 0; i < 5; i++) {
+        tmp = cdf->head;
+        for(int j = 0;j < size; j++) {
+            convert_value((COLUMN *)(COLUMN *) tmp->data, i, str, REALOC_SIZE);
+            printf("%d| %s\t",i, str);
+            tmp = tmp->next;
+        }
+        printf("\n");
+    }
+    printf("\n");
 }
 
 

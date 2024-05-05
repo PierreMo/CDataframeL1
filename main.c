@@ -8,8 +8,18 @@
 
 int main() {
 
-    ENUM_TYPE cdftype [] = {INT,CHAR,INT};
+    ENUM_TYPE cdftype [] = {INT,INT,INT};
     CDATAFRAME *cdf = create_cdataframe(cdftype, 3);
+    LNODE * tmp = (LNODE *) cdf->head;
+    /*for (int i=0; i<3; i++){
+        printf("%s\n", ((COLUMN*)tmp->data)->title);
+        tmp = tmp->next;
+    }*/
+    hard_fill_dataframe(cdf);
+    LNODE * tmp1 = (LNODE *) cdf->head;
+    //print_col((COLUMN *) ((COLUMN *) tmp1->data));
+    printf("\n--- Dataframe --- \n");
+    display_dataframe(cdf);
     delete_cdataframe(&cdf);
 
     /*

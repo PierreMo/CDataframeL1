@@ -20,10 +20,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="part3">
+    <list default="true" id="38b0c17d-8f80-433c-ae69-06a800faf3c0" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cdataframe.c" beforeDir="false" afterPath="$PROJECT_DIR$/cdataframe.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cdataframe.h" beforeDir="false" afterPath="$PROJECT_DIR$/cdataframe.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CDataframeL1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CDataframeL1.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/cdataframe.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/cdataframe.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CDataframeL1.dir/main.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <list id="d6b0e9a3-e777-45c1-9cbe-a56a58c58437" name="Changes by pierr" comment="">
       <change beforePath="$PROJECT_DIR$/column.h" beforeDir="false" afterPath="$PROJECT_DIR$/column.h" afterDir="false" />
@@ -139,7 +146,7 @@
       <workItem from="1714720535009" duration="21000" />
       <workItem from="1714721009873" duration="8000" />
       <workItem from="1714721072412" duration="1199000" />
-      <workItem from="1714744984769" duration="22692000" />
+      <workItem from="1714744984769" duration="29777000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Test">
       <option name="closed" value="true" />
@@ -477,7 +484,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714851618276</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="update">
+      <option name="closed" value="true" />
+      <created>1714929305384</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1714929305384</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -507,13 +522,13 @@
     <MESSAGE value="quicksort ok with string" />
     <MESSAGE value="update (sorting pb)" />
     <MESSAGE value="display title" />
-    <MESSAGE value="update" />
     <MESSAGE value="update (pb sort after string added solved)" />
     <MESSAGE value="search val ok for INT" />
     <MESSAGE value="search val" />
     <MESSAGE value="structures" />
     <MESSAGE value="search value" />
     <MESSAGE value="part3" />
-    <option name="LAST_COMMIT_MESSAGE" value="part3" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>

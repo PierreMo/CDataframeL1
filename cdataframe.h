@@ -55,6 +55,17 @@ void delete_cdataframe(CDATAFRAME **cdf);
 */
 void delete_column_by_name(CDATAFRAME *cdf, char *col_name);
 
+/**
+ * Hard fill the dataframe
+ * @param1 : dataframe to fill
+ */
+void hard_fill_dataframe(CDATAFRAME* cdf);
+
+/**
+ * Display the dataframe
+ * @param1 : pointer on dataframe to display
+ */
+void display_dataframe(CDATAFRAME* cdf);
 
 /*
 typedef struct{
