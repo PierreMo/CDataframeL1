@@ -3,6 +3,7 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "cdataframe.h"
 #include "list.h"
 #include "column.h"
@@ -20,20 +21,47 @@ CDATAFRAME *create_cdataframe(ENUM_TYPE *cdftype, int size){
         lnode* ptr_col = lst_create_lnode(col);
         lst_insert_tail((list *) dataframe, ptr_col);
     }
-    dataframe->size = size;
     return dataframe;
 }
 
+int get_cdataframe_cols_size(CDATAFRAME *cdf){
+    int size = 0;
+    LNODE* tmp_lnode = cdf->head;
+    while(tmp_lnode->next != NULL){
+        tmp_lnode = tmp_lnode->next;
+        size++;
+    }
+    size++;// to count the last node of the list
+    return size;
+}
+
 void delete_cdataframe(CDATAFRAME **cdf){
-    LNODE* tmp_node = (*cdf)->head;
+    LNODE* tmp_lnode = (*cdf)->head;
     int count = 0;
-    while(count <= (*cdf)->size){
-        delete_column(tmp_node->data);
-        tmp_node = tmp_node->next;
+    int size = get_cdataframe_cols_size(*cdf);
+    while(count <= size){
+        delete_column(tmp_lnode->data);
+        tmp_lnode = tmp_lnode->next;
         count++;
     }
     lst_delete_list((list *) *cdf);
 }
+
+void delete_column_by_name(CDATAFRAME *cdf, char *col_name){
+    LNODE* tmp = cdf->head;
+    int size = get_cdataframe_cols_size(cdf);
+    for(int i =0; i < size ; i++){
+        // strcmp return 0 if col_nome correspond to a column name in cdf
+        if( strcmp(((COLUMN*)tmp->data)->title, col_name) == 0){
+            delete_column(tmp->data);
+            lst_delete_lnode((list*)cdf,(lnode*)tmp);
+            printf("The column %s has been deleted.\n", col_name);
+        }
+        tmp = tmp->next;
+    }
+}
+
+
 /*
 void choose_title_not_inside(DATAFRAME* dataframe, char* title){
     do{

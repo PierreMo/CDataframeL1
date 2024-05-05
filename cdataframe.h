@@ -21,7 +21,6 @@ typedef struct lnode {
 typedef struct list {
     LNODE *head;
     LNODE *tail;
-    int size;
 } LIST;
 
 typedef LIST CDATAFRAME;
@@ -37,10 +36,25 @@ void choose_title_not_inside(char* title);
 CDATAFRAME *create_cdataframe(ENUM_TYPE *cdftype, int size);
 
 /**
+* @brief: Number of columns
+* @param1: Point to the CDataframe
+* @return: Number of columns in the CDataframe
+*/
+int get_cdataframe_cols_size(CDATAFRAME *cdf);
+
+/**
 * @brief: Column deletion
 * param1: Pointer to the CDataframe to delete
 */
 void delete_cdataframe(CDATAFRAME **cdf);
+
+/**
+* @breif: Delete column by name
+* @param1: Pointer to the CDataframe
+* @param2: Column name
+*/
+void delete_column_by_name(CDATAFRAME *cdf, char *col_name);
+
 
 /*
 typedef struct{
