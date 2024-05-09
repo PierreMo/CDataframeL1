@@ -87,6 +87,7 @@ void delete_column(COLUMN** col){
     }
     free((*col)->data);
     free((*col)->title);
+    free(*col);
     *col=NULL;
 }
 
@@ -198,7 +199,7 @@ void update_index(COLUMN* col){
 }
 
 int search_value_in_column(COLUMN *col, void *val){
-    if(col->valid_index != 1){ // the column is not sorted
+    if(check_index(col) != 1){ // the column is not sorted
         return -1;
     }
     else{
