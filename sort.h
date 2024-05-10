@@ -29,24 +29,6 @@ void swap(int* p1, int* p2);
 int partition(COLUMN* col, int left, int right);
 
 /**
- * @brief: partition the column to sort the index list -> ascending order
- * @param1: pointer on the column to sort
- * @param2: integer at the left of the index list
- * @param3: integer at the right of the index list
- * @return: the final position of the pivot
- */
-int partition_asc(COLUMN* col, int left, int right);
-
-/**
- * @brief: partition the column to sort the index list -> descending order
- * @param1: pointer on the column to sort
- * @param2: integer at the left of the index list
- * @param3: integer at the right of the index list
- * @return: the final position of the pivot
- */
-int partition_desc(COLUMN* col, int left, int right);
-
-/**
  * @brief: sort index list according to the linked column by recursive call
  * @param1: pointer on the column
  * @param2: integer at the left of the index list

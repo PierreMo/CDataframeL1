@@ -83,11 +83,13 @@ int insert_value(COLUMN *col, void *value) {
 void delete_column(COLUMN** col){
     for(int i=0; i<(*col)->size;i++){
         free((*col)->data[i]);
+
+    }
+    if ((*col)->index != NULL){
         free((*col)->index);
     }
     free((*col)->data);
     free((*col)->title);
-    free(*col);
     *col=NULL;
 }
 
@@ -199,7 +201,7 @@ void update_index(COLUMN* col){
 }
 
 int search_value_in_column(COLUMN *col, void *val){
-    if(check_index(col) != 1){ // the column is not sorted
+    if(col->valid_index != 1){ // the column is not sorted
         return -1;
     }
     else{

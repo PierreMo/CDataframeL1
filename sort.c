@@ -3,7 +3,7 @@
 //
 
 #include "sort.h"
-#include <stdio.h>
+#include "stdio.h"
 #include <string.h>
 
 void swap(int* p1, int* p2){
@@ -14,168 +14,168 @@ void swap(int* p1, int* p2){
 }
 
 int partition(COLUMN* col, int left, int right){
+    int i;
     if (col->sort_dir == ASC){ // ascending order
-        return partition_asc(col, left, right);
+        switch(col->column_type) {
+            case (UINT): {
+                unsigned int pivot = *((unsigned int*) col->data[col->index[right]]);
+                i = (left - 1);
+                for (int j = left; j <= right-1; j++) {
+                    if (*((unsigned int *) col->data[col->index[j]]) < pivot){
+                        i++;
+                        swap(&col->index[i], &col->index[j]);
+                    }
+                }
+                swap(&col->index[i + 1], &col->index[right]);
+                break;
+            }
+            case (INT): {
+                int pivot = *((int *) col->data[col->index[right]]);
+                i = (left - 1);
+                for (int j = left; j <= right-1; j++) {
+                    if (*((int *) col->data[col->index[j]]) < pivot){
+                        i++;
+                        swap((int *) &col->index[i], (int *) &col->index[j]);
+                    }
+                }
+                swap((int *) &col->index[i + 1], (int *) &col->index[right]);
+                break;
+            }
+            case (FLOAT): {
+                float pivot = *((float *) col->data[col->index[right]]);
+                i = (left - 1);
+                for (int j = left; j <= right-1; j++) {
+                    if (*((float *) col->data[col->index[j]]) < pivot){
+                        i++;
+                        swap((int *) &col->index[i], (int *) &col->index[j]);
+                    }
+                }
+                swap((int *) &col->index[i + 1], (int *) &col->index[right]);
+                break;
+            }
+            case (DOUBLE): {
+                double pivot = *((double *) col->data[col->index[right]]);
+                i = (left - 1);
+                for (int j = left; j <= right-1; j++) {
+                    if (*((double *) col->data[col->index[j]]) < pivot){
+                        i++;
+                        swap((int *) &col->index[i], (int *) &col->index[j]);
+                    }
+                }
+                swap((int *) &col->index[i + 1], (int *) &col->index[right]);
+                break;
+            }
+            case (CHAR): {
+                char pivot = *((char *) col->data[col->index[right]]);
+                i = (left - 1);
+                for (int j = left; j <= right-1; j++) {
+                    if (*((char *) col->data[col->index[j]]) < pivot){
+                        i++;
+                        swap((int *) &col->index[i], (int *) &col->index[j]);
+                    }
+                }
+                swap((int *) &col->index[i + 1], (int *) &col->index[right]);
+                break;
+            }
+            case (STRING): {
+                char pivot[REALOC_SIZE], str[REALOC_SIZE];
+                convert_value(col,col->index[right], pivot, REALOC_SIZE);
+                i = (left - 1);
+                for (int j = left; j <= right-1; j++) {
+                    convert_value(col,col->index[j], str, REALOC_SIZE);
+                    // strcmp > 0 => str < pivot
+                    if (strcmp(str,pivot)>0){
+                        i++;
+                        swap(&col->index[i], &col->index[j]);
+                    }
+                }
+                swap(&col->index[i + 1], &col->index[right]);
+                break;
+            }
+        }
     }
     else{// decreasing order
-        return partition_desc(col, left, right);
-    }
-}
-
-int partition_asc(COLUMN* col, int left, int right){
-    int i;// ascending order
-    i = (left - 1);
-    switch(col->column_type) {
-        case (UINT): {
-            unsigned int pivot = *((unsigned int*) col->data[col->index[right]]);
-            for (int j = left; j <= right-1; j++) {
-                if (*((unsigned int *) col->data[col->index[j]]) < pivot){
-                    i++;
-                    swap(&col->index[i], &col->index[j]);
+        switch(col->column_type) {
+            case (INT): {
+                int pivot = *((int *) col->data[col->index[right]]);
+                i = (left - 1);
+                for (int j = left; j <= right; j++) {
+                    if (*((int *) col->data[col->index[j]]) > pivot) {
+                        i++;
+                        swap(&col->index[i], &col->index[j]);
+                    }
                 }
+                swap(&col->index[i + 1], &col->index[right]);
+                break;
             }
-            swap(&col->index[i + 1], &col->index[right]);
-            break;
-        }
-        case (INT): {
-            int pivot = *((int *) col->data[col->index[right]]);
-            for (int j = left; j <= right-1; j++) {
-                if (*((int *) col->data[col->index[j]]) < pivot){
-                    i++;
-                    swap((int *) &col->index[i], (int *) &col->index[j]);
+            case (FLOAT): {
+                float pivot = *((float *) col->data[col->index[right]]);
+                i = (left - 1);
+                for (int j = left; j <= right; j++) {
+                    if (*((float *) col->data[col->index[j]]) > pivot) {
+                        i++;
+                        swap(&col->index[i], &col->index[j]);
+                    }
                 }
+                swap(&col->index[i + 1], &col->index[right]);
+                break;
             }
-            swap((int *) &col->index[i + 1], (int *) &col->index[right]);
-            break;
-        }
-        case (FLOAT): {
-            float pivot = *((float *) col->data[col->index[right]]);
-            for (int j = left; j <= right-1; j++) {
-                if (*((float *) col->data[col->index[j]]) < pivot){
-                    i++;
-                    swap((int *) &col->index[i], (int *) &col->index[j]);
+            case (UINT): {
+                unsigned int pivot = *((unsigned int*) col->data[col->index[right]]);
+                i = (left - 1);
+                for (int j = left; j <= right; j++) {
+                    if (*((unsigned int*) col->data[col->index[j]]) > pivot) {
+                        i++;
+                        swap(&col->index[i], &col->index[j]);
+                    }
                 }
+                swap(&col->index[i + 1], &col->index[right]);
+                break;
             }
-            swap((int *) &col->index[i + 1], (int *) &col->index[right]);
-            break;
-        }
-        case (DOUBLE): {
-            double pivot = *((double *) col->data[col->index[right]]);
-            for (int j = left; j <= right-1; j++) {
-                if (*((double *) col->data[col->index[j]]) < pivot){
-                    i++;
-                    swap((int *) &col->index[i], (int *) &col->index[j]);
+            case (DOUBLE): {
+                double pivot = *((double *) col->data[col->index[right]]);
+                i = (left - 1);
+                for (int j = left; j <= right; j++) {
+                    if (*((double *) col->data[col->index[j]]) > pivot) {
+                        i++;
+                        swap(&col->index[i], &col->index[j]);
+                    }
                 }
+                swap(&col->index[i + 1], &col->index[right]);
+                break;
             }
-            swap((int *) &col->index[i + 1], (int *) &col->index[right]);
-            break;
-        }
-        case (CHAR): {
-            char pivot = *((char *) col->data[col->index[right]]);
-            for (int j = left; j <= right-1; j++) {
-                if (*((char *) col->data[col->index[j]]) < pivot){
-                    i++;
-                    swap((int *) &col->index[i], (int *) &col->index[j]);
+            case (CHAR): {
+                char pivot = *((char *) col->data[col->index[right]]);
+                i = (left - 1);
+                for (int j = left; j <= right; j++) {
+                    if (*((char *) col->data[col->index[j]]) > pivot){
+                        i++;
+                        swap(&col->index[i], &col->index[j]);
+                    }
                 }
+                swap(&col->index[i + 1], &col->index[right]);
+                break;
             }
-            swap((int *) &col->index[i + 1], (int *) &col->index[right]);
-            break;
-        }
-        case (STRING): {
-            char pivot[REALOC_SIZE], str[REALOC_SIZE];
-            convert_value(col,col->index[right], pivot, REALOC_SIZE);
-            for (int j = left; j <= right-1; j++) {
-                convert_value(col,col->index[j], str, REALOC_SIZE);
-                // strcmp > 0 => str < pivot
-                if (strcmp(str,pivot)>0){
-                    i++;
-                    swap(&col->index[i], &col->index[j]);
+            case (STRING): {
+                char pivot[REALOC_SIZE], str[REALOC_SIZE];
+                convert_value(col,col->index[right], pivot, REALOC_SIZE);
+                i = (left - 1);
+                for (int j = left; j <= right; j++) {
+                    convert_value(col,col->index[j], str, REALOC_SIZE);
+                    // strcmp < 0 => str > pivot
+                    if (strcmp(str,pivot)<0){
+                        i++;
+                        swap(&col->index[i], &col->index[j]);
+                    }
                 }
+                swap(&col->index[i + 1], &col->index[right]);
+                break;
             }
-            swap(&col->index[i + 1], &col->index[right]);
-            break;
-        }
-    }
-    return (i + 1);
-}
-
-int partition_desc(COLUMN* col, int left, int right){
-    int i;
-    i = (left - 1);
-    // decreasing order
-    switch(col->column_type) {
-        case (INT): {
-            int pivot = *((int *) col->data[col->index[right]]);
-            for (int j = left; j <= right; j++) {
-                if (*((int *) col->data[col->index[j]]) > pivot) {
-                    i++;
-                    swap(&col->index[i], &col->index[j]);
-                }
-            }
-            swap(&col->index[i + 1], &col->index[right]);
-            break;
-        }
-        case (FLOAT): {
-            float pivot = *((float *) col->data[col->index[right]]);
-            for (int j = left; j <= right; j++) {
-                if (*((float *) col->data[col->index[j]]) > pivot) {
-                    i++;
-                    swap(&col->index[i], &col->index[j]);
-                }
-            }
-            swap(&col->index[i + 1], &col->index[right]);
-            break;
-        }
-        case (UINT): {
-            unsigned int pivot = *((unsigned int*) col->data[col->index[right]]);
-            for (int j = left; j <= right; j++) {
-                if (*((unsigned int*) col->data[col->index[j]]) > pivot) {
-                    i++;
-                    swap(&col->index[i], &col->index[j]);
-                }
-            }
-            swap(&col->index[i + 1], &col->index[right]);
-            break;
-        }
-        case (DOUBLE): {
-            double pivot = *((double *) col->data[col->index[right]]);
-            for (int j = left; j <= right; j++) {
-                if (*((double *) col->data[col->index[j]]) > pivot) {
-                    i++;
-                    swap(&col->index[i], &col->index[j]);
-                }
-            }
-            swap(&col->index[i + 1], &col->index[right]);
-            break;
-        }
-        case (CHAR): {
-            char pivot = *((char *) col->data[col->index[right]]);
-            for (int j = left; j <= right; j++) {
-                if (*((char *) col->data[col->index[j]]) > pivot){
-                    i++;
-                    swap(&col->index[i], &col->index[j]);
-                }
-            }
-            swap(&col->index[i + 1], &col->index[right]);
-            break;
-        }
-        case (STRING): {
-            char pivot[REALOC_SIZE], str[REALOC_SIZE];
-            convert_value(col,col->index[right], pivot, REALOC_SIZE);
-            for (int j = left; j <= right; j++) {
-                convert_value(col,col->index[j], str, REALOC_SIZE);
-                // strcmp < 0 => str > pivot
-                if (strcmp(str,pivot)<0){
-                    i++;
-                    swap(&col->index[i], &col->index[j]);
-                }
-            }
-            swap(&col->index[i + 1], &col->index[right]);
-            break;
         }
     }
     return (i + 1);
 }
+
 
 void quickSort(COLUMN* col, int left, int right){
     if (left < right) {

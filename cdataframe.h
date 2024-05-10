@@ -26,9 +26,31 @@ typedef struct list {
 typedef LIST CDATAFRAME;
 
 /**
- * let the user enter the title of a column
+ * @biref :let the user enter the title of a column
+ * param1 : get the title
+ * param2 : index of the column to title
  */
-void choose_title_not_inside(char* title);
+void choose_title_not_inside(char* title, int nb);
+/**
+ * brief : compute the length of the dataframe
+ * @param1: dataframe to get the length
+ * @return: the length of the dataframe
+ */
+int lenght_cdf(CDATAFRAME *cdf);
+
+/**
+ * Find the column with the highest number of value
+ * @param1 : pointer on the dataframe
+ * @return : integer that is the nb of lines of the dataframe
+ */
+int longest_col(CDATAFRAME* cdf);
+
+/**
+ * @brief : ask the user the type of each column
+ * @param1 : a list to save columns type
+ * @param2 : number of column in the dataframe
+ */
+void choose_type(ENUM_TYPE* cdftype, int size);
 
 /**
 * Create a dataframe
@@ -67,6 +89,27 @@ void hard_fill_dataframe(CDATAFRAME* cdf);
  */
 void display_dataframe(CDATAFRAME* cdf);
 
+/**
+ * Allow to enter a value between 0 and val
+ * @param1 : val lower bound
+ * @param2 : val upper bound
+ * @return : the chosen value by the user between param1 et 2
+ */
+int valid_input(int lower_bound, int upper_bound);
+
+/**
+ * Create a dataframe if the dataframe is NULL
+ * @param1 : pointer on the dataframe to check
+ * @param2 : list of columns type
+ */
+CDATAFRAME* is_cdataframe(CDATAFRAME* cdf, ENUM_TYPE* cdftype);
+
+/**
+ * Allow the user to fill the dataframe
+ * @param1 : dataframe to fill
+ */
+void fill_cdataframe(CDATAFRAME* cdf);
+
 /*
 typedef struct{
     COLUMN** col;
@@ -101,39 +144,7 @@ typedef struct{
  */
 //void choose_title_inside(DATAFRAME* dataframe, char* title);
 
-/**
- * Allow the user to fill the dataframe
- * @param1 : dataframe to fill
- */
-//void fill_dataframe(DATAFRAME* dataframe);
 
-/**
- * Hard fill the dataframe
- * @param1 : dataframe to fill
- */
-//void hard_fill_dataframe(DATAFRAME* dataframe);
-
-/**
- * Display the dataframe
- * @param1 : pointer on dataframe to display
- * @param2 : integer that give the number of lines to print
- * @param3 : integer that give the number of column to print
- */
-//void display_dataframe(DATAFRAME* dataframe, int nb_lines, int nb_col);
-
-/**
- * Allow to enter a value between 0 and val
- * @param1 : val lower bound
- * @param2 : val upper bound
- * @return : the chosen value by the user between param1 et 2
- */
-//int valid_input(int lower_bound, int upper_bound);
-/**
- * Find the column with the highest number of value
- * @param1 : pointer on the dataframe
- * @return : integer that is the nb of lines of the dataframe
- */
-//int longest_col(DATAFRAME* dataframe);
 
 /**
  * Find the column with the smallest number of value
@@ -143,11 +154,7 @@ typedef struct{
 //int smallest_col(DATAFRAME* dataframe);
 
 //int input_number();
-/**
- * Create a dataframe if the dataframe is NULL
- * @param1 : pointer on the dataframe to check
- */
-//DATAFRAME* is_dataframe(DATAFRAME* dataframe);
+
 
 /**
 * @brief: Find how many cells are either equal to a given value in the dataframe
