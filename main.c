@@ -56,7 +56,7 @@ int main() {
                     case 3: // Hard filling of the CDataframe
                     {
                         cdf = is_cdataframe(cdf, cdftype);
-                        hard_fill_dataframe(cdf);
+                        hard_fill_dataframe(cdf, cdftype);
                         break;
                     }
                     case 4: {

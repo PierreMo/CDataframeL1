@@ -13,6 +13,19 @@ void choose_title(char* title, int nb){
     scanf("%s",title);
 }
 
+int valid_input(int lower_bound, int upper_bound){
+    int choice=0, type;
+    do{
+        printf("\nChoose a value between %d and %d:",lower_bound, upper_bound);
+        type = scanf("%d",&choice);//if the type is int type=1
+        if (type != 1 || choice < lower_bound || choice > upper_bound) {
+            printf("Invalid input.");
+            while (getchar() != '\n'); // to clear out the input buffer
+        }
+    }while (type!=1||(choice > upper_bound) || (choice<lower_bound));
+    return choice;
+}
+
 void choose_type(ENUM_TYPE* cdftype, int size){
     char* types[] = {"1. UINT", "2. INT", "3. CHAR", "4. FLOAT", "5. DOUBLE", "6. STRING", "7. STRUCTURE"};
     printf("All the types available are:\n ");
@@ -50,31 +63,84 @@ int longest_col(CDATAFRAME* cdf){
     return max;
 }
 
-int valid_input(int lower_bound, int upper_bound){
-    int choice=0, type;
-    do{
-        printf("\nChoose a value between %d and %d:",lower_bound, upper_bound);
-        type = scanf("%d",&choice);//if the type is int type=1
-        if (type != 1 || choice < lower_bound || choice > upper_bound) {
-            printf("Invalid input.");
-            while (getchar() != '\n'); // to clear out the input buffer
+void input_value(COLUMN* col, void *choice){
+    int type;
+    switch(col->column_type){
+        case UINT:{
+            unsigned int *val = (unsigned int *)choice;
+            do{
+                printf("\nChoose a value:");
+                type = scanf("%d",val);//if the type is unsigned int type=1
+                if (type != 1) {
+                    printf("Invalid input.");
+                    while (getchar() != '\n'); // to clear out the input buffer
+                }
+            }while (type!=1);
+            break;
         }
-    }while (type!=1||(choice > upper_bound) || (choice<lower_bound));
-    return choice;
-}
-
-int input_value(){//change with void + switch
-    int choice=0, type;
-    do{
-        printf("\nChoose a value:");
-        type = scanf("%d",&choice);//if the type is int type=1
-        if (type != 1) {
-            printf("Invalid input.");
-            while (getchar() != '\n'); // to clear out the input buffer
+        case INT:{
+            int *val = (int *)choice;
+            do{
+                printf("\nChoose a value:");
+                type = scanf("%d",val);//if the type is int type=1
+                if (type != 1) {
+                    printf("Invalid input.");
+                    while (getchar() != '\n'); // to clear out the input buffer
+                }
+            }while (type!=1);
+            break;
         }
-    }while (type!=1);
-    return choice;
-
+        case CHAR:{
+            char *val = (char *)choice;
+            do{
+                printf("\nChoose a value:");
+                type = scanf(" %c",val);//if the type is char type=1
+                if (type != 1) {
+                    printf("Invalid input.");
+                    while (getchar() != '\n'); // to clear out the input buffer
+                }
+            }while (type!=1);
+            break;
+        }
+        case FLOAT:{
+            float *val = (float *)choice;
+            do{
+                printf("\nChoose a value:");
+                type = scanf("%f",val);//if the type is float type=1
+                if (type != 1) {
+                    printf("Invalid input.");
+                    while (getchar() != '\n'); // to clear out the input buffer
+                }
+            }while (type!=1);
+            break;
+        }
+        case DOUBLE:{
+            double *val = (double *)choice;
+            do{
+                printf("\nChoose a value:");
+                type = scanf("%lf",val);//if the type is double type=1
+                if (type != 1) {
+                    printf("Invalid input.");
+                    while (getchar() != '\n'); // to clear out the input buffer
+                }
+            }while (type!=1);
+            break;
+        }
+        case STRING:{
+            char *val = (char *)choice;
+            do{
+                printf("\nChoose a value:");
+                type = scanf(" %s",val);//if the type is a string type=1
+                if (type != 1) {
+                    printf("Invalid input.");
+                    while (getchar() != '\n'); // to clear out the input buffer
+                }
+            }while (type!=1);
+            break;
+        }
+        case STRUCTURE:
+            break;
+    }
 }
 
 CDATAFRAME *create_cdataframe(ENUM_TYPE *cdftype, int size){
@@ -134,14 +200,36 @@ void delete_column_by_name(CDATAFRAME *cdf, char *col_name){
     }
 }
 
-// faire un switch en fct des types(les metre en parametre)
-void hard_fill_dataframe(CDATAFRAME * cdf){
+void hard_fill_dataframe(CDATAFRAME * cdf, ENUM_TYPE* cdftype){
     LNODE* tmp = cdf->head;
     int size = get_cdataframe_cols_size(cdf);
+    int nbr_val = 5;
     for(int i = 0; i < size; i++){
-        int nbr_val = 5;
-        for(int j=0; j< nbr_val; j++){;
-            insert_value(tmp ->data, &j);
+        switch (cdftype[i]) {
+            case(UINT):
+            case(FLOAT):
+            case(DOUBLE):
+            case(INT):{
+                for(int j=0; j< nbr_val; j++){;
+                    insert_value(tmp ->data, &j);
+                }
+                break;
+            }
+            case(CHAR):{
+                char val = 'A';
+                for(int j=0; j< nbr_val; j++){;
+                    insert_value(tmp ->data, &val);
+                    val++;
+                }
+                break;
+            }
+            case(STRING):{
+                char* val[]= {"Mega", "Giga", "Tera", "Kilo", "Octet"};
+                for(int j=0; j< nbr_val; j++){;
+                    insert_value(tmp ->data, val[j]);
+                }
+                break;
+            }
         }
         tmp = tmp->next;
     }
@@ -205,24 +293,38 @@ void fill_cdataframe(CDATAFRAME* cdf){
         nbr_val = valid_input(1, REALOC_SIZE);
         for(int j=0; j< nbr_val; j++){
             printf("\nEnter the value to insert: ");
-            int value = input_value();
-            insert_value(tmp->data,&value);
+            void* choice;
+            input_value(((COLUMN*) tmp->data), &choice);
+            insert_value(tmp->data,&choice);
         }
         size--;
         tmp = tmp->next;
     }
 }
 
+int check_type(COLUMN* col){
+    ENUM_TYPE type = col->column_type;
+    int i = 2;
+    while(i<7 && type!=i){
+        i++;
+    }
+    return i-1;
+}
+
 void add_line_dataframe(CDATAFRAME* cdf){
+    char* types[] = {"UINT", "INT", "CHAR", "FLOAT", "DOUBLE", "STRING", "STRUCTURE"};
     LNODE* tmp = cdf->head;
     int size = lenght_cdf(cdf);
     for(int i= 0;i < size ;i++){
-        printf("Insert the new value for %s", ((COLUMN*)tmp->data)->title);
-        int value = input_value();
-        insert_value(tmp->data, &value);
+        printf("Insert the new value for the column %s (of type %s) ", ((COLUMN*)tmp->data)->title, types[check_type(((COLUMN*)tmp->data))-1]);
+        void* choice;
+        input_value(((COLUMN*) tmp->data), &choice);
+        insert_value(tmp->data,&choice);
         tmp = tmp->next;
     }
+
 }
+
 
 
 /*

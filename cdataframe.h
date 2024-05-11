@@ -53,9 +53,11 @@ int longest_col(CDATAFRAME* cdf);
 void choose_type(ENUM_TYPE* cdftype, int size);
 /**
  * brief : allow the user to enter a value
+ * param1:
+ * param2:
  * @return : return if
  */
-int input_value();
+void input_value(COLUMN* col, void* choice);
 
 /**
 * Create a dataframe
@@ -86,7 +88,7 @@ void delete_column_by_name(CDATAFRAME *cdf, char *col_name);
  * Hard fill the dataframe
  * @param1 : dataframe to fill
  */
-void hard_fill_dataframe(CDATAFRAME* cdf);
+void hard_fill_dataframe(CDATAFRAME* cdf, ENUM_TYPE* cdftype);
 
 /**
  * Display the dataframe
@@ -114,7 +116,12 @@ CDATAFRAME* is_cdataframe(CDATAFRAME* cdf, ENUM_TYPE* cdftype);
  * @param1 : dataframe to fill
  */
 void fill_cdataframe(CDATAFRAME* cdf);
-
+/**
+ *
+ * @param cdf
+ * @return
+ */
+int check_type(COLUMN* col);
 /**
  * @brief: Add a row of values to the dataframe
  * @param1: Pointer to the dataframe
