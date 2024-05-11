@@ -26,11 +26,27 @@ typedef struct list {
 typedef LIST CDATAFRAME;
 
 /**
- * @biref :let the user enter the title of a column
- * param1 : get the title
- * param2 : index of the column to title
+ * @breif: Allow the user to choose a title not already in the dataframe
+ * @param1 : pointer on dataframe
+ * @param2 : Pointer on the title
  */
-void choose_title_not_inside(char* title, int nb);
+void choose_title_not_inside(CDATAFRAME* cdf, char* title);
+
+/**
+ * @brief: Allow the user to choose a title in the dataframe
+ * @param1 : pointer on dataframe
+ * @param2 : Pointer on the title
+ */
+void choose_title_inside(CDATAFRAME* cdf, char* title);
+
+/**
+ * @brief: search an input string in the dataframe
+ * @param1: pointer on the dataframe
+ * @param2: string
+ * @return: the index of the column where the title is already used else -1
+ */
+int title_in_dataframe(CDATAFRAME* cdf, char* title);
+
 /**
  * brief : compute the length of the dataframe
  * @param1: dataframe to get the length
@@ -50,7 +66,8 @@ int longest_col(CDATAFRAME* cdf);
  * @param1 : a list to save columns type
  * @param2 : number of column in the dataframe
  */
-void choose_type(ENUM_TYPE* cdftype, int size);
+void choose_type(ENUM_TYPE* cdftype, int size, int add_type);
+
 /**
  * brief : allow the user to enter a value
  * param1:
@@ -59,6 +76,11 @@ void choose_type(ENUM_TYPE* cdftype, int size);
  */
 void input_value(COLUMN* col, void* choice);
 
+/**
+ *
+ * @param cdf
+ */
+void display_titles(CDATAFRAME* cdf);
 /**
 * Create a dataframe
 */
@@ -69,7 +91,7 @@ CDATAFRAME *create_cdataframe(ENUM_TYPE *cdftype, int size);
 * @param1: Point to the CDataframe
 * @return: Number of columns in the CDataframe
 */
-int get_cdataframe_cols_size(CDATAFRAME *cdf);
+int cdataframe_size(CDATAFRAME *cdf);
 
 /**
 * @brief: Column deletion
@@ -128,6 +150,29 @@ int check_type(COLUMN* col);
  */
 void add_line_dataframe(CDATAFRAME* cdf);
 
+/**
+ * @brief: delete a column of the dataframe
+ * @param1: Pointer to the dataframe
+ * @param2: index of the column to delete
+ * @return: 1 if the line is delete and else 0
+*/
+int delete_col_cdataframe(CDATAFRAME* cdf, int index);
+
+/**
+ * @brief: delete a row of values to the dataframe
+ * @param1: Pointer to the dataframe
+ * @param2: index at which we want delete a row
+ */
+void delete_line_cdataframe(CDATAFRAME* cdf, int index);
+
+/**
+ * @brief: add a column to the dataframe
+ * @param1: Pointer to the dataframe
+ * @param2: title of the new column
+ * @return: 1 if the line is added and else 0
+*/
+int add_column(CDATAFRAME* cdf, ENUM_TYPE* cdftype, char* title);
+
 
 /*
 typedef struct{
@@ -148,21 +193,6 @@ typedef struct{
  * @size of the list
  */
 //DATAFRAME* create_dataframe(int size);
-/**
- * @breif: Allow the user to choose a title not already in the dataframe
- * @param1 : pointer on dataframe
- * @param2 : Pointer on the title
- */
-//void choose_title_not_inside(DATAFRAME*dataframe, char* title);
-
-
-/**
- * @brief: Allow the user to choose a title in the dataframe
- * @param1 : pointer on dataframe
- * @param2 : Pointer on the title
- */
-//void choose_title_inside(DATAFRAME* dataframe, char* title);
-
 
 
 /**
@@ -171,9 +201,6 @@ typedef struct{
  * @return : integer that is the nb of full lines
  */
 //int smallest_col(DATAFRAME* dataframe);
-
-
-
 
 /**
 * @brief: Find how many cells are either equal to a given value in the dataframe
@@ -198,28 +225,6 @@ typedef struct{
 */
 //int smaller(DATAFRAME* dataframe, int value);
 
-/**
- * @brief: delete a row of values to the dataframe
- * @param1: Pointer to the dataframe
- * @param2: index at which we want delete a row
- */
-//void delete_line_dataframe(DATAFRAME* dataframe, int index);
-
-/**
- * @brief: add a column to the dataframe
- * @param1: Pointer to the dataframe
- * @param2: title of the new column
- * @return: 1 if the line is added and else 0
-*/
-//int add_column(DATAFRAME* dataframe, char* title);
-
-/**
- * @brief: delete a column to the dataframe
- * @param1: Pointer to the dataframe
- * @param2: index of the column to delete
- * @return: 1 if the line is delete and else 0
-*/
-//int delete_col_dataframe(DATAFRAME* dataframe, int index);
 
 /**
  * @brief: compare two strings
@@ -228,14 +233,6 @@ typedef struct{
  * @return: 1 if it's the same string else 0
  */
 //int is_string_equal(char* a, char* b);
-
-/**
- * @brief: search an input string in the dataframe
- * @param1: pointer on the dataframe
- * @param2: string
- * @return: the index of the column where the title is already used else -1
- */
-//int title_in_dataframe(DATAFRAME* dataframe, char* title);
 
 /**
  * @brief: display the title of all columns of the dataframe

@@ -15,11 +15,9 @@ int main() {
         printf("\n-- Principal menu --\n");
         printf("\n1. Filling\n2. Displaying\n3. Usual operations \n4. Analysis and statistics\n0. Exit\n");
         choice = valid_input(1, 5);
+        // must create a cdf before any action
         if (choice != 1 && cdf == NULL) {
             choice = -1;
-        }
-        else{
-
         }
         switch (choice) {
             case -1: {
@@ -29,7 +27,7 @@ int main() {
             case 1: {
                 printf("1.Creation of an empty CDataframe \n2. Filling in the CDataframe with an input \n3. Hard filling of the CDataframe\n4.Go back to the principal menu\n");
                 choice = valid_input(1, 4);
-                if (choice == 1 && cdf != NULL) {
+                if ((choice == 1 || choice == 3) && cdf != NULL) {
                     choice = -1;
                 }
                 switch (choice) {
@@ -42,7 +40,7 @@ int main() {
                         int phys_size;
                         printf("How many columns do you want in the Dataframe? (max %d)", REALOC_SIZE);
                         phys_size = valid_input(1, REALOC_SIZE);
-                        choose_type(cdftype, phys_size);
+                        choose_type(cdftype, phys_size, 0);
                         cdf = create_cdataframe(cdftype, phys_size);
                         break;
                     }
@@ -57,9 +55,6 @@ int main() {
                     {
                         cdf = is_cdataframe(cdf, cdftype);
                         hard_fill_dataframe(cdf, cdftype);
-                        break;
-                    }
-                    case 4: {
                         break;
                     }
                 }
@@ -110,20 +105,20 @@ int main() {
                     case 2: // Delete a row of values from the CDataframe
                     {
                         printf("Enter the index of the row to remove");
-                        //delete_line_dataframe(cdf, valid_input(0, smallest_col(cdf)));
+                        delete_line_cdataframe(cdf, valid_input(0, longest_col(cdf)));
                         break;
                     }
                     case 3: // Add a column to the CDataframe
                     {
                         int result;
                         char* title = (char*)malloc(100*sizeof(char));
-                        //choose_title_not_inside(cdf, title);
-                        //result = add_column(cdf, title);
-                        if(result){
+                        choose_title_not_inside(cdf, title);
+                        result = add_column(cdf,cdftype, title);
+                        /*if(result){
                             printf("Column successfully added.\n");
                         }else{
                             printf("Can't add a column: no more place in memory.\n");
-                        }
+                        }*/
                         break;
                     }
                     case 4: // Delete a column from the CDataframe
@@ -231,6 +226,9 @@ int main() {
             }
         }
     }while (choice != 0);
+    if (cdf!=NULL){
+        delete_cdataframe(&cdf);
+    }
 
 /*
     //TEST with number ok

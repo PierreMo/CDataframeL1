@@ -81,15 +81,16 @@ int insert_value(COLUMN *col, void *value) {
 }
 
 void delete_column(COLUMN** col){
+    printf("%d", (*col)->size);
     for(int i=0; i<(*col)->size;i++){
         free((*col)->data[i]);
-
     }
     if ((*col)->index != NULL){
         free((*col)->index);
     }
     free((*col)->data);
     free((*col)->title);
+    free(*col);
     *col=NULL;
 }
 
