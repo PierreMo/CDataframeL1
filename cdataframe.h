@@ -51,6 +51,11 @@ int longest_col(CDATAFRAME* cdf);
  * @param2 : number of column in the dataframe
  */
 void choose_type(ENUM_TYPE* cdftype, int size);
+/**
+ * brief : allow the user to enter a value
+ * @return : return if
+ */
+int input_value();
 
 /**
 * Create a dataframe
@@ -87,7 +92,7 @@ void hard_fill_dataframe(CDATAFRAME* cdf);
  * Display the dataframe
  * @param1 : pointer on dataframe to display
  */
-void display_dataframe(CDATAFRAME* cdf);
+void display_dataframe(CDATAFRAME* cdf, int nb_lines, int nb_col);
 
 /**
  * Allow to enter a value between 0 and val
@@ -109,6 +114,13 @@ CDATAFRAME* is_cdataframe(CDATAFRAME* cdf, ENUM_TYPE* cdftype);
  * @param1 : dataframe to fill
  */
 void fill_cdataframe(CDATAFRAME* cdf);
+
+/**
+ * @brief: Add a row of values to the dataframe
+ * @param1: Pointer to the dataframe
+ */
+void add_line_dataframe(CDATAFRAME* cdf);
+
 
 /*
 typedef struct{
@@ -153,7 +165,7 @@ typedef struct{
  */
 //int smallest_col(DATAFRAME* dataframe);
 
-//int input_number();
+
 
 
 /**
@@ -178,13 +190,6 @@ typedef struct{
 * @return: return the number of value smaller than @param2
 */
 //int smaller(DATAFRAME* dataframe, int value);
-
-
-/**
- * @brief: Add a row of values to the dataframe
- * @param1: Pointer to the dataframe
- */
-//void add_line_dataframe(DATAFRAME* dataframe);
 
 /**
  * @brief: delete a row of values to the dataframe

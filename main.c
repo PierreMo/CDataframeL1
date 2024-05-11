@@ -71,23 +71,23 @@ int main() {
                 switch (choice) {
                     case 1: // Display the entire CDataframe
                     {
-                        display_dataframe(cdf);
+                        display_dataframe(cdf, 0, 0);
                         break;
                     }
                     case 2: // Display a part of the CDataframe rows according to a chosen limit
                     {
                         int nb_lines;
                         printf("How many lines do you want to display?");
-                        //nb_lines = valid_input(1, longest_col(cdf));
-                        //display_dataframe(cdf, nb_lines, 0);
+                        nb_lines = valid_input(1, longest_col(cdf));
+                        display_dataframe(cdf, nb_lines, 0);
                         break;
                     }
                     case 3: // Display a part of the columns of the CDataframe according to a limit supplied by the user
                     {
                         int nb_col;
                         printf("How many columns do you want to display?");
-                       // nb_col = valid_input(1, longest_col(cdf));
-                        //display_dataframe(cdf, 0, nb_col);
+                        nb_col = valid_input(1, longest_col(cdf));
+                        display_dataframe(cdf, 0, nb_col);
                         break;
                     }
                     case 4: {
@@ -97,14 +97,14 @@ int main() {
                 break;
             }
             case 3: {
-                printf("1. Add a row of values to the CDataframe\n2. Delete a row of values from the CDataframe\n3. Add a column to the CDataframe"
+                printf("1. Add a row of values at the end of the CDataframe\n2. Delete a row of values from the CDataframe\n3. Add a column to the CDataframe"
                        " \n4. Delete a column from the CDataframe\n5. Rename the title of a column in the CDataframe \n6. • Check the existence of a value (search) in the CDataframe"
                        "\n7. Access/replace the value in a CDataframe cell using its row and column number\n8. Display column names\n9.Go back to the principal menu\n");
                 choice = valid_input(1, 9);
                 switch (choice) {
                     case 1: // Add a row of values to the CDataframe
                     {
-                        //add_line_dataframe(cdf);
+                        add_line_dataframe(cdf);
                         break;
                     }
                     case 2: // Delete a row of values from the CDataframe
