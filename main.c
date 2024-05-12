@@ -110,6 +110,12 @@ int main() {
                     }
                     case 3: // Add a column to the CDataframe
                     {
+                        // debug ----------------------
+                        for(int i=0; i<3; i++){
+                            printf("\t-- %d",cdftype[i]);
+                        }
+                        printf("\n");
+                        //-
                         int result;
                         char* title = (char*)malloc(100*sizeof(char));
                         choose_title_not_inside(cdf, title);

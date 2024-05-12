@@ -79,7 +79,14 @@ void choose_type(ENUM_TYPE* cdftype, int size, int add_type){
     }
     if(add_type){ // to add a type when we add a column
         printf("To choose a type you must entre it's number.\n");
-        cdftype[size+1]= valid_input(1,7)+1;
+        cdftype[size+1]= valid_input(1,7)+1;// +1 to avoid NULLVAL at 1 in enum_type
+
+        printf("debug in choose_type_new_col\n");
+        for(int i=0; i<size+1; i++){
+            printf("\t-- %d",cdftype[i]);
+        }
+        printf("\n");
+
     }
     else{
         printf("To choose a type you must entre it's number. You can choose a type per column.\n");
@@ -87,6 +94,13 @@ void choose_type(ENUM_TYPE* cdftype, int size, int add_type){
             printf("For column %d ", i+1);
             cdftype[i]= valid_input(1,7)+1;// +1 to avoid NULLVAL at 1 in enum_type
         }
+        // debug ----------------------
+        printf("debug in choose_type_new_cdf\n");
+        for(int i=0; i<size; i++){
+            printf("\t-- %d",cdftype[i]);
+        }
+        printf("\n");
+        //---------------------------
     }
 
 }
@@ -118,7 +132,7 @@ int longest_col(CDATAFRAME* cdf){
 
 void input_value(COLUMN* col, void *choice){
     int type;
-    printf("type : %d", col->column_type);
+    printf("type : %d\n", col->column_type);
     switch(col->column_type){
         case UINT:{
             unsigned int *val = (unsigned int *)choice;
@@ -394,12 +408,19 @@ void delete_line_cdataframe(CDATAFRAME* cdf, int index){
 int add_column(CDATAFRAME* cdf, ENUM_TYPE* cdftype, char* title){
     int success = 0;
     int size = lenght_cdf(cdf);
+    // debug ----------------------
+    for(int i=0; i<size; i++){
+        printf("\t-- %d",cdftype[i]);
+    }
+    printf("\n");
+    //-------------------------------
     choose_type(cdftype, size, 1);
-    printf("size : %d", size-1);
+    printf("\nsize : %d", size-1);
     COLUMN* col = (COLUMN *) create_column(cdftype[size], title);
+    printf("type : %d\n", col->column_type);
     lnode* ptr_col = lst_create_lnode(col);
     printf("Where do you want to insert your column ? Input the value corresponding to your choice.");
-    printf("\n1. At the end of the dataframe\n2. At the beginning of the dataframe\n 3. After a chosen column");
+    printf("\n1. At the end of the dataframe\n2. At the beginning of the dataframe\n3. After a chosen column");
     int choice = valid_input(1,3);
     switch (choice) {
         case(1):{ // insert at the tail
@@ -437,9 +458,10 @@ int add_column(CDATAFRAME* cdf, ENUM_TYPE* cdftype, char* title){
             choose_title_inside(cdf,title_in);
             LNODE *tmp = cdf->head;
             int i = 0;
-            while(i <size){
+            while(i <size && success == 0){
                 if(strcmp(((COLUMN*)tmp->data)->title, title_in) ==0 ){
                     lst_insert_after((list *) cdf, ptr_col, ((lnode *) tmp->data));
+                    success = 1;
                 }
                 tmp = tmp->next;
                 i++;
@@ -455,6 +477,7 @@ int add_column(CDATAFRAME* cdf, ENUM_TYPE* cdftype, char* title){
                 input_value(((COLUMN*) tmp->data), &val);
                 insert_value(tmp->data,&val);
             }
+            free(title_in);
             break;
         }
     }
