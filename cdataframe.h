@@ -80,7 +80,7 @@ void input_value(COLUMN* col, void* choice);
  *
  * @param cdf
  */
-void display_titles(CDATAFRAME* cdf);
+void display_titles(CDATAFRAME* cdf, int nb_col);
 /**
 * Create a dataframe
 */

@@ -81,7 +81,6 @@ int insert_value(COLUMN *col, void *value) {
 }
 
 void delete_column(COLUMN** col){
-    printf("%d", (*col)->size);
     for(int i=0; i<(*col)->size;i++){
         free((*col)->data[i]);
     }
@@ -110,6 +109,10 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
         }
         case CHAR:{
             snprintf(str, size, "%c", *((int*)col->data[i]));
+            break;
+        }
+        case FLOAT:{
+            snprintf(str, size, "%f", *((float*)col->data[i]));
             break;
         }
         case DOUBLE:{

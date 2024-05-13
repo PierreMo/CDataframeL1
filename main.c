@@ -14,7 +14,7 @@ int main() {
     do {
         printf("\n-- Principal menu --\n");
         printf("\n1. Filling\n2. Displaying\n3. Usual operations \n4. Analysis and statistics\n0. Exit\n");
-        choice = valid_input(1, 5);
+        choice = valid_input(0, 5);
         // must create a cdf before any action
         if (choice != 1 && cdf == NULL) {
             choice = -1;
@@ -61,7 +61,7 @@ int main() {
                 break;
             }
             case 2: {
-                printf("1. Display the entire CDataframe \n2. Display a part of the CDataframe rows according to a chosen limit\n3. Display a part of the columns of the CDataframe according to a limit supplied by the user\n4.Go back to the principal menu\n");
+                printf("\n1. Display the entire CDataframe \n2. Display a part of the CDataframe rows according to a chosen limit\n3. Display a part of the columns of the CDataframe according to a limit supplied by the user\n4.Go back to the principal menu\n");
                 choice = valid_input(1, 4);
                 switch (choice) {
                     case 1: // Display the entire CDataframe
