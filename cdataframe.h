@@ -182,6 +182,19 @@ void delete_line_cdataframe(CDATAFRAME* cdf, int index);
 */
 int add_column(CDATAFRAME* cdf, char* title);
 
+/**
+ *
+ */
+void convert_chosen_value(type,str2, value);
+
+/**
+* @brief: Find how many cells are either equal to a given value in the dataframe
+* @param1: Pointer to the dataframe
+* @param2: integer to compare other values with
+* @return: return the number of value equal to @param2
+*/
+int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value);
+
 
 /*
 typedef struct{
@@ -211,13 +224,7 @@ typedef struct{
  */
 //int smallest_col(DATAFRAME* dataframe);
 
-/**
-* @brief: Find how many cells are either equal to a given value in the dataframe
-* @param1: Pointer to the dataframe
-* @param2: integer to compare other values with
-* @return: return the number of value equal to @param2
-*/
-//int equal(DATAFRAME* dataframe, int value);
+
 
 /**
 * @brief: Find how many cells are either greater than a given value in the dataframe

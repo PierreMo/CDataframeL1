@@ -463,6 +463,62 @@ int add_column(CDATAFRAME* cdf, char* title){
     return 0;
 }
 
+void convert_chosen_value(ENUM_TYPE type, char* str, void* value){
+    int size = REALOC_SIZE;
+    switch (type) {
+        case UINT:{
+            snprintf(str, size, "%d", *((unsigned int*)value));
+            break;
+        }
+        case INT:{
+            snprintf(str, size, "%d", *((int*)value));
+            break;
+        }
+        case CHAR:{
+            snprintf(str, size, "%c", *((char*)value));
+            break;
+        }
+        case FLOAT:{
+            snprintf(str, size, "%f", *((float*)value));
+            break;
+        }
+        case DOUBLE:{
+            snprintf(str, size, "%f", *((double*)value));
+            break;
+        }
+        case STRING:{
+            snprintf(str, size, "%s", ((char*)value));
+            break;
+        }
+        case STRUCTURE:{
+            // here we have to do a switch for the different structures
+            break;
+        }
+    }
+}
+
+int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
+    LNODE* tmp = cdf->head;
+    int size = cdataframe_size(cdf);
+    char str1[REALOC_SIZE], str2[REALOC_SIZE];//buffer
+    int cpt=0;
+    printf("type: %d", type);
+    convert_chosen_value(type, str2, value);
+    for(int i =0; i<size; i++){
+        if (((COLUMN*) tmp->data)->column_type == type ){
+            for(int j=0; j<((COLUMN*) tmp->data)->size; j++){
+                convert_value((COLUMN *) tmp->data, j, str1, REALOC_SIZE);
+                printf("2 strings :%s, %s", str1, str2);
+                if(strcmp(str1, str2) == 0){
+                    cpt++;
+                }
+            }
+        }
+        tmp = tmp->next;
+    }
+    return cpt;
+}
+
 /*
 int still_in_frame(DATAFRAME* dataframe;int i){
     int bool = 0;
@@ -481,17 +537,7 @@ int smallest_col(DATAFRAME* dataframe){
     return min;
 }
 
-int equal(DATAFRAME* dataframe, int value){
-    int cpt=0;
-    for(int i =0; i<dataframe->ls; i++){
-        for(int j=0; j<dataframe->col[i]->ls; j++){
-            if(dataframe->col[i]->tab[j]==value){
-                cpt++;
-            }
-        }
-    }
-    return cpt;
-}
+
 
 int greater(DATAFRAME* dataframe, int value){
     int cpt=0;

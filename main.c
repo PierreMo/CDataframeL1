@@ -200,17 +200,18 @@ int main() {
                     }
                     case 3: // Display the number of cells equal to x (x given as parameter)
                     {
-                        int value, res;
+                        void* value;
+                        int res;
                         ENUM_TYPE cdftype_1[] = {};
                         choose_type(cdftype_1, 1);
                         printf("type: %d", cdftype_1[0]);
                         input_value(*cdftype_1, &value);
-                        printf("value : %d", value);
-                        //res = equal(cdf, value);
+                        res = equal(cdf,cdftype_1[0],value);
+                        printf("%d", res);
                         if (res) {
                             printf("There are %d cells with the value %d.\n", res, value);
                         } else {
-                            printf("The value %d is not in the dataframe.", value);
+                            printf("%d is not in the dataframe.", value);
                         }
                         break;
                     }

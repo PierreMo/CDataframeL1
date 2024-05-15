@@ -108,7 +108,7 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
             break;
         }
         case CHAR:{
-            snprintf(str, size, "%c", *((int*)col->data[i]));
+            snprintf(str, size, "%c", *((char*)col->data[i]));
             break;
         }
         case FLOAT:{
