@@ -117,7 +117,7 @@ int main() {
                         printf("\n");
                         //-
                         int result;
-                        char* title = (char*)malloc(100*sizeof(char));
+                        char* title = (char*)malloc(REALOC_SIZE * sizeof(char));
                         choose_title_not_inside(cdf, title);
                         result = add_column(cdf,cdftype, title);
                         /*if(result){
