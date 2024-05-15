@@ -8,8 +8,8 @@
 #include "list.h"
 #include "column.h"
 
-void choose_title(char* title, int nb){
-    printf("Choose the title of column %d:", nb);
+void choose_title(char* title){
+    printf("Choose the title of the column: ");
     scanf("%s",title);
 }
 /*
@@ -25,29 +25,29 @@ int is_string_equal(char* a, char* b){
     }
 }*/
 
-void choose_title_not_inside(CDATAFRAME* dataframe, char* title){
+void choose_title_not_inside(CDATAFRAME* cdf, char* title){
     do{
         printf("Choose the title of the column:");
         scanf("%s",title);
-        if (title_in_dataframe(dataframe, title)!=-1){
+        if (title_in_dataframe(cdf, title)!=-1){
             printf("This title is already in the dataframe!\n");
         }
-    }while(title_in_dataframe(dataframe, title)!=-1);
+    }while(title_in_dataframe(cdf, title)!=-1);
 }
 
-void choose_title_inside(CDATAFRAME* dataframe, char* title){
+void choose_title_inside(CDATAFRAME* cdf, char* title){
     do{
         printf("Choose the title of the column:");
         scanf("%s",title);
-        if (title_in_dataframe(dataframe, title)==-1){
+        if (title_in_dataframe(cdf, title)==-1){
             printf("This title is not in the dataframe!\n");
         }
-    }while(title_in_dataframe(dataframe, title)==-1);
+    }while(title_in_dataframe(cdf, title)==-1);
 }
 
 int title_in_dataframe(CDATAFRAME* cdf, char* title) {
     LNODE* tmp = cdf->head;
-    int size = lenght_cdf(cdf);
+    int size = cdataframe_size(cdf);
     for (int i = 0; i < size; i++){
         // if strings equal strcmp = 0
         if (strcmp(title, ((COLUMN*)tmp->data)->title) == 0) {
@@ -71,38 +71,17 @@ int valid_input(int lower_bound, int upper_bound){
     return choice;
 }
 
-void choose_type(ENUM_TYPE* cdftype, int size, int add_type){
+void choose_type(ENUM_TYPE* cdftype, int size){
     char* types[] = {"1. UINT", "2. INT", "3. CHAR", "4. FLOAT", "5. DOUBLE", "6. STRING", "7. STRUCTURE"};
     printf("All the types available are:\n ");
     for(int i=0; i<7; i++){
         printf("%s\n",types[i]);
     }
-    if(add_type){ // to add a type when we add a column
-        printf("To choose a type you must entre it's number.\n");
-        cdftype[size+1]= valid_input(1,7)+1;// +1 to avoid NULLVAL at 1 in enum_type
-
-        printf("debug in choose_type_new_col\n");
-        for(int i=0; i<size+1; i++){
-            printf("\t-- %d",cdftype[i]);
-        }
-        printf("\n");
-
+    printf("To choose a type you must entre it's number. You can choose a type per column.\n");
+    for (int i= 0; i<size; i++){
+        printf("For column %d ", i+1);
+        cdftype[i]= valid_input(1,7)+1;// +1 to avoid NULLVAL at 1 in enum_type
     }
-    else{
-        printf("To choose a type you must entre it's number. You can choose a type per column.\n");
-        for (int i= 0; i<size; i++){
-            printf("For column %d ", i+1);
-            cdftype[i]= valid_input(1,7)+1;// +1 to avoid NULLVAL at 1 in enum_type
-        }
-        // debug ----------------------
-        printf("debug in choose_type_new_cdf\n");
-        for(int i=0; i<size; i++){
-            printf("\t-- %d",cdftype[i]);
-        }
-        printf("\n");
-        //---------------------------
-    }
-
 }
 
 
@@ -117,7 +96,6 @@ int lenght_cdf(CDATAFRAME* cdf){
     return size;
 }
 
-
 int longest_col(CDATAFRAME* cdf){
     int max=0;
     LNODE* tmp = cdf->head;
@@ -131,10 +109,9 @@ int longest_col(CDATAFRAME* cdf){
     return max;
 }
 
-void input_value(COLUMN* col, void *choice){
+void input_value(ENUM_TYPE type_col, void *choice){
     int type;
-    printf("type : %d\n", col->column_type);
-    switch(col->column_type){
+    switch(type_col){
         case UINT:{
             unsigned int *val = (unsigned int *)choice;
             do{
@@ -150,7 +127,6 @@ void input_value(COLUMN* col, void *choice){
         case INT:{
             int *val = (int *)choice;
             do{
-                printf("arriver");
                 printf("\nChoose a value:");
                 type = scanf("%d",val);//if the type is int type=1
                 if (type != 1) {
@@ -217,7 +193,12 @@ CDATAFRAME *create_cdataframe(ENUM_TYPE *cdftype, int size){
     CDATAFRAME * cdf = (CDATAFRAME *) lst_create_list();
     for(int i = 0; i<size; i++){
         char* title = (char *)malloc(100*sizeof(char));
-        choose_title(title, i+1);
+        if(i!=0){
+            choose_title_not_inside(cdf, title);
+        }
+        else{
+            choose_title(title);
+        }
         COLUMN* col = (COLUMN *) create_column(cdftype[i], title);
         lnode* ptr_col = lst_create_lnode(col);
         lst_insert_tail((list *) cdf, ptr_col);
@@ -225,25 +206,34 @@ CDATAFRAME *create_cdataframe(ENUM_TYPE *cdftype, int size){
     return cdf;
 }
 
+int cdataframe_size(CDATAFRAME *cdf){
+    int size = 0;
+    LNODE* tmp_lnode = cdf->head;
+    while(tmp_lnode->next != NULL){
+        tmp_lnode = tmp_lnode->next;
+        size++;
+    }
+    size++;// to count the last node of the list
+    return size;
+}
 
+// a retester
 void delete_cdataframe(CDATAFRAME **cdf){
     LNODE* tmp = (*cdf)->head;
-    COLUMN* col = tmp->data;
     while(tmp->next != NULL){
-        delete_column(&(tmp->data));
+        delete_column(tmp->data);// pb
         tmp = tmp->next;
     }
-    delete_column(&(tmp->data));
+    delete_column(tmp->data);
     lst_delete_list((list *) *cdf);
     free(tmp);
-    printf("Dataframe successfully deleted");
 }
 
 // à tester
 void delete_column_by_name(CDATAFRAME *cdf, char *col_name){
     int deleted = 0;
     LNODE* tmp = cdf->head;
-    int size = lenght_cdf(cdf);
+    int size = cdataframe_size(cdf);
     for(int i =0; i < size ; i++){
         // strcmp return 0 if col_name correspond to a column name in cdf
         if( strcmp(((COLUMN*)tmp->data)->title, col_name) == 0){
@@ -263,7 +253,7 @@ void delete_column_by_name(CDATAFRAME *cdf, char *col_name){
 
 void hard_fill_dataframe(CDATAFRAME * cdf, ENUM_TYPE* cdftype){
     LNODE* tmp = cdf->head;
-    int size = lenght_cdf(cdf);
+    int size = cdataframe_size(cdf);
     int nbr_val = 5;
     for(int i = 0; i < size; i++){
         switch (cdftype[i]) {
@@ -296,20 +286,16 @@ void hard_fill_dataframe(CDATAFRAME * cdf, ENUM_TYPE* cdftype){
     }
 }
 
-void display_titles(CDATAFRAME* cdf, int size){
-    // 0 for display all the titles
-    if (size==0){
-        size = lenght_cdf(cdf);
-    }
+void display_titles(CDATAFRAME* cdf){
+    int size = cdataframe_size(cdf);
     LNODE * tmp = (LNODE *) cdf->head;
-    //printf("size:%d",size);
     for (int i=0; i<size; i++){
-        //printf("i:%d",i);
         printf("%s\t", ((COLUMN*)tmp->data)->title);
         tmp = tmp->next;
     }
 }
 void display_dataframe(CDATAFRAME* cdf, int nb_lines, int nb_col){
+
     // if the user want to display all the dataframe
     if (nb_lines==0){
         //the number of lines to print is the logical size of longest column
@@ -318,15 +304,13 @@ void display_dataframe(CDATAFRAME* cdf, int nb_lines, int nb_col){
     if (nb_col==0){
         nb_col = lenght_cdf(cdf);
     }
-    display_titles(cdf, nb_col);
+    display_titles(cdf);
     //display values and index
     printf("\n");
     char str[REALOC_SIZE];//buffer
     for(int i = 0; i < nb_lines; i++) {
-        //printf("i:%d",i);
         LNODE * tmp = cdf->head;
         for(int j = 0;j < nb_col; j++) {
-            //printf("j:%d",j);
             if(i < ((COLUMN*)tmp->data)->size ){
                 convert_value((COLUMN *) tmp->data, i, str, REALOC_SIZE);
                 printf("[%d] %s\t",i, str);
@@ -346,7 +330,7 @@ CDATAFRAME* is_cdataframe(CDATAFRAME* cdf, ENUM_TYPE* cdftype){
         printf("Let's first create a dataframe. ");
         printf("How many columns do you want in the Dataframe? (max %d)", REALOC_SIZE);
         phys_size = valid_input(1, REALOC_SIZE);
-        choose_type(cdftype, phys_size, 0);
+        choose_type(cdftype, phys_size);
         cdf = create_cdataframe(cdftype, phys_size);
     }
     return cdf;
@@ -362,7 +346,7 @@ void fill_cdataframe(CDATAFRAME* cdf){
         for(int j=0; j< nbr_val; j++){
             printf("\nEnter the value to insert: ");
             void* choice;
-            input_value(((COLUMN*) tmp->data), &choice);
+            input_value(((COLUMN*) tmp->data)->column_type, &choice);
             insert_value(tmp->data,&choice);
         }
         size--;
@@ -386,7 +370,7 @@ void add_line_dataframe(CDATAFRAME* cdf){
     for(int i= 0;i < size ;i++){
         printf("Insert the new value for the column %s (of type %s) ", ((COLUMN*)tmp->data)->title, types[check_type(((COLUMN*)tmp->data))-1]);
         void* choice;
-        input_value(((COLUMN*) tmp->data), &choice);
+        input_value(((COLUMN*) tmp->data)->column_type, &choice);
         insert_value(tmp->data,&choice);
         tmp = tmp->next;
     }
@@ -395,7 +379,7 @@ void add_line_dataframe(CDATAFRAME* cdf){
 
 void delete_line_cdataframe(CDATAFRAME* cdf, int index){
     LNODE* tmp = cdf->head;
-    int size = lenght_cdf(cdf);
+    int size = cdataframe_size(cdf);
     for(int i =0; i<size; i++){
         if(((COLUMN*)tmp->data)->size>= i){
             delete_value(((COLUMN*)tmp->data), index);
@@ -404,80 +388,76 @@ void delete_line_cdataframe(CDATAFRAME* cdf, int index){
     }
 }
 
-int add_column(CDATAFRAME* cdf, ENUM_TYPE* cdftype, char* title){
-    int success = 0;
+int add_column(CDATAFRAME* cdf, char* title){
     int size = lenght_cdf(cdf);
+    ENUM_TYPE cdftype[] = {};
+    int success = 0;
+    choose_type(cdftype, 1);
 
-    // debug ----------------------
-    for(int i=0; i<size; i++){
-        printf("\t-- %d",cdftype[i]);
-    }
-    printf("\n");
-    //-------------------------------
-
-    choose_type(cdftype, size, 1);
-    printf("\nsize : %d", size-1);
-    COLUMN* col = (COLUMN *) create_column(cdftype[size], title);
-    printf("type : %d\n", col->column_type);
+    // creation of the new column
+    COLUMN* col = (COLUMN *) create_column(cdftype[0], title);
     lnode* ptr_col = lst_create_lnode(col);
 
+    // insert the column in the dataframe
     printf("Where do you want to insert your column ? Input the value corresponding to your choice.");
     printf("\n1. At the end of the dataframe\n2. At the beginning of the dataframe\n3. After a chosen column");
     int choice = valid_input(1,3);
-
-    int nbr_val;
-    printf("How many value do you want in your column: ");
-    nbr_val = valid_input(1, REALOC_SIZE);
-
-
     switch (choice) {
         case(1):{ // insert at the tail
             lst_insert_tail((list *) cdf, ptr_col);
-            LNODE *tmp = cdf->tail;// tail ?
+            int nbr_val;
+            LNODE *tmp = cdf->tail;
+            printf("How many value do you want in your column: ");
+            nbr_val = valid_input(1, REALOC_SIZE);
             for(int j=0; j< nbr_val; j++){
                 printf("\nEnter the value to insert: ");
                 void* val;
-                input_value(((COLUMN*) tmp->data), &val);
+                input_value(((COLUMN*) tmp->data)->column_type, &val);
                 insert_value(tmp->data,&val);
             }
-            break;
+            return 1;
         }
         case(2):{ // insert at the head
             lst_insert_head((list *) cdf, ptr_col);
+            int nbr_val;
             LNODE *tmp = cdf->head;
+            printf("How many value do you want in your column:");
+            nbr_val = valid_input(1, REALOC_SIZE);
             for(int j=0; j< nbr_val; j++){
                 printf("\nEnter the value to insert: ");
                 void* val;
-                input_value(((COLUMN*) tmp->data), &val);
+                input_value(((COLUMN*) tmp->data)->column_type, &val);
                 insert_value(tmp->data,&val);
             }
-            break;
+            return 1;
         }
         case(3):{ // insert at a chosen position
             printf("After which column do you want to insert your new column? \n");
-            display_titles(cdf, 0);
+            display_titles(cdf);
             char* title_in = (char*)malloc(100*sizeof(char));
             choose_title_inside(cdf,title_in);
             LNODE *tmp = cdf->head;
             int i = 0;
             while(i <size && success == 0){
                 if(strcmp(((COLUMN*)tmp->data)->title, title_in) ==0 ){
-                    lst_insert_after((list *) cdf, ptr_col, ((lnode *) tmp->data));
+                    lst_insert_after((list *) cdf, ptr_col, (lnode *) tmp);
                     success = 1;
                 }
                 tmp = tmp->next;
                 i++;
             }
             // fill column
-            tmp =  tmp->prev;
+            int nbr_val;
+            printf("How many value do you want in your column:");
+            nbr_val = valid_input(1, REALOC_SIZE);
             for(int j=0; j< nbr_val; j++){
                 printf("\nEnter the value to insert: ");
                 void* val;
-                input_value(((COLUMN*) tmp->data), &val);
+                input_value(((COLUMN*) tmp->data)->column_type, &val);
                 insert_value(tmp->data,&val);
             }
             free(title_in);
-            break;
+            return 1;
         }
     }
     return 0;

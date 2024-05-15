@@ -26,6 +26,12 @@ typedef struct list {
 typedef LIST CDATAFRAME;
 
 /**
+ *
+ * @param title
+ */
+void choose_title(char* title);
+
+/**
  * @breif: Allow the user to choose a title not already in the dataframe
  * @param1 : pointer on dataframe
  * @param2 : Pointer on the title
@@ -66,23 +72,26 @@ int longest_col(CDATAFRAME* cdf);
  * @param1 : a list to save columns type
  * @param2 : number of column in the dataframe
  */
-void choose_type(ENUM_TYPE* cdftype, int size, int add_type);
+void choose_type(ENUM_TYPE* cdftype, int size);
 
 /**
  * brief : allow the user to enter a value
- * param1:
- * param2:
- * @return : return if
+ * param1: a column of the dataframe
+ * param2: the value chosen by the user
  */
-void input_value(COLUMN* col, void* choice);
+void input_value(ENUM_TYPE type_col, void* choice);
 
 /**
- *
- * @param cdf
+ * breif : print titles of dataframe columns
+ * @param1 : pointer on the dataframe
  */
-void display_titles(CDATAFRAME* cdf, int nb_col);
+void display_titles(CDATAFRAME* cdf);
+
 /**
-* Create a dataframe
+* brief : Create a dataframe
+ * param1: list of types of column in the dataframe
+ * param2: size of the dataframe
+ * return : the dataframe
 */
 CDATAFRAME *create_cdataframe(ENUM_TYPE *cdftype, int size);
 
@@ -171,7 +180,7 @@ void delete_line_cdataframe(CDATAFRAME* cdf, int index);
  * @param2: title of the new column
  * @return: 1 if the line is added and else 0
 */
-int add_column(CDATAFRAME* cdf, ENUM_TYPE* cdftype, char* title);
+int add_column(CDATAFRAME* cdf, char* title);
 
 
 /*

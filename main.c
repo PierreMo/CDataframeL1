@@ -20,6 +20,7 @@ int main() {
             choice = -1;
         }
         switch (choice) {
+
             case -1: {
                 printf("You must create a dataframe first!\n");
                 break;
@@ -40,7 +41,7 @@ int main() {
                         int phys_size;
                         printf("How many columns do you want in the Dataframe? (max %d)", REALOC_SIZE);
                         phys_size = valid_input(1, REALOC_SIZE);
-                        choose_type(cdftype, phys_size, 0);
+                        choose_type(cdftype, phys_size);
                         cdf = create_cdataframe(cdftype, phys_size);
                         break;
                     }
@@ -119,19 +120,19 @@ int main() {
                         int result;
                         char* title = (char*)malloc(REALOC_SIZE * sizeof(char));
                         choose_title_not_inside(cdf, title);
-                        result = add_column(cdf,cdftype, title);
-                        /*if(result){
+                        result = add_column(cdf, title);
+                        if(result){
                             printf("Column successfully added.\n");
                         }else{
                             printf("Can't add a column: no more place in memory.\n");
-                        }*/
+                        }
                         break;
                     }
                     case 4: // Delete a column from the CDataframe
                     {
                         char* title = (char*)malloc(100*sizeof(char));
                         int index_col_title;
-                        printf("Which column do you want to delete?\n");
+                        //printf("Which column do you want to delete?\n");
                         //choose_title_inside(cdf,title);
                         //display_dataframe(cdf, 0, 0);
                         //index_col_title = title_in_dataframe(cdf, title);
@@ -184,26 +185,30 @@ int main() {
             }
             case 4: {
                 printf("1. Display the number of rows\n2. Display the number of columns\n3. Display the number of cells equal to a chosen value"
-                       " \n4. Display the number of cells containing a value greater than a chosen value\n5. Display the number of cells containing a value less than a chosen value \n6.Go back to the principal menu\n");
+                       " \n4. Display the number of cells containing a value greater than a chosen value\n5. Display the number of cells containing a value less than a chosen value \n6. Go back to the principal menu\n");
                 choice = valid_input(1, 6);
                 switch (choice) {
                     case 1: // Display the number of rows
                     {
-                        //printf("There are %d rows in the dataframe.\n", longest_col(cdf));
+                        printf("There are %d rows in the dataframe.\n", longest_col(cdf));
                         break;
                     }
                     case 2: // Display the number of columns
                     {
-                        //printf("There are %d columns in the dataframe.\n", cdf->ls);
+                        printf("There are %d columns in the dataframe.\n", cdataframe_size(cdf));
                         break;
                     }
                     case 3: // Display the number of cells equal to x (x given as parameter)
                     {
-                        int value, cpt;
-                        //value = input_number();
-                        //cpt = equal(cdf, value);
-                        if (cpt) {
-                            printf("There are %d cells with the value %d.\n", cpt, value);
+                        int value, res;
+                        ENUM_TYPE cdftype_1[] = {};
+                        choose_type(cdftype_1, 1);
+                        printf("type: %d", cdftype_1[0]);
+                        input_value(*cdftype_1, &value);
+                        printf("value : %d", value);
+                        //res = equal(cdf, value);
+                        if (res) {
+                            printf("There are %d cells with the value %d.\n", res, value);
                         } else {
                             printf("The value %d is not in the dataframe.", value);
                         }
@@ -231,10 +236,12 @@ int main() {
                 break;
             }
         }
-    }while (choice != 0);
+    }
+    while (choice != 0);
+    /*
     if (cdf!=NULL){
         delete_cdataframe(&cdf);
-    }
+    }*/
 
 /*
     //TEST with number ok
