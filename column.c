@@ -135,7 +135,43 @@ void delete_value(COLUMN *col, int index) {
     for (i = index; i < col->size; i++) {
         col->data[i] = col->data[i + 1];
     }
-    col->size--;
+    //col->size--;
+}
+
+void change_value(COLUMN *col, void *value, int index) {
+    if (value != NULL) {
+        switch (col->column_type) {
+            case INT: {
+                *((int *) col->data[index]) = *((int *) value); //convert
+                break;
+            }
+            case CHAR: {
+                *((char *) col->data[index]) = *((char *) value);
+                break;
+            }
+            case UINT: {
+                *((unsigned int *) col->data[index]) = *((unsigned int *) value);
+                break;
+            }
+            case FLOAT: {
+                *((float *) col->data[index]) = *((float *) value);
+                break;
+            }
+            case DOUBLE: {
+                *((double *) col->data[index]) = *((double *) value);
+                break;
+            }
+            case STRING: {
+                char* str = (char*) value;
+                strcpy((char *) col->data[index], str);
+                break;
+            }
+            case STRUCTURE: {
+                *((void **) col->data[index]) = *((void **) value);
+                break;
+            }
+        }
+    }
 }
 
 void print_col(COLUMN* col){

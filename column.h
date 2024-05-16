@@ -107,6 +107,13 @@ void print_col_by_index(COLUMN *col);
 void delete_value(COLUMN *col, int index);
 
 /**
+ *
+ * @param col
+ * @param index
+ */
+void change_value(COLUMN* col, void* value, int index);
+
+/**
 * @brief: Remove the index of a column
 * @param1: Pointer to the column
 */

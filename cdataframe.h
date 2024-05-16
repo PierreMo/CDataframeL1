@@ -10,7 +10,7 @@
 * element lnode
 */
 typedef struct lnode {
-    COLUMN *data; // Pointer to a column
+    void *data; // Pointer to a column
     struct lnode *prev;
     struct lnode *next;
 } LNODE;
@@ -215,6 +215,15 @@ int greater(CDATAFRAME* cdf, ENUM_TYPE type, void* value);
  * @param1: pointer on the dataframe on which we operate
  */
 void access_replace(CDATAFRAME* cdf);
+
+/**
+* @brief: Find how many cells are either smaller than a given value in the dataframe
+* @param1: Pointer to the dataframe
+* @param2: integer to compare other values with
+* @return: return the number of value smaller than @param2
+*/
+int smaller(CDATAFRAME* cdf, ENUM_TYPE type, void* value);
+
 /*
 typedef struct{
     COLUMN** col;
@@ -229,42 +238,11 @@ typedef struct{
 }COORD;
 
 /**
- * Create a dataframe
- * @param1 : Pointer on column
- * @size of the list
- */
-//DATAFRAME* create_dataframe(int size);
-
-
-/**
  * Find the column with the smallest number of value
  * @param1 : pointer on the dataframe
  * @return : integer that is the nb of full lines
  */
 //int smallest_col(DATAFRAME* dataframe);
-
-/**
-* @brief: Find how many cells are either smaller than a given value in the dataframe
-* @param1: Pointer to the dataframe
-* @param2: integer to compare other values with
-* @return: return the number of value smaller than @param2
-*/
-//int smaller(DATAFRAME* dataframe, int value);
-
-
-/**
- * @brief: compare two strings
- * @param1: string
- * @param2: the string to compare with param1
- * @return: 1 if it's the same string else 0
- */
-//int is_string_equal(char* a, char* b);
-
-/**
- * @brief: display the title of all columns of the dataframe
- * @param1: pointer on the dataframe
- */
-//void print_col_names(DATAFRAME* dataframe);
 
 /**
  * @brief: search all the index of a value
@@ -274,15 +252,6 @@ typedef struct{
  * @return: the tab of coord
  */
 //COORD* search_value_index(DATAFRAME* dataframe, int value, COORD* tab);
-
-/**
- * @brief:
- * @param1:
- */
-//void rename_col_dataframe(DATAFRAME* dataframe, int index);
-
-
-
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
 

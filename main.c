@@ -94,7 +94,7 @@ int main() {
             }
             case 3: {
                 printf("1. Add a row of values at the end of the CDataframe\n2. Delete a row of values from the CDataframe\n3. Add a column to the CDataframe"
-                       " \n4. Delete a column from the CDataframe\n5. Rename the title of a column in the CDataframe \n6.Check the existence of a value (search) in the CDataframe"
+                       " \n4. Delete a column from the CDataframe\n5. Rename the title of a column in the CDataframe \n6. • Check the existence of a value (search) in the CDataframe"
                        "\n7. Access/replace the value in a CDataframe cell using its row and column number\n8. Display column names\n9.Go back to the principal menu\n");
                 choice = valid_input(1, 9);
                 switch (choice) {
@@ -147,17 +147,16 @@ int main() {
                     }
                     case 6: // Check the existence of a value (search) in the CDataframe
                     {
-                        int res;
-                        ENUM_TYPE cdftype_2[] = {};
-                        choose_type(cdftype_2, 1);
                         void* value;
-                        input_value(cdftype_2[0], &value);
-                        res = equal(cdf,cdftype_2[0],value);
-                        if (res){
-                            printf("There are %d cells with this value.\n", res);
-                        }
-                        else {
-                            printf("There is no cells with this value in the dataframe.");
+                        int res;
+                        ENUM_TYPE cdftype_1[] = {};
+                        choose_type(cdftype_1, 1);
+                        input_value(cdftype_1[0], &value);
+                        res = equal(cdf,cdftype_1[0],value);
+                        if (res) {
+                            printf("The value %d is in the dataframe.\n", value);
+                        } else {
+                            printf("The value %d is not in the dataframe.", value);
                         }
                         break;
                     }
@@ -171,7 +170,7 @@ int main() {
                         display_titles(cdf);
                         break;
                     }
-                    case 9:{
+                    case 9:{ // sort col + add the case in the text to choose actions
                         break;
                     }
                 }
@@ -184,27 +183,45 @@ int main() {
                 switch (choice) {
                     case 1: // Display the number of rows
                     {
-                        printf("There are %d rows in the dataframe.\n", longest_col(cdf));
+                        int col_size = longest_col(cdf);
+                        if(col_size>1){
+                            printf("There are %d rows in the dataframe.\n",col_size );
+                        }
+                        else{
+                            printf("There is 1 row in the dataframe.\n");
+                        }
                         break;
                     }
                     case 2: // Display the number of columns
                     {
-                        printf("There are %d columns in the dataframe.\n", cdataframe_size(cdf));
+                        int cdf_size =  cdataframe_size(cdf);
+                        if(cdf_size>1){
+                            printf("There are %d columns in the dataframe.\n", cdf_size);
+                        }
+                        else{
+                            printf("There is 1 column in the dataframe.\n");
+                        }
+
                         break;
                     }
                     case 3: // Display the number of cells equal to x (x given as parameter)
                     {
+                        void* value;
                         int res;
                         ENUM_TYPE cdftype_1[] = {};
                         choose_type(cdftype_1, 1);
-                        void* value;
                         input_value(cdftype_1[0], &value);
                         res = equal(cdf,cdftype_1[0],value);
-                        if (res){
-                            printf("There are %d cells with this value.\n", res);
-                        }
-                        else {
-                            printf("There is no cells with this value in the dataframe.");
+                        if (res) {
+                            if(res>1){
+                                printf("There are %d cells with the value %d.\n", res, value);
+                            }
+                            else{
+                                printf("There is 1 cell with the value %d.\n", value);
+                            }
+
+                        } else {
+                            printf("%d is not in the dataframe.", value);
                         }
                         break;
                     }
@@ -215,27 +232,40 @@ int main() {
                         choose_type(cdftype_1, 1);
                         void* value;
                         input_value(cdftype_1[0], &value);
-                        res = equal(cdf,cdftype_1[0],value);
+                        res = greater(cdf,cdftype_1[0],value);
                         if (res){
-                            printf("There are %d cells with the value %d.\n", res, value);
+                            if(res>1){
+                                printf("There are %d cells with greater values than %d.\n", res,value);
+                            }else{
+                                printf("There is 1 cell with a greater value than %d.\n",value);
+                            }
+
                         }
                         else {
-                            printf("%d is not in the dataframe.", value);
+                            printf("There is no value greater than %d in the dataframe.", value);
                         }
-                        printf("There are %d cells with greater values than %d.\n", res,value);
                         break;
                     }
                     case 5: // Display the number of cells containing a value less than a chosen value
                     {
-                        int value;
-                        //value = input_number();
-                        //printf("There are %d cells with smaller values than %d.\n", smaller(cdf, value), value);
+                        int res;
+                        ENUM_TYPE cdftype_1[] = {};
+                        choose_type(cdftype_1, 1);
+                        void* value;
+                        input_value(cdftype_1[0], &value);
+                        res = smaller(cdf,cdftype_1[0],value);
+                        if (res){
+                            if(res>1){
+                                printf("There are %d cells with greater values than %d.\n", res,value);
+                            }else{
+                                printf("There is 1 cell with a greater value than %d.\n",value);
+                            }
+                        }
+                        else {
+                            printf("There is no value smaller than %d in the dataframe.", value);
+                        }
                         break;
                     }
-                    case 6: {
-                        break;
-                    }
-
                 }
                 break;
             }
