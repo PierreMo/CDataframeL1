@@ -26,11 +26,11 @@ COLUMN *create_column(ENUM_TYPE type,char* title){
 int insert_value(COLUMN *col, void *value) {
     if (value != NULL) {
         if (col->size == col->max_size) {
-            col->data = realloc(col->data, (col->max_size + REALOC_SIZE) * sizeof(void *));
+            col->data = realloc(col->data, (col->max_size + REALLOC_SIZE) * sizeof(void *));
             if (col->data == NULL) {
                 return 0;
             }
-            col->max_size += REALOC_SIZE;
+            col->max_size += REALLOC_SIZE;
         }
         switch (col->column_type) {
             case INT: {
@@ -116,7 +116,7 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
             break;
         }
         case DOUBLE:{
-            snprintf(str, size, "%f", *((double*)col->data[i]));
+            snprintf(str, size, "%lf", *((double*)col->data[i]));
             break;
         }
         case STRING:{
@@ -139,14 +139,14 @@ void delete_value(COLUMN *col, int index) {
 }
 
 void print_col(COLUMN* col){
-    char str[REALOC_SIZE];//buffer
+    char str[REALLOC_SIZE];//buffer
     printf("%s\n", col->title);
     for(int i=0; i<col->size;i++){
         if(col->data[i]==NULL){
             printf("[%d] NULL\n",i);
         }
         else{
-            convert_value(col, i,str, REALOC_SIZE);
+            convert_value(col, i,str, REALLOC_SIZE);
             printf("[%d] %s\n",i, str);
         }
     }
@@ -154,7 +154,7 @@ void print_col(COLUMN* col){
 
 
 void print_col_by_index(COLUMN* col){
-    char str[REALOC_SIZE];
+    char str[REALLOC_SIZE];
     int j;
     printf("%s\n", col->title);
     for(int i=0; i<col->size; i++){
@@ -167,7 +167,7 @@ void print_col_by_index(COLUMN* col){
             printf("[%d] NULL\n",i);
         }
         else{
-            convert_value(col, j,str, REALOC_SIZE);
+            convert_value(col, j,str, REALLOC_SIZE);
             printf("[%d] %s\n", i, str);
         }
     }
@@ -198,7 +198,7 @@ int check_index(COLUMN* col){
 
 void update_index(COLUMN* col){
     if (col->index[col->size-1] == col->index[col->max_size]) {
-        col->index = realloc(col->index, (col->max_size + REALOC_SIZE) * sizeof(void *));
+        col->index = realloc(col->index, (col->max_size + REALLOC_SIZE) * sizeof(void *));
     }
     col->index[col->size-1]=col->size-1;
     col->valid_index = -1;
@@ -324,11 +324,11 @@ int search_value_in_column(COLUMN *col, void *val){
                 break;
             }
             case(STRING):{
-                char str[REALOC_SIZE];
+                char str[REALLOC_SIZE];
                 do {
                     // compute the middle of the list;
                     m = (h + l) /2 ;
-                    convert_value(col, col->index[m], str, REALOC_SIZE);
+                    convert_value(col, col->index[m], str, REALLOC_SIZE);
                     // strcmp = 0 => val = str
                     if(strcmp(val, str) == 0) {
                         stop = 1 ;

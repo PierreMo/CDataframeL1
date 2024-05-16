@@ -4,7 +4,7 @@
 
 #ifndef CDATAFRAMEL1_COLUMN_H
 #define CDATAFRAMEL1_COLUMN_H
-#define REALOC_SIZE 256
+#define REALLOC_SIZE 256
 #define ASC 0
 #define DESC 1
 #include <stdlib.h>

@@ -279,6 +279,13 @@ void hard_fill_dataframe(CDATAFRAME * cdf, ENUM_TYPE* cdftype){
                 }
                 break;
             }
+            case(FLOAT):{
+                float nb = 0.00;
+                for(int j=0; j< nbr_val; j++){;
+                    insert_value(tmp ->data, &j);
+                }
+                break;
+            }
             case(STRUCTURE):{
                 break;
             }
@@ -313,12 +320,12 @@ void display_dataframe(CDATAFRAME* cdf, int nb_lines, int nb_col){
     display_titles(cdf);
     //display values and index
     printf("\n");
-    char str[REALOC_SIZE];//buffer
+    char str[REALLOC_SIZE];//buffer
     for(int i = 0; i < nb_lines; i++) {
         LNODE * tmp = cdf->head;
         for(int j = 0;j < nb_col; j++) {
             if(i < ((COLUMN*)tmp->data)->size ){
-                convert_value((COLUMN *) tmp->data, i, str, REALOC_SIZE);
+                convert_value((COLUMN *) tmp->data, i, str, REALLOC_SIZE);
                 printf("[%d] %s\t",i, str);
             }else{
                 printf("[%d] /\t", i);
@@ -334,8 +341,8 @@ CDATAFRAME* is_cdataframe(CDATAFRAME* cdf, ENUM_TYPE* cdftype){
     if (cdf ==NULL){
         int phys_size;
         printf("Let's first create a dataframe. ");
-        printf("How many columns do you want in the Dataframe? (max %d)", REALOC_SIZE);
-        phys_size = valid_input(1, REALOC_SIZE);
+        printf("How many columns do you want in the Dataframe? (max %d)", REALLOC_SIZE);
+        phys_size = valid_input(1, REALLOC_SIZE);
         choose_type(cdftype, phys_size);
         cdf = create_cdataframe(cdftype, phys_size);
     }
@@ -348,7 +355,7 @@ void fill_cdataframe(CDATAFRAME* cdf){
     while(size>0){
         int nbr_val;
         printf("How many value do you want in the column %s :", ((COLUMN*) tmp->data)->title);
-        nbr_val = valid_input(1, REALOC_SIZE);
+        nbr_val = valid_input(1, REALLOC_SIZE);
         for(int j=0; j< nbr_val; j++){
             printf("\nEnter the value to insert: ");
             void* choice;
@@ -414,7 +421,7 @@ int add_column(CDATAFRAME* cdf, char* title){
             int nbr_val;
             LNODE *tmp = cdf->tail;
             printf("How many value do you want in your column: ");
-            nbr_val = valid_input(1, REALOC_SIZE);
+            nbr_val = valid_input(1, REALLOC_SIZE);
             for(int j=0; j< nbr_val; j++){
                 printf("\nEnter the value to insert: ");
                 void* val;
@@ -428,7 +435,7 @@ int add_column(CDATAFRAME* cdf, char* title){
             int nbr_val;
             LNODE *tmp = cdf->head;
             printf("How many value do you want in your column:");
-            nbr_val = valid_input(1, REALOC_SIZE);
+            nbr_val = valid_input(1, REALLOC_SIZE);
             for(int j=0; j< nbr_val; j++){
                 printf("\nEnter the value to insert: ");
                 void* val;
@@ -455,7 +462,7 @@ int add_column(CDATAFRAME* cdf, char* title){
             // fill column
             int nbr_val;
             printf("How many value do you want in your column:");
-            nbr_val = valid_input(1, REALOC_SIZE);
+            nbr_val = valid_input(1, REALLOC_SIZE);
             for(int j=0; j< nbr_val; j++){
                 printf("\nEnter the value to insert: ");
                 void* val;
@@ -470,7 +477,7 @@ int add_column(CDATAFRAME* cdf, char* title){
 }
 
 void convert_chosen_value(ENUM_TYPE type, char* str, void* value){
-    int size = REALOC_SIZE;
+    int size = REALLOC_SIZE;
     switch (type) {
         case UINT:{
             snprintf(str, size, "%d", *((unsigned int*)value));
@@ -513,12 +520,13 @@ int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value) {
     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
     printf("3");
     int cpt = 0;
-    convert_chosen_value(type, str2, value);
+    printf("Bien initialise");
+    convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    printf("avant la boucle");
     for (int i = 0; i < size; i++) {
         if (((COLUMN *) tmp->data)->column_type == type) {
             for (int j = 0; j < ((COLUMN *) tmp->data)->size; j++) {
-                convert_value((COLUMN *) tmp->data, j, str1, REALOC_SIZE);
-                printf("2 strings :%s, %s", str1, str2);
+                convert_value((COLUMN *) tmp->data, j, str1, REALLOC_SIZE);
                 if (strcmp(str1, str2) == 0) {
                     cpt++;
                 }
@@ -634,17 +642,7 @@ int smallest_col(DATAFRAME* dataframe){
 
 
 
-int greater(DATAFRAME* dataframe, int value){
-    int cpt=0;
-    for(int i =0; i<dataframe->ls; i++){
-        for(int j=0; j<dataframe->col[i]->ls; j++){
-            if(dataframe->col[i]->tab[j]>value){
-                cpt++;
-            }
-        }
-    }
-    return cpt;
-}
+
 
 int smaller(DATAFRAME* dataframe, int value){
     int cpt=0;
@@ -681,7 +679,7 @@ COORD* search_value_index(DATAFRAME* dataframe,int value, COORD* tab){
         for(int j=0; j<dataframe->col[i]->ls; j++){
             if(dataframe->col[i]->tab[j]==value){
                 if(tab==NULL){
-                    tab = (COORD*)malloc(REALOC_SIZE*sizeof(COORD));
+                    tab = (COORD*)malloc(REALLOC_SIZE*sizeof(COORD));
                     tab->ls = 0;
                 }
                 tab[tab->ls].col = i;
@@ -700,26 +698,6 @@ void rename_col_dataframe(DATAFRAME* dataframe, int index){
     dataframe->col[index]->title = title;
 }
 
-void access_replace(DATAFRAME* dataframe){
-    display_dataframe(dataframe,0,0);
-    int column, row;
-    printf("Enter the index of the column:");
-    column = valid_input(0,dataframe->ls-1);
-    printf("Enter the index of the row:");
-    row = valid_input(0,dataframe->col[column]->ls-1);
-    printf("The value at this position is %d. ",dataframe->col[column]->tab[row]);
-    int answer;
-    do {
-        printf("Do you want to replace it? 1 for yes 0 for no: ");
-        scanf("%d", &answer);
-        if(answer==1){
-            int value;
-            printf("\nEnter the value to put instead: ");
-            scanf("%d", &value);
-            dataframe->col[column]->tab[row] = value;
-        }
-    }while(answer!=1 && answer != 0);
-}
-
+void
 */
 
