@@ -230,21 +230,28 @@ void delete_cdataframe(CDATAFRAME **cdf){
 }
 
 // à tester
-void delete_column_by_name(CDATAFRAME *cdf, char *col_name){
+void delete_column_by_name(CDATAFRAME **cdf, char *col_name){
     int deleted = 0;
-    LNODE* tmp = cdf->head;
-    int size = cdataframe_size(cdf);
-    for(int i =0; i < size ; i++){
+    LNODE* tmp = (*cdf)->head;
+    int size = cdataframe_size(*cdf);
+    for(int i =0; i < size && !deleted ; i++){
         // strcmp return 0 if col_name correspond to a column name in cdf
         if( strcmp(((COLUMN*)tmp->data)->title, col_name) == 0){
             delete_column((COLUMN **) &(tmp->data));
-            lst_delete_lnode((list*)cdf,(lnode*)tmp);
+            lst_delete_lnode((list*)*cdf,(lnode*)tmp);
             deleted = 1;
         }
         tmp = tmp->next;
     }
     if(deleted){
-        printf("The column %s has been deleted.\n", col_name);
+        if(size==1){
+            printf("The column %s has been deleted.\n", col_name);
+            *cdf = NULL;
+            printf("The dataframe has been correctly deleted.");
+        } else{
+            printf("The column %s has been deleted.\n", col_name);
+        }
+
     }
     else{
         printf("There is no column named %s.\n", col_name);
@@ -295,7 +302,6 @@ void display_titles(CDATAFRAME* cdf){
     }
 }
 void display_dataframe(CDATAFRAME* cdf, int nb_lines, int nb_col){
-
     // if the user want to display all the dataframe
     if (nb_lines==0){
         //the number of lines to print is the logical size of longest column
@@ -498,10 +504,14 @@ void convert_chosen_value(ENUM_TYPE type, char* str, void* value){
 }
 
 int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value) {
-    printf("\ntype: %d", type);
-    LNODE *tmp = cdf->head;
+    printf("Bien rentré");
+    printf("%s",cdf->head->data->title);
+    LNODE* tmp = cdf->head;
+    printf("1");
     int size = cdataframe_size(cdf);
-    char str1[REALOC_SIZE], str2[REALOC_SIZE];//buffer
+    printf("2");
+    char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
+    printf("3");
     int cpt = 0;
     convert_chosen_value(type, str2, value);
     for (int i = 0; i < size; i++) {
@@ -516,8 +526,92 @@ int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value) {
         }
         tmp = tmp->next;
     }
+    printf("après la boucle");
     return cpt;
 }
+
+void rename_col_dataframe(CDATAFRAME * cdf){
+    printf("Which column do you want to rename?\n");
+    char* ancient_title=(char*)malloc(REALLOC_SIZE*sizeof(char));
+    choose_title_inside(cdf, ancient_title);
+
+    printf("What is the new title?\n");
+    char* new_title=(char*)malloc(REALLOC_SIZE*sizeof(char));
+    choose_title_not_inside(cdf, new_title);
+
+    int renamed = 0;
+    LNODE* tmp = cdf->head;
+    int size = cdataframe_size(cdf);
+    for(int i =0; i < size && !renamed ; i++){
+        // strcmp return 0 if col_name correspond to a column name in cdf
+        if( strcmp(((COLUMN*)tmp->data)->title, ancient_title) == 0){
+            free(((COLUMN*)tmp->data)->title);
+            ((COLUMN*)tmp->data)->title = new_title;
+            renamed=1;
+        }
+        tmp = tmp->next;
+    }
+
+    printf("Column successfuly renamed (～￣▽￣)～");
+}
+
+int greater(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
+    LNODE *tmp = cdf->head;
+    int size = cdataframe_size(cdf);
+    char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
+    int cpt = 0;
+    convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    for (int i = 0; i < size; i++) {
+        if (((COLUMN *) tmp->data)->column_type == type) {
+            for (int j = 0; j < ((COLUMN *) tmp->data)->size; j++) {
+                convert_value((COLUMN *) tmp->data, j, str1, REALLOC_SIZE);
+                // strcmp > 0 => str1 > str2 (value)
+                if (strcmp(str1, str2)< 0) {
+                    cpt++;
+                }
+            }
+        }
+        tmp = tmp->next;
+    }
+    return cpt;
+}
+
+void access_replace(CDATAFRAME* cdf){
+    display_dataframe(cdf,0,0);
+    int column, row;
+    int size = cdataframe_size(cdf);
+    printf("Enter the index of the column:");
+    column = valid_input(0, size);
+    // find the chosen column
+    LNODE *tmp = cdf->head;
+    for(int i=0; i<column; i++){
+        tmp = tmp -> next;
+    }
+    char str[REALLOC_SIZE];
+    printf("Enter the index of the row:");
+    row = valid_input(0,((COLUMN *) tmp->data)->size);
+    convert_value((COLUMN *) tmp->data,row, str, REALLOC_SIZE);
+    printf("The value at this position is %s. ",str);
+    int answer;
+    do {
+        printf("Do you want to replace it? 1 for yes 0 for no: ");
+        scanf("%d", &answer);
+        if(answer==1){
+            // search the type in the list
+            char* types[] = {"1. UINT", "2. INT", "3. CHAR", "4. FLOAT", "5. DOUBLE", "6. STRING", "7. STRUCTURE"};
+            printf("All the types available are:\n ");
+            int i = 1;
+            while(((COLUMN *) tmp->data)->column_type != i){
+                i++;
+            }
+            void *value;
+            printf("\nEnter the value of type %s to put instead: ", types[i-1]);
+            input_value(((COLUMN *) tmp->data)->column_type, value);
+            insert_value(((COLUMN *) tmp->data)->data[row],value);
+        }
+    }while(answer!=1 && answer != 0);
+}
+
 
 
 /*

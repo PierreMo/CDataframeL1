@@ -39,8 +39,8 @@ int main() {
                     case 1://Creation of an empty CDataframe
                     {
                         int phys_size;
-                        printf("How many columns do you want in the Dataframe? (max %d)", REALOC_SIZE);
-                        phys_size = valid_input(1, REALOC_SIZE);
+                        printf("How many columns do you want in the Dataframe? (max %d)", REALLOC_SIZE);
+                        phys_size = valid_input(1, REALLOC_SIZE);
                         choose_type(cdftype, phys_size);
                         cdf = create_cdataframe(cdftype, phys_size);
                         break;
@@ -94,7 +94,7 @@ int main() {
             }
             case 3: {
                 printf("1. Add a row of values at the end of the CDataframe\n2. Delete a row of values from the CDataframe\n3. Add a column to the CDataframe"
-                       " \n4. Delete a column from the CDataframe\n5. Rename the title of a column in the CDataframe \n6. • Check the existence of a value (search) in the CDataframe"
+                       " \n4. Delete a column from the CDataframe\n5. Rename the title of a column in the CDataframe \n6.Check the existence of a value (search) in the CDataframe"
                        "\n7. Access/replace the value in a CDataframe cell using its row and column number\n8. Display column names\n9.Go back to the principal menu\n");
                 choice = valid_input(1, 9);
                 switch (choice) {
@@ -118,7 +118,7 @@ int main() {
                         printf("\n");
                         //-
                         int result;
-                        char* title = (char*)malloc(REALOC_SIZE * sizeof(char));
+                        char* title = (char*)malloc(REALLOC_SIZE * sizeof(char));
                         choose_title_not_inside(cdf, title);
                         result = add_column(cdf, title);
                         if(result){
@@ -132,39 +132,33 @@ int main() {
                     {
                         char* title = (char*)malloc(100*sizeof(char));
                         int index_col_title;
-                        //printf("Which column do you want to delete?\n");
-                        //choose_title_inside(cdf,title);
-                        //display_dataframe(cdf, 0, 0);
-                        //index_col_title = title_in_dataframe(cdf, title);
-                        //delete_col_dataframe(cdf,index_col_title);
+
+                        printf("Which column do you want to delete?\n");
+                        choose_title_inside(cdf,title);
+                        delete_column_by_name(&cdf, title);
+                        printf("Column deleted");
                         break;
                     }
                     case 5: // Rename the title of a column in the CDataframe
                     {
-                        char* title=(char *)malloc(100*sizeof(char));
-                        int index_col_title;
-                        printf("Which column do you want to rename?\n");
-                        //display_dataframe(cdf, 0, 0);
-                        //choose_title_inside(cdf, title);
-                        //index_col_title = title_in_dataframe(cdf, title);
-                        //rename_col_dataframe(cdf, index_col_title);
+                        display_dataframe(cdf, 0, 0);
+                        rename_col_dataframe(cdf);
                         break;
                     }
                     case 6: // Check the existence of a value (search) in the CDataframe
                     {
-                        //COORD* tab_index=NULL;
-                        //tab_index = search_value_index(cdf, input_number(), tab_index);
-                        /*if (tab_index){
-                            printf("The value is in the dataframe at the following position(s):");
-                            for(int i=0; i<tab_index->ls;i++ ){
-                                printf("(%d,%d), ", tab_index[i].line,tab_index[i].col);
-                            }
-                            printf("\n");
+                        int res;
+                        ENUM_TYPE cdftype_2[] = {};
+                        choose_type(cdftype_2, 1);
+                        void* value;
+                        input_value(cdftype_2[0], &value);
+                        res = equal(cdf,cdftype_2[0],value);
+                        if (res){
+                            printf("There are %d cells with this value.\n", res);
                         }
-                        else{
-                            printf("The value is not in the dataframe.\n");
+                        else {
+                            printf("There is no cells with this value in the dataframe.");
                         }
-                        free(tab_index);*/
                         break;
                     }
                     case 7: // Access/replace the value in a Ccdf cell using its row and column number

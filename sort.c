@@ -78,11 +78,11 @@ int partition(COLUMN* col, int left, int right){
                 break;
             }
             case (STRING): {
-                char pivot[REALOC_SIZE], str[REALOC_SIZE];
-                convert_value(col,col->index[right], pivot, REALOC_SIZE);
+                char pivot[REALLOC_SIZE], str[REALLOC_SIZE];
+                convert_value(col,col->index[right], pivot, REALLOC_SIZE);
                 i = (left - 1);
                 for (int j = left; j <= right-1; j++) {
-                    convert_value(col,col->index[j], str, REALOC_SIZE);
+                    convert_value(col,col->index[j], str, REALLOC_SIZE);
                     // strcmp > 0 => str < pivot
                     if (strcmp(str,pivot)>0){
                         i++;
@@ -157,11 +157,11 @@ int partition(COLUMN* col, int left, int right){
                 break;
             }
             case (STRING): {
-                char pivot[REALOC_SIZE], str[REALOC_SIZE];
-                convert_value(col,col->index[right], pivot, REALOC_SIZE);
+                char pivot[REALLOC_SIZE], str[REALLOC_SIZE];
+                convert_value(col,col->index[right], pivot, REALLOC_SIZE);
                 i = (left - 1);
                 for (int j = left; j <= right; j++) {
-                    convert_value(col,col->index[j], str, REALOC_SIZE);
+                    convert_value(col,col->index[j], str, REALLOC_SIZE);
                     // strcmp < 0 => str > pivot
                     if (strcmp(str,pivot)<0){
                         i++;
@@ -230,15 +230,15 @@ void sort_insertion_col(COLUMN* col){
                     break;
                 }
                 case(STRING):{
-                    char str1[REALOC_SIZE], str2[REALOC_SIZE];
-                    convert_value(col, col->index[j], str1, REALOC_SIZE);
-                    convert_value(col, col->index[tmp_index], str2, REALOC_SIZE);
+                    char str1[REALLOC_SIZE], str2[REALLOC_SIZE];
+                    convert_value(col, col->index[j], str1, REALLOC_SIZE);
+                    convert_value(col, col->index[tmp_index], str2, REALLOC_SIZE);
                     // strcmp <0 : str1>str2, strcmp>0 : str1<str2, else equal
                     while (j >= 0 && strcmp(str1,str2)<0) {
                         col->index[j + 1] = col->index[j];
                         j--;
                         if (j>=0){
-                            convert_value(col, col->index[j], str1, REALOC_SIZE);
+                            convert_value(col, col->index[j], str1, REALLOC_SIZE);
                         }
                     }
                     break;
@@ -288,15 +288,15 @@ void sort_insertion_col(COLUMN* col){
                     break;
                 }
                 case (STRING): {
-                    char str1[REALOC_SIZE], str2[REALOC_SIZE];
-                    convert_value(col, col->index[j], str1, REALOC_SIZE);
-                    convert_value(col, col->index[tmp_index], str2, REALOC_SIZE);
+                    char str1[REALLOC_SIZE], str2[REALLOC_SIZE];
+                    convert_value(col, col->index[j], str1, REALLOC_SIZE);
+                    convert_value(col, col->index[tmp_index], str2, REALLOC_SIZE);
                     // strcmp <0 : str1>str2, strcmp>0 : str1<str2, else equal
                     while (j >= 0 && strcmp(str1, str2) > 0) {
                         col->index[j + 1] = col->index[j];
                         j--;
                         if (j>=0){
-                            convert_value(col, col->index[j], str1, REALOC_SIZE);
+                            convert_value(col, col->index[j], str1, REALLOC_SIZE);
                         }
                     }
                     break;

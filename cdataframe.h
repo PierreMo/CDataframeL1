@@ -10,7 +10,7 @@
 * element lnode
 */
 typedef struct lnode {
-    void *data; // Pointer to a column
+    COLUMN *data; // Pointer to a column
     struct lnode *prev;
     struct lnode *next;
 } LNODE;
@@ -113,7 +113,7 @@ void delete_cdataframe(CDATAFRAME **cdf);
 * @param1: Pointer to the CDataframe
 * @param2: Column name
 */
-void delete_column_by_name(CDATAFRAME *cdf, char *col_name);
+void delete_column_by_name(CDATAFRAME **cdf, char *col_name);
 
 /**
  * Hard fill the dataframe
@@ -196,6 +196,25 @@ void convert_chosen_value(ENUM_TYPE ,char* str2,void* value);
 int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value);
 
 
+/**
+ * @brief: ask a column by name and rename it
+ * @param1: a Cdataframe
+ */
+void rename_col_dataframe(CDATAFRAME* cdf);
+
+/**
+* @brief: Find how many cells are either greater than a given value in the dataframe
+* @param1: Pointer to the dataframe
+* @param2: type of the value to compare
+* @return: return the number of value greater than @param2
+*/
+int greater(CDATAFRAME* cdf, ENUM_TYPE type, void* value);
+
+/*
+ * @brief: give the value of a given index and ask if you want to replace it
+ * @param1: pointer on the dataframe on which we operate
+ */
+void access_replace(CDATAFRAME* cdf);
 /*
 typedef struct{
     COLUMN** col;
@@ -224,15 +243,6 @@ typedef struct{
  */
 //int smallest_col(DATAFRAME* dataframe);
 
-
-
-/**
-* @brief: Find how many cells are either greater than a given value in the dataframe
-* @param1: Pointer to the dataframe
-* @param2: integer to compare other values with
-* @return: return the number of value greater than @param2
-*/
-//int greater(DATAFRAME* dataframe, int value);
 /**
 * @brief: Find how many cells are either smaller than a given value in the dataframe
 * @param1: Pointer to the dataframe
@@ -271,11 +281,7 @@ typedef struct{
  */
 //void rename_col_dataframe(DATAFRAME* dataframe, int index);
 
-/*
- * @brief: give the value of a given index and ask if you want to replace it
- * @param1: pointer on the dataframe on which we operate
- */
-//void access_replace(DATAFRAME* dataframe);
+
 
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
