@@ -497,19 +497,19 @@ void convert_chosen_value(ENUM_TYPE type, char* str, void* value){
     }
 }
 
-int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
-    LNODE* tmp = cdf->head;
+int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value) {
+    printf("\ntype: %d", type);
+    LNODE *tmp = cdf->head;
     int size = cdataframe_size(cdf);
     char str1[REALOC_SIZE], str2[REALOC_SIZE];//buffer
-    int cpt=0;
-    printf("type: %d", type);
+    int cpt = 0;
     convert_chosen_value(type, str2, value);
-    for(int i =0; i<size; i++){
-        if (((COLUMN*) tmp->data)->column_type == type ){
-            for(int j=0; j<((COLUMN*) tmp->data)->size; j++){
+    for (int i = 0; i < size; i++) {
+        if (((COLUMN *) tmp->data)->column_type == type) {
+            for (int j = 0; j < ((COLUMN *) tmp->data)->size; j++) {
                 convert_value((COLUMN *) tmp->data, j, str1, REALOC_SIZE);
                 printf("2 strings :%s, %s", str1, str2);
-                if(strcmp(str1, str2) == 0){
+                if (strcmp(str1, str2) == 0) {
                     cpt++;
                 }
             }
@@ -518,6 +518,7 @@ int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
     }
     return cpt;
 }
+
 
 /*
 int still_in_frame(DATAFRAME* dataframe;int i){

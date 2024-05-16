@@ -185,7 +185,7 @@ int add_column(CDATAFRAME* cdf, char* title);
 /**
  *
  */
-void convert_chosen_value(type,str2, value);
+void convert_chosen_value(ENUM_TYPE ,char* str2,void* value);
 
 /**
 * @brief: Find how many cells are either equal to a given value in the dataframe

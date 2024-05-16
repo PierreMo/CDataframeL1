@@ -204,10 +204,11 @@ int main() {
                         int res;
                         ENUM_TYPE cdftype_1[] = {};
                         choose_type(cdftype_1, 1);
-                        printf("type: %d", cdftype_1[0]);
-                        input_value(*cdftype_1, &value);
+                        printf("chosen type: %d", cdftype_1[0]);
+                        input_value(cdftype_1[0], &value);
+                        printf("type after input_val %d\n", cdftype_1[0]);
                         res = equal(cdf,cdftype_1[0],value);
-                        printf("%d", res);
+                        printf("\nres:%d", res);
                         if (res) {
                             printf("There are %d cells with the value %d.\n", res, value);
                         } else {
