@@ -163,6 +163,9 @@ void change_value(COLUMN *col, void *value, int index) {
             }
             case STRING: {
                 char* str = (char*) value;
+                int str_size = strlen(str);
+                // memory allocation of the size of the string +1 to add '\0'
+                col->data[col->size] = malloc((str_size +1)*sizeof(char));
                 strcpy((char *) col->data[index], str);
                 break;
             }

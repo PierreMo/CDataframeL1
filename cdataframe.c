@@ -595,7 +595,8 @@ void access_replace(CDATAFRAME* cdf){
             printf("\nEnter the value of type %s to put instead: ", types[i-1]);
             input_value(((COLUMN *) tmp->data)->column_type, &value);
             //delete_value(((COLUMN *)tmp->data), row);
-            //change_value(((COLUMN *)tmp->data), value, row);
+            printf("ok");
+            change_value((COLUMN *)tmp->data, value, row);
         }
     }while(answer!=1 && answer != 0);
 }
@@ -620,35 +621,3 @@ int smaller(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
     }
     return cpt;
 }
-
-/*
-
-int smallest_col(DATAFRAME* dataframe){
-    int min = dataframe->col[0]->ls;
-    for(int i=1; i<dataframe->ls;i++){
-        if (dataframe->col[i]->ls <min){
-            min = dataframe->col[i]->ls;
-        }
-    }
-    return min;
-}
-
-COORD* search_value_index(DATAFRAME* dataframe,int value, COORD* tab){
-    for(int i =0; i<dataframe->ls; i++){
-        for(int j=0; j<dataframe->col[i]->ls; j++){
-            if(dataframe->col[i]->tab[j]==value){
-                if(tab==NULL){
-                    tab = (COORD*)malloc(REALLOC_SIZE*sizeof(COORD));
-                    tab->ls = 0;
-                }
-                tab[tab->ls].col = i;
-                tab[tab->ls].line = j;
-                tab->ls++;
-            }
-        }
-    }
-    return tab;
-}
-
-
-*/

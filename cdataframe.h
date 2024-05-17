@@ -183,7 +183,9 @@ void delete_line_cdataframe(CDATAFRAME* cdf, int index);
 int add_column(CDATAFRAME* cdf, char* title);
 
 /**
- *
+ * @brief
+ * @param str2
+ * @param value
  */
 void convert_chosen_value(ENUM_TYPE ,char* str2,void* value);
 
@@ -223,35 +225,6 @@ void access_replace(CDATAFRAME* cdf);
 * @return: return the number of value smaller than @param2
 */
 int smaller(CDATAFRAME* cdf, ENUM_TYPE type, void* value);
-
-/*
-typedef struct{
-    COLUMN** col;
-    int ls;
-    int ps;
-}DATAFRAME;
-
-typedef struct{
-    int line;
-    int col;
-    int ls;
-}COORD;
-
-/**
- * Find the column with the smallest number of value
- * @param1 : pointer on the dataframe
- * @return : integer that is the nb of full lines
- */
-//int smallest_col(DATAFRAME* dataframe);
-
-/**
- * @brief: search all the index of a value
- * @param1: pointer on dataframe
- * @param2: integer that is the value to search
- * @param3: list of all coordinates of "value"
- * @return: the tab of coord
- */
-//COORD* search_value_index(DATAFRAME* dataframe, int value, COORD* tab);
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
 
