@@ -131,11 +131,14 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
 }
 
 void delete_value(COLUMN *col, int index) {
-    int i = 0;
-    for (i = index; i < col->size; i++) {
-        col->data[i] = col->data[i + 1];
+    if (col->size!=0){
+        void *temp= col->data[index];
+        for (int i = index; i < col->size; i++) {
+            col->data[i] = col->data[i + 1];
+        }
+        free(temp);
+        col->size--;
     }
-    //col->size--;
 }
 
 void change_value(COLUMN *col, void *value, int index) {

@@ -23,7 +23,7 @@ union column_type{
     char* string_value;
     void* struct_value;
 };
-typedef union column_type COL_TYPE ;
+typedef union column_type COL_TYPE;
 
 struct column {
     char *title;

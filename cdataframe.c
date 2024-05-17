@@ -85,21 +85,10 @@ void choose_type(ENUM_TYPE* cdftype, int size){
 }
 
 
-int lenght_cdf(CDATAFRAME* cdf){
-    int size=0;
-    LNODE* tmp = cdf->head;
-    while (tmp->next != NULL){
-        size++;
-        tmp = tmp->next;
-    }
-    size++;
-    return size;
-}
-
 int longest_col(CDATAFRAME* cdf){
     int max=0;
     LNODE* tmp = cdf->head;
-    int nb_col = lenght_cdf(cdf);
+    int nb_col = cdataframe_size(cdf);
     for(int i=0; i<nb_col;i++){
         if (((COLUMN*)tmp->data)->size> max){
             max = ((COLUMN*)tmp->data)->size;
@@ -229,7 +218,7 @@ void delete_cdataframe(CDATAFRAME **cdf){
     free(tmp);
 }
 
-// à tester
+// à tester -> ne fonctionnne pas
 void delete_column_by_name(CDATAFRAME **cdf, char *col_name){
     int deleted = 0;
     LNODE* tmp = (*cdf)->head;
@@ -272,10 +261,26 @@ void hard_fill_dataframe(CDATAFRAME * cdf, ENUM_TYPE* cdftype){
                 }
                 break;
             }
+            case(FLOAT):{
+                float nb = 1;
+                for(int j=0; j< nbr_val; j++){;
+                    insert_value(tmp ->data, &nb);
+                    nb++;
+                }
+                break;
+                }
+            case(DOUBLE):{
+                double nb = 1;
+                for(int j=0; j< nbr_val; j++){;
+                    insert_value(tmp ->data, &nb);
+                    nb++;
+                }
+                break;
+            }
             case(STRUCTURE):{
                 break;
             }
-            default:{ // for numbers types
+            default:{ // for int and unit types
                 for(int j=0; j< nbr_val; j++){;
                     insert_value(tmp ->data, &j);
                 }
@@ -286,8 +291,9 @@ void hard_fill_dataframe(CDATAFRAME * cdf, ENUM_TYPE* cdftype){
     }
 }
 
-void display_titles(CDATAFRAME* cdf){
-    int size = cdataframe_size(cdf);
+void display_titles(CDATAFRAME* cdf, int size){
+    if (size==0)
+        size = cdataframe_size(cdf);
     LNODE * tmp = (LNODE *) cdf->head;
     for (int i=0; i<size; i++){
         printf("%s\t", ((COLUMN*)tmp->data)->title);
@@ -302,16 +308,60 @@ void display_dataframe(CDATAFRAME* cdf, int nb_lines, int nb_col){
         nb_lines = longest_col(cdf);
     }
     if (nb_col==0){
-        nb_col = lenght_cdf(cdf);
+        nb_col = cdataframe_size(cdf);
     }
-    display_titles(cdf);
+    display_titles(cdf, nb_col);
     //display values and index
     printf("\n");
     char str[REALLOC_SIZE];//buffer
     for(int i = 0; i < nb_lines; i++) {
         LNODE * tmp = cdf->head;
         for(int j = 0;j < nb_col; j++) {
-            if(i < ((COLUMN*)tmp->data)->size ){
+            if(i < ((COLUMN*)tmp->data)->size){
+                convert_value((COLUMN *) tmp->data, i, str, REALLOC_SIZE);
+                printf("[%d] %s\t",i, str);
+            }else{
+                printf("[%d] /\t", i);
+            }
+            tmp = tmp->next;
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void display_sorted_cdf(CDATAFRAME* cdf, int nb_lines, int nb_col){
+
+    // if the user want to display all the dataframe
+    if (nb_lines==0){
+        //the number of lines to print is the logical size of longest column
+        nb_lines = longest_col(cdf);
+    }
+    if (nb_col==0){
+        nb_col = cdataframe_size(cdf);
+    }
+    display_titles(cdf, nb_col);
+
+    LNODE * tmp = cdf->head;
+    int column;
+    int size = cdataframe_size(cdf);
+    int index=0;
+    printf("In function of which column do you want to display the dataframe?");
+    do{
+        int choice_col;
+        printf("Enter the index of the column:");
+        choice_col = valid_input(0,nb_col);
+        index = check_index((COLUMN*)tmp->data);
+    }while(index != 1);
+
+    column = valid_input(0, size-1);
+    //display values and index
+    printf("\n");
+    char str[REALLOC_SIZE];//buffer
+    for(int i = 0; i < nb_lines; i++) {
+        LNODE * tmp = cdf->head;
+        for(int j = 0;j < nb_col; j++) {
+            if(i < ((COLUMN*)tmp->data)->size){
                 convert_value((COLUMN *) tmp->data, i, str, REALLOC_SIZE);
                 printf("[%d] %s\t",i, str);
             }else{
@@ -338,7 +388,7 @@ CDATAFRAME* is_cdataframe(CDATAFRAME* cdf, ENUM_TYPE* cdftype){
 
 void fill_cdataframe(CDATAFRAME* cdf){
     LNODE* tmp = cdf->head;
-    int size = lenght_cdf(cdf);
+    int size = cdataframe_size(cdf);
     while(size>0){
         int nbr_val;
         printf("How many value do you want in the column %s :", ((COLUMN*) tmp->data)->title);
@@ -366,7 +416,7 @@ int check_type(COLUMN* col){
 void add_line_dataframe(CDATAFRAME* cdf){
     char* types[] = {"UINT", "INT", "CHAR", "FLOAT", "DOUBLE", "STRING", "STRUCTURE"};
     LNODE* tmp = cdf->head;
-    int size = lenght_cdf(cdf);
+    int size = cdataframe_size(cdf);
     for(int i= 0;i < size ;i++){
         printf("Insert the new value for the column %s (of type %s) ", ((COLUMN*)tmp->data)->title, types[check_type(((COLUMN*)tmp->data))-1]);
         void* choice;
@@ -379,9 +429,13 @@ void add_line_dataframe(CDATAFRAME* cdf){
 
 void delete_line_cdataframe(CDATAFRAME* cdf, int index){
     LNODE* tmp = cdf->head;
+    printf("%s ", cdf->head->data->title);
     int size = cdataframe_size(cdf);
-    for(int i =0; i<size; i++){
-        if(((COLUMN*)tmp->data)->size>= i){
+    while (tmp != NULL){
+        printf("%s ", tmp->data->title);
+
+        if((tmp->data)->size>= index){
+            printf("%d ", tmp->data->size);
             delete_value(((COLUMN*)tmp->data), index);
         }
         tmp = tmp->next;
@@ -389,7 +443,7 @@ void delete_line_cdataframe(CDATAFRAME* cdf, int index){
 }
 
 int add_column(CDATAFRAME* cdf, char* title){
-    int size = lenght_cdf(cdf);
+    int size = cdataframe_size(cdf);
     ENUM_TYPE cdftype[] = {};
     int success = 0;
     choose_type(cdftype, 1);
@@ -433,7 +487,7 @@ int add_column(CDATAFRAME* cdf, char* title){
         }
         case(3):{ // insert at a chosen position
             printf("After which column do you want to insert your new column? \n");
-            display_titles(cdf);
+            display_titles(cdf,0);printf("\n");
             char* title_in = (char*)malloc(100*sizeof(char));
             choose_title_inside(cdf,title_in);
             LNODE *tmp = cdf->head;

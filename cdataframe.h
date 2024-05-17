@@ -10,7 +10,7 @@
 * element lnode
 */
 typedef struct lnode {
-    void *data; // Pointer to a column
+    COLUMN *data; // Pointer to a column
     struct lnode *prev;
     struct lnode *next;
 } LNODE;
@@ -53,12 +53,6 @@ void choose_title_inside(CDATAFRAME* cdf, char* title);
  */
 int title_in_dataframe(CDATAFRAME* cdf, char* title);
 
-/**
- * brief : compute the length of the dataframe
- * @param1: dataframe to get the length
- * @return: the length of the dataframe
- */
-int lenght_cdf(CDATAFRAME *cdf);
 
 /**
  * Find the column with the highest number of value
@@ -82,10 +76,11 @@ void choose_type(ENUM_TYPE* cdftype, int size);
 void input_value(ENUM_TYPE type_col, void* choice);
 
 /**
- * breif : print titles of dataframe columns
+ * breif : print titles of dataframe columns according to a chosen limit, 0 for the whole
  * @param1 : pointer on the dataframe
+ * @param2: limit
  */
-void display_titles(CDATAFRAME* cdf);
+void display_titles(CDATAFRAME* cdf, int size);
 
 /**
 * brief : Create a dataframe
@@ -127,6 +122,11 @@ void hard_fill_dataframe(CDATAFRAME* cdf, ENUM_TYPE* cdftype);
  */
 void display_dataframe(CDATAFRAME* cdf, int nb_lines, int nb_col);
 
+/**
+ * Display the dataframe
+ * @param1 : pointer on dataframe to display
+ */
+void display_sorted_cdf(CDATAFRAME* cdf, int nb_lines, int nb_col);
 /**
  * Allow to enter a value between 0 and val
  * @param1 : val lower bound

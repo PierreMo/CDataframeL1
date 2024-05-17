@@ -13,7 +13,7 @@ int main() {
     ENUM_TYPE cdftype[] = {};
     do {
         printf("\n-- Principal menu --\n");
-        printf("\n1. Filling\n2. Displaying\n3. Usual operations \n4. Analysis and statistics\n0. Exit\n");
+        printf("\n1. Filling\n2. Basic Displaying\n3. Usual Operations \n4. Analysis and Statistics\n5. Amazing sort and display\n0. Exit\n");
         choice = valid_input(0, 5);
         // must create a cdf before any action
         if (choice != 1 && cdf == NULL) {
@@ -58,6 +58,9 @@ int main() {
                         hard_fill_dataframe(cdf, cdftype);
                         break;
                     }
+                    case(4):{ // Go back to the previous menu
+                        break;
+                    }
                 }
                 break;
             }
@@ -86,7 +89,7 @@ int main() {
                         display_dataframe(cdf, 0, nb_col);
                         break;
                     }
-                    case 4: {
+                    case 4: { // Go back to the previous menu
                         break;
                     }
                 }
@@ -94,8 +97,8 @@ int main() {
             }
             case 3: {
                 printf("1. Add a row of values at the end of the CDataframe\n2. Delete a row of values from the CDataframe\n3. Add a column to the CDataframe"
-                       " \n4. Delete a column from the CDataframe\n5. Rename the title of a column in the CDataframe \n6. • Check the existence of a value (search) in the CDataframe"
-                       "\n7. Access/replace the value in a CDataframe cell using its row and column number\n8. Display column names\n9.Go back to the principal menu\n");
+                       " \n4. Delete a column from the CDataframe\n5. Rename the title of a column in the CDataframe \n6. Check the existence of a value (search) in the CDataframe"
+                       "\n7. Access/replace the value in a CDataframe cell using its row and column number\n8. Display column names\n9. Go back to the principal menu\n");
                 choice = valid_input(1, 9);
                 switch (choice) {
                     case 1: // Add a row of values to the CDataframe
@@ -106,7 +109,7 @@ int main() {
                     case 2: // Delete a row of values from the CDataframe
                     {
                         printf("Enter the index of the row to remove");
-                        delete_line_cdataframe(cdf, valid_input(0, longest_col(cdf)));
+                        delete_line_cdataframe(cdf, valid_input(0, longest_col(cdf)-1));
                         break;
                     }
                     case 3: // Add a column to the CDataframe
@@ -134,6 +137,7 @@ int main() {
                         int index_col_title;
 
                         printf("Which column do you want to delete?\n");
+                        display_titles(cdf,0);printf("\n");
                         choose_title_inside(cdf,title);
                         delete_column_by_name(&cdf, title);
                         printf("Column deleted");
@@ -167,10 +171,10 @@ int main() {
                     }
                     case 8: // Display column names
                     {
-                        display_titles(cdf);
+                        display_titles(cdf, 0);
                         break;
                     }
-                    case 9:{ // sort col + add the case in the text to choose actions
+                    case 9:{ // Go back to the previous menu
                         break;
                     }
                 }
@@ -266,8 +270,69 @@ int main() {
                         }
                         break;
                     }
+                    case(6):{// Go back to the previous menu
+                        break;
+                    }
                 }
                 break;
+            }
+            case(5):{
+                printf("1. Sort a column by ascending order\n2. Sort a column by decreasing order\n3. Go back to the principal menu\n");
+                choice = valid_input(1, 6);
+                switch(choice){
+                    case(1):{
+                        int index, i=0;
+                        printf("Which column do you want to sort? Input ints index :");
+                        LNODE*tmp = cdf->head;
+                        while(i!=index){
+                            tmp = tmp->next;
+                            i++;
+                        }
+                        void* choice;
+                        valid_input(0, cdataframe_size(cdf));
+                        sort((COLUMN*)tmp->data, 0);
+                        break;
+                    }
+                    case(2):{
+                        int index, i=0;
+                        printf("Which column do you want to sort? Input ints index :");
+                        LNODE*tmp = cdf->head;
+                        while(i!=index){
+                            tmp = tmp->next;
+                            i++;
+                        }
+                        void* choice;
+                        valid_input(0, cdataframe_size(cdf));
+                        sort((COLUMN*)tmp->data, 1);
+                        break;
+                    }
+                    case(3):{
+                        int choice;
+                        printf("Do you want to display all the dataframe or choose a limit of column and lines?");
+                        printf("Choose 1 to display all the dataframe and 0 else.");
+                        choice = valid_input(0,1);
+                        if (choice){
+                            display_dataframe(cdf, 0, 0);
+                        }
+                        else{
+                            int nb_col, nb_lines;
+                            // choose columns
+                            printf("How many columns do you want to display?");
+                            nb_col = valid_input(0, cdataframe_size(cdf)-1);
+                            // choose lines
+                            printf("How many lines do you want to display?");
+                            nb_lines = valid_input(0, longest_col(cdf));
+
+                            display_dataframe(cdf, nb_lines, nb_col);
+                            break;
+                        }
+
+                    }
+                    case(4):{// Go back to the previous menu
+                        break;
+                    }
+                }
+
             }
         }
     }
