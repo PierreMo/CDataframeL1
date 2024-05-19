@@ -125,6 +125,7 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
         }
         case STRUCTURE:{
             // here we have to do a switch for the different structures
+            snprintf(str, size, "%s", "/");
             break;
         }
     }

@@ -754,9 +754,19 @@ void* input_str_to_typed(ENUM_TYPE type_col, char *choice){
 }
 
 
-
+void remove_newline(char* text){
+    size_t len = strlen(text);
+    if(len>0 && text[len-1]=='\n'){
+        text[len-1]='\0';
+    }
+}
 
 CDATAFRAME* load_from_csv(char *file_name){
+    // creating a proper path to the file
+    char path[REALLOC_SIZE] = "../csv_data/";
+    strcat(path, file_name);
+    strcat(path, ".csv");
+
     FILE* csv_file;
     char line[MAX_LINE_LENGTH];
     char *token ; // pointer to go through the sub-chaine obtained
@@ -764,7 +774,7 @@ CDATAFRAME* load_from_csv(char *file_name){
     short unsigned int size=0;
     //----------------------- ouverture du fichier de donnÃ©es CSV ------------------------------
 
-    csv_file = fopen( file_name, "rt") ;
+    csv_file = fopen( path, "rt") ;
     if (csv_file==NULL)
     {
         perror("Can't open file!\n");
@@ -799,6 +809,7 @@ CDATAFRAME* load_from_csv(char *file_name){
     token = strtok(line, limit); // Initial call to strtok
     for(int i = 0; i<size; i++){
         char *title = strdup(token);
+        remove_newline(title);
         COLUMN* col = (COLUMN *) create_column(types[i], title);
         lnode* ptr_col = lst_create_lnode(col);
         lst_insert_tail((list *) cdf, ptr_col);
@@ -841,7 +852,60 @@ CDATAFRAME* load_from_csv(char *file_name){
 }
 
 
+void save_into_csv(CDATAFRAME *cdf, char *file_name){
+    // creating a proper path to the file
+    char path[REALLOC_SIZE] = "../csv_data/";
+    strcat(path, file_name);
+    strcat(path, ".csv");
 
+    FILE *csv_file;
+    csv_file = fopen(path, "w+"); // open
+    if (csv_file==NULL){
+        printf("Fail to open the file");
+        return;
+    }
+    int size = cdataframe_size(cdf);
+    LNODE* tmp;
+
+
+
+    // writing the types
+    tmp = cdf->head;
+    for(int i =0; i<size-1; i++){
+        fprintf(csv_file, "%d,", tmp->data->column_type-1);
+        tmp=tmp->next;
+    }
+    fprintf(csv_file, "%d\n", tmp->data->column_type-1);
+
+    // writing the names of columns
+    tmp = cdf->head;
+    for(int i =0; i<size-1; i++){
+        fprintf(csv_file, "%s,", tmp->data->title);
+        tmp=tmp->next;
+    }
+    fprintf(csv_file, "%s\n", tmp->data->title);
+
+    printf("reached middle\n");
+
+    // writing the data
+    int depth = longest_col(cdf);
+    char val[REALLOC_SIZE];
+    for (int j =0; j<depth;j++){
+        printf("depth : %d\n", j);
+        tmp = cdf->head;
+        for(int i =0; i<size-1; i++){
+            printf("col : %d\n", i);
+            convert_value((COLUMN*)tmp->data, j, val, REALLOC_SIZE);
+            fprintf(csv_file, "%s,", val);
+            tmp=tmp->next;
+        }
+        convert_value((COLUMN*)tmp->data, j, val, REALLOC_SIZE);
+        fprintf(csv_file, "%s\n", val);
+    }
+
+
+    fclose(csv_file); // close
+}
 
 
 

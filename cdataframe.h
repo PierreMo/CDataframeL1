@@ -250,6 +250,11 @@ CDATAFRAME* load_from_csv(char *file_name);
 */
 void save_into_csv(CDATAFRAME *cdf, char *file_name);
 
+/**
+* @brief: Remove \n at end if char* if it exist
+* @param1: char* to modify
+*/
+void remove_newline(char*);
 
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H

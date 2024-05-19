@@ -333,8 +333,8 @@ int main() {
                 }
             }
             case(6):{// Loading and saving in CSV files
-                printf("1. Load from a file (CSV)\n2. \n3. \n");
-                choice = valid_input(1, 4);
+                printf("1. Load from a file (CSV)\n2. Save in a CSV file\n3. Exit\n");
+                choice = valid_input(1, 3);
 
                 if (choice != 1 && cdf == NULL) {
                     choice = -1;
@@ -346,10 +346,10 @@ int main() {
                         break;
                     }
                     case(1):{ //Loading from a file
-                        char* name;
-                        /*printf("What is the name of your file?");
-                        scanf("%s", name);*/
-                        name="../test.csv";
+                        char name[REALLOC_SIZE];
+                        printf("What is the name of your file?");
+                        scanf("%s", name);
+
                         if(cdf!=NULL) { // already have a dataframe
                             printf("This will delete your current dataframe. Are you sure? 1. yes 2. no\n");
                             int answ = valid_input(1, 2);
@@ -363,14 +363,13 @@ int main() {
                         break;
                     }
                     case(2):{
-
+                        char name[REALLOC_SIZE];
+                        printf("You want to save under what name?");
+                        scanf("%s", name);
+                        save_into_csv(cdf, name);
                         break;
                     }
                     case(3):{
-
-                        break;
-                    }
-                    case(4):{// Go back to the previous menu
                         break;
                     }
                 }
