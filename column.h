@@ -102,8 +102,9 @@ void print_col_by_index(COLUMN *col);
 void delete_value(COLUMN *col, int index);
 
 /**
- *
- * @param col
+ * @brief Enter a value in the column
+ * @param column
+ * @param value
  * @param index
  */
 void change_value(COLUMN* col, void* value, int index);
@@ -152,5 +153,9 @@ int check_type(COLUMN* col);
  * @return the length of the longest element of the column
  */
 int max_str(COLUMN* col);
+
+
+int isLeapYear(int year);
+int compareDates(DATE*,DATE*);
 
 #endif //CDATAFRAMEL1_COLUMN_H

@@ -68,8 +68,8 @@ int insert_value(COLUMN *col, void *value) {
                 break;
             }
             case STRUCTURE: {
-                col->data[col->size] = (void **) malloc(sizeof(void *));
-                *((void **) col->data[col->size]) = *((void **) value);
+                col->data[col->size] = (DATE*) malloc(sizeof(DATE *));
+                *((DATE *) col->data[col->size]) = *((DATE*) value);
                 break;
             }
         }
@@ -116,7 +116,7 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
             break;
         }
         case FLOAT:{
-            snprintf(str, size, "%.2f", *((float*)col->data[i]));
+            snprintf(str, size, "%.2f", *( (float*)col->data[i]) );
             break;
         }
         case DOUBLE:{
@@ -129,7 +129,18 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
         }
         case STRUCTURE:{
             // here we have to do a switch for the different structures
-            snprintf(str, size, "%s", "/");
+            char date[size], buffer[size];
+
+            snprintf(date, size, "%d", ((DATE*)col->data[i])->month);
+
+            strcat(date, "/");
+            snprintf(buffer, size, "%d", ((DATE*)col->data[i])->day);
+            strcat(date, buffer);
+            strcat(date, "/");
+            snprintf(buffer, size, "%d", ((DATE*)col->data[i])->year);
+            strcat(date, buffer);
+
+            snprintf(str, size, "%s", date);
             break;
         }
     }
@@ -154,7 +165,7 @@ void change_value(COLUMN *col, void *value, int index) {
                 break;
             }
             case INT: {
-                *( (int*) col->data[index]) = (int)*((int*) value); //convert    pb avec la deuxième partie de l'égalité
+                *( (int*) col->data[index]) = (int)*((int*) value); //convert
                 break;
             }
             case CHAR: {
@@ -178,7 +189,7 @@ void change_value(COLUMN *col, void *value, int index) {
                 break;
             }
             case STRUCTURE: {
-                *((void **) col->data[index]) = *((void **) value);
+                *((DATE *) col->data[index]) = *((DATE *) value);
                 break;
             }
         }
@@ -251,7 +262,7 @@ int search_value_in_column(COLUMN *col, void *val){
         return -1;
     }
     else{
-        int in = -1;
+        int in = 0;
         int m, l = 0, stop;
         int h = col->size - 1;
         switch (col->column_type) {
@@ -396,12 +407,7 @@ int search_value_in_column(COLUMN *col, void *val){
             }
         }
 
-        if(in != -1){ // value found
-            return 1;
-        }
-        else{ // value not found
-            return 0;
-        }
+        return in;
     }
 }
 
@@ -409,7 +415,7 @@ int search_value_in_column(COLUMN *col, void *val){
 int check_type(COLUMN* col){
     ENUM_TYPE type = col->column_type;
     int i = 2;
-    while(i<7 && type!=i){
+    while(i<8 && type!=i){
         i++;
     }
     return i-1;
@@ -427,3 +433,51 @@ int max_str(COLUMN* col){
     return max;
 }
 
+int isLeapYear(int year) {
+    if (year % 400 == 0)
+        return 1;
+    if (year % 100 == 0)
+        return 0;
+    if (year % 4 == 0)
+        return 1;
+    return 0;
+}
+
+
+int compareDates(DATE* d1, DATE* d2){
+    if (d1->year == d2->year && d1->month == d2->month && d1->day == d2->day){
+        return 0;
+    }
+    else{
+        if (d1->year > d2->year){
+            return 1;
+        }
+        else{
+            if (d1->year < d2->year){
+                return -1;
+            }
+            else{
+                if (d1->year == d2->year){
+                    if (d1->month == d2->month){
+                        if (d1->day > d2-> day){
+                            return 1;
+                        }
+                        else{
+                            return -1;
+                        }
+                    }
+                    else{
+                        if(d1->month > d2->month){
+                            return 1;
+                        }
+                        else{
+                            return -1;
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
+}

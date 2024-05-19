@@ -9,6 +9,11 @@
 
 typedef list CDATAFRAME;
 
+typedef struct{
+    int line;
+    int col;
+    int ls;
+}COORD;
 /**
  *
  * @param title
@@ -54,7 +59,7 @@ void choose_type(ENUM_TYPE* cdftype, int size);
 
 /**
  * brief : allow the user to enter a value
- * param1: a column of the dataframe
+ * param1: a type of value
  * param2: the value chosen by the user
  */
 void input_value(ENUM_TYPE type_col, void* choice);
@@ -174,7 +179,7 @@ void convert_chosen_value(ENUM_TYPE ,char* str2,void* value);
 * @param2: integer to compare other values with
 * @return: return the number of value equal to @param2
 */
-int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value);
+int equal(COLUMN * col, ENUM_TYPE type, void* value);
 
 
 /**
@@ -240,7 +245,15 @@ void save_into_csv(CDATAFRAME *cdf, char *file_name);
 */
 void remove_newline(char*);
 
-
+/**
+ *
+ * @param cdf
+ * @param type
+ * @param value
+ * @param tab
+ * @return
+ */
+COORD* search_value_index(CDATAFRAME* cdf,ENUM_TYPE type, void* value, COORD* tab);
 
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
