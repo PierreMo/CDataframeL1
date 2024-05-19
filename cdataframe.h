@@ -211,7 +211,12 @@ void rename_col_dataframe(CDATAFRAME* cdf);
 * @return: return the number of value greater than @param2
 */
 int greater(CDATAFRAME* cdf, ENUM_TYPE type, void* value);
-
+/**
+ * @brief : check if a there is a sorted column in the data frame
+ * @param1: dataframe
+ * @return : 0 if there is no sorted column, else the number of sorted column
+ */
+int is_sorted_column(CDATAFRAME* cdf);
 /*
  * @brief: give the value of a given index and ask if you want to replace it
  * @param1: pointer on the dataframe on which we operate

@@ -275,10 +275,16 @@ int main() {
                 }
                 break;
             }
-            case(5):{
+            case(5):{ // sort and display sorted dataframe
                 printf("1. Sort a column by ascending order\n2. Sort a column by decreasing order\n3. Go back to the principal menu\n");
                 choice = valid_input(1, 4);
+                if (choice ==3 && is_sorted_column(cdf)==0 ) { // cannot display by index if ther is no sorted column
+                    choice = -1;
+                }
                 switch(choice){
+                    case(-1):{
+                        printf("You must sort a column of your dataframe first !");
+                    }
                     case(1):{
                         int index, i=0;
                         printf("Which column do you want to sort? Input ints index :");
@@ -305,7 +311,7 @@ int main() {
                         sort((COLUMN*)tmp->data, 1);
                         break;
                     }
-                    case(3):{
+                    case(3):{ // display sorted dataframe
                         int choice;
                         printf("Do you want to display all the dataframe or choose a limit of column and lines?");
                         printf("Choose 1 to display all the dataframe and 0 else.");
@@ -346,19 +352,19 @@ int main() {
                         break;
                     }
                     case(1):{ //Loading from a file
-                        char name[REALLOC_SIZE];
-                        printf("What is the name of your file?");
-                        scanf("%s", name);
-
                         if(cdf!=NULL) { // already have a dataframe
                             printf("This will delete your current dataframe. Are you sure? 1. yes 2. no\n");
                             int answ = valid_input(1, 2);
                             if (answ) {
-                                //delete_cdataframe(&cdf); -> to fix
-                                printf("pas vraiment deleted\n");
-                                cdf = NULL;
-                            } else { break; }
+                                delete_cdataframe(&cdf);
+                            } else{
+                                break;
+                            }
                         }
+
+                        char name[REALLOC_SIZE];
+                        printf("What is the name of your file?");
+                        scanf("%s", name);
                         cdf = load_from_csv(name);
                         break;
                     }
@@ -382,109 +388,5 @@ int main() {
     if (cdf!=NULL){
         delete_cdataframe(&cdf);
     }
-
-/*
-    //TEST with number ok
-    COLUMN *mycol = create_column(INT, "My column");
-    int a = 1, b = 2,c = 5, d = 7, e = 4;
-    insert_value(mycol, &b);
-    insert_value(mycol, &c);
-    insert_value(mycol, &a);
-    insert_value(mycol, &d);
-    // should NULL always be at the end of the list?
-    //insert_value(mycol, NULL);
-    mycol->valid_index = 0;
-    printf("not sorted (YES:-1) ? : %d\n", search_value_in_column(mycol, &d));
-    printf("Column content before sorting : \n");
-    print_col(mycol);
-    sort(mycol, ASC);
-    // if the direction of sorting change then valid_index = -1 ?
-    printf("\n");;
-    printf("Column content after sorting : \n");
-    print_col_by_index(mycol);
-
-    insert_value(mycol,&e);
-    update_index(mycol);
-    sort(mycol, ASC);
-    printf("\n");
-    printf("Column content after an add + sorting : \n");
-    print_col_by_index(mycol);
-
-    int r = 100;
-    printf("\nfound 7 in col (YES : 1) ? : %d\n", search_value_in_column(mycol, &d));
-    printf("not found 100 in col (NO: 0) ? : %d", search_value_in_column(mycol, &r));
-
-    delete_column(&mycol);
-    */
-
-    /*
-    //TEST WITH STRING
-    COLUMN *mycol = create_column(STRING, "My column");
-    char a[]= "Bravo", b[] = "Tango", c[] = "Zulu", d[] = "Lima", e[]="Yuzu";
-
-    //COLUMN *mycol = create_column(CHAR, "My column");
-    //char a = 'A', b = 'Z', c= 'Y', d = 'E', e='L';
-    insert_value(mycol, b);
-    insert_value(mycol, c);
-    insert_value(mycol, a);
-    insert_value(mycol, d);
-    mycol->valid_index = 0;
-    printf("Column content before sorting : \n");
-    print_col(mycol);
-    sort(mycol, DESC);
-    // if the direction of sorting change then valid_index = -1 ?
-    printf("\n");
-
-    printf("Column content after sorting : \n");
-    print_col_by_index(mycol);
-
-    insert_value(mycol,e);
-    update_index(mycol);
-    sort(mycol, DESC);
-    //for(int i=0; i<mycol->size;i++){
-        //printf("%d\n",mycol->index[i]);
-    //}
-    printf("\n");
-    printf("Column content after an add + sorting : \n");
-    print_col_by_index(mycol);
-
-    printf("\ntest search value\n");
-    char r[] ="OK" ;
-    printf("'Bravo' in col (YES : 1) ? : %d\n", search_value_in_column(mycol, &a));
-    printf("'OK' in col (NO: 0) ? : %d", search_value_in_column(mycol, &r));
-    delete_column(&mycol);*/
-    
-    /*printf("%s\n", mycol->title);
-    for (int i = 0; i < mycol->size; i++) {
-        printf("-%c-\n", *((char *)mycol->data[i])); //convert back
-    }
-    printf("--------");
-    COLUMN *mycol1 = create_column(INT, "New column");
-    for(int i = 0 ; i < 10 ; i++){
-        insert_value(mycol1, &i);
-    }
-    printf("\n%s\n", mycol1->title);
-    for(int i = 0 ; i < 10; i++){
-        printf("%d\t", *((int *)(mycol1->data[i])));
-    }*/
-
-        /*
-    ENUM_TYPE cdftype [] = {INT,INT,INT};
-    CDATAFRAME *cdf = create_cdataframe(cdftype, 3);
-    LNODE * tmp = (LNODE *) cdf->head;
-    for (int i=0; i<3; i++){
-        printf("%s\n", ((COLUMN*)tmp->data)->title);
-        tmp = tmp->next;
-    }
-    hard_fill_dataframe(cdf);
-    LNODE * tmp1 = (LNODE *) cdf->head;
-    //print_col((COLUMN *) ((COLUMN *) tmp1->data));
-    printf("\n--- Dataframe --- \n");
-    display_dataframe(cdf);
-    char t[] ="a";
-    delete_column_by_name(cdf, t);
-    display_dataframe(cdf);
-    delete_cdataframe(&cdf);*/
-
     return 0;
 }

@@ -213,12 +213,13 @@ int cdataframe_size(CDATAFRAME *cdf){
 void delete_cdataframe(CDATAFRAME **cdf){
     LNODE* tmp = (*cdf)->head;
     while(tmp->next != NULL){
-        delete_column(tmp->data);// pb
+        delete_column(&(tmp->data));
         tmp = tmp->next;
     }
-    delete_column(tmp->data);
+    delete_column(&(tmp->data));
     lst_delete_list((list *) *cdf);
-    free(tmp);
+    free(*cdf);
+    *cdf= NULL;
 }
 
 // à tester -> ne fonctionnne pas
@@ -621,6 +622,20 @@ int greater(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
     return cpt;
 }
 
+
+int is_sorted_column(CDATAFRAME* cdf){
+    LNODE *tmp = cdf->head;
+    int size = cdataframe_size(cdf);
+    int sorted = 0;
+    // check if there is a sorted list
+    for(int i = 0; i<size; i++){
+        if (check_type((COLUMN *) tmp->data)== 1){
+            sorted++;
+        }
+    }
+    return sorted;
+}
+
 void access_replace(CDATAFRAME* cdf){
     display_dataframe(cdf,0,0);
     int column, row;
@@ -680,7 +695,6 @@ int smaller(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
 }
 
 void* input_str_to_typed(ENUM_TYPE type_col, char *choice){
-    int type;
     switch(type_col){
         case UINT:{
             char *endptr;
@@ -691,7 +705,7 @@ void* input_str_to_typed(ENUM_TYPE type_col, char *choice){
             } else {
                 int* res= malloc(sizeof(unsigned int));
                 *res = (unsigned int)value;
-                printf("uint: %d\n", *res);
+                //printf("uint: %d\n", *res);
                 return res;
             }
             break;
@@ -705,7 +719,7 @@ void* input_str_to_typed(ENUM_TYPE type_col, char *choice){
             } else {
                 int* res= malloc(sizeof(int));
                 *res = (int)value;
-                printf("int: %d\n", *res);
+                //printf("int: %d\n", *res);
                 return res;
             }
             break;
@@ -713,7 +727,7 @@ void* input_str_to_typed(ENUM_TYPE type_col, char *choice){
         case CHAR:{
             char* res = malloc(sizeof(char));
             *res = choice[0];
-            printf("char: %c\n", *res);
+            //printf("char: %c\n", *res);
             return res;
         }
         case FLOAT:{
@@ -725,7 +739,7 @@ void* input_str_to_typed(ENUM_TYPE type_col, char *choice){
             } else {
                 float* res = malloc(sizeof(float));
                 *res = value;
-                printf("float: %f\n", *res);
+                //printf("float: %f\n", *res);
                 return res;
             }
         }
@@ -738,13 +752,13 @@ void* input_str_to_typed(ENUM_TYPE type_col, char *choice){
             } else {
                 double* res = malloc(sizeof(double));
                 *res = value;
-                printf("double: %lf\n", *res);
+                //printf("double: %lf\n", *res);
                 return res;
             }
         }
         case STRING:{
             char* res = strdup(choice);
-            printf("string: %s\n", res);
+            //printf("string: %s\n", res);
             return res;
         }
         case STRUCTURE:
@@ -801,7 +815,6 @@ CDATAFRAME* load_from_csv(char *file_name){
         }
         token = strtok(NULL, limit);
     }
-    printf("size: %d\n", size);
 
     // Reading the titles of the columns and creating the dataframe
     CDATAFRAME * cdf = (CDATAFRAME *) lst_create_list();
@@ -837,12 +850,9 @@ CDATAFRAME* load_from_csv(char *file_name){
                 }
             }
             token = strtok(NULL, limit);
-            printf("type col %d: %d\n",i, temp->data->column_type);
             temp = temp->next;
         }
     }
-    printf("col type: ");
-    printf("%d", cdf->tail->data->column_type);
 
     if(cdf==NULL)
         printf("marche pas");
