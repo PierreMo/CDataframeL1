@@ -11,9 +11,9 @@ int main() {
     CDATAFRAME *cdf = NULL;
     ENUM_TYPE cdftype[] = {};
     do {
-        printf("\n-- Principal menu --\n");
+        printf("\n--- Principal Menu ---\n");
         printf("\n1. Filling\n2. Basic Displaying\n3. Usual Operations \n4. Analysis and Statistics\n5. Amazing sort and display\n6. Save and load (CSV)\n0. Exit\n");
-        choice = valid_input(0, 7);
+        choice = valid_input(0, 6);
         // must create a cdf before any action
         if (choice != 1 && choice!=6 && cdf == NULL) {
             choice = -1;
@@ -113,12 +113,6 @@ int main() {
                     }
                     case 3: // Add a column to the CDataframe
                     {
-                        // debug ----------------------
-                        for(int i=0; i<3; i++){
-                            printf("\t-- %d",cdftype[i]);
-                        }
-                        printf("\n");
-                        //-
                         int result;
                         char* title = (char*)malloc(REALLOC_SIZE * sizeof(char));
                         choose_title_not_inside(cdf, title);
@@ -150,10 +144,10 @@ int main() {
                     }
                     case 6: // Check the existence of a value (search) in the CDataframe
                     {
-                        void* value;
                         int res;
                         ENUM_TYPE cdftype_1[] = {};
                         choose_type(cdftype_1, 1);
+                        void* value;
                         input_value(cdftype_1[0], &value);
                         res = equal(cdf,cdftype_1[0],value);
                         if (res) {
@@ -242,7 +236,6 @@ int main() {
                             }else{
                                 printf("There is 1 cell with a greater value than %d.\n",value);
                             }
-
                         }
                         else {
                             printf("There is no value greater than %d in the dataframe.", value);
@@ -275,49 +268,57 @@ int main() {
                 }
                 break;
             }
-            case(5):{ // sort and display sorted dataframe
-                printf("1. Sort a column by ascending order\n2. Sort a column by decreasing order\n3. Go back to the principal menu\n");
+            case(5):{ // sort cdf and display sorted dataframe
+                printf("1. Sort a column by ascending order\n2. Sort a column by decreasing order\n"
+                       "3. Display the sorted dataframe\n4. Go back to the principal menu\n");
                 choice = valid_input(1, 4);
-                if (choice ==3 && is_sorted_column(cdf)==0 ) { // cannot display by index if ther is no sorted column
+                if (choice ==3 && is_sorted_column(cdf)==0 ) { // cannot display by index if there is no sorted column
                     choice = -1;
                 }
                 switch(choice){
                     case(-1):{
                         printf("You must sort a column of your dataframe first !");
+                        break;
                     }
                     case(1):{
                         int index, i=0;
-                        printf("Which column do you want to sort? Input ints index :");
-                        LNODE*tmp = cdf->head;
+                        printf("Which column do you want to sort?\n");
+                        display_titles(cdf,0);
+                        printf("Input its index :");
+                        index = valid_input(0, cdataframe_size(cdf)-1);
+                        lnode*tmp = cdf->head;
                         while(i!=index){
                             tmp = tmp->next;
                             i++;
                         }
-                        void* choice;
-                        valid_input(0, cdataframe_size(cdf));
                         sort((COLUMN*)tmp->data, 0);
+                        printf("Your sorted column :\n");
+                        print_col_by_index((COLUMN*)tmp->data);
                         break;
                     }
                     case(2):{
                         int index, i=0;
-                        printf("Which column do you want to sort? Input ints index :");
-                        LNODE*tmp = cdf->head;
+                        printf("Which column do you want to sort?\n");
+                        display_titles(cdf,0);
+                        printf("Input its index :");
+                        index = valid_input(0, cdataframe_size(cdf)-1);
+                        lnode*tmp = cdf->head;
                         while(i!=index){
                             tmp = tmp->next;
                             i++;
                         }
-                        void* choice;
-                        valid_input(0, cdataframe_size(cdf));
                         sort((COLUMN*)tmp->data, 1);
+                        printf("Your sorted column :\n");
+                        print_col_by_index((COLUMN*)tmp->data);
                         break;
                     }
                     case(3):{ // display sorted dataframe
                         int choice;
-                        printf("Do you want to display all the dataframe or choose a limit of column and lines?");
+                        printf("Do you want to display all the dataframe or choose a limit of column and lines?\n");
                         printf("Choose 1 to display all the dataframe and 0 else.");
                         choice = valid_input(0,1);
                         if (choice){
-                            display_dataframe(cdf, 0, 0);
+                            display_sorted_cdf(cdf, 0, 0);
                         }
                         else{
                             int nb_col, nb_lines;
@@ -328,7 +329,7 @@ int main() {
                             printf("How many lines do you want to display?");
                             nb_lines = valid_input(0, longest_col(cdf));
 
-                            display_dataframe(cdf, nb_lines, nb_col);
+                            display_sorted_cdf(cdf, nb_lines, nb_col);
                             break;
                         }
 
@@ -337,6 +338,7 @@ int main() {
                         break;
                     }
                 }
+                break;
             }
             case(6):{// Loading and saving in CSV files
                 printf("1. Load from a file (CSV)\n2. Save in a CSV file\n3. Exit\n");

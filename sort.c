@@ -84,7 +84,7 @@ int partition(COLUMN* col, int left, int right){
                 for (int j = left; j <= right-1; j++) {
                     convert_value(col,col->index[j], str, REALLOC_SIZE);
                     // strcmp > 0 => str < pivot
-                    if (strcmp(str,pivot)>0){
+                    if (strcmp(str,pivot)<0){
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
@@ -163,7 +163,7 @@ int partition(COLUMN* col, int left, int right){
                 for (int j = left; j <= right; j++) {
                     convert_value(col,col->index[j], str, REALLOC_SIZE);
                     // strcmp < 0 => str > pivot
-                    if (strcmp(str,pivot)<0){
+                    if (strcmp(str,pivot)>0){
                         i++;
                         swap(&col->index[i], &col->index[j]);
                     }
@@ -233,8 +233,8 @@ void sort_insertion_col(COLUMN* col){
                     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];
                     convert_value(col, col->index[j], str1, REALLOC_SIZE);
                     convert_value(col, col->index[tmp_index], str2, REALLOC_SIZE);
-                    // strcmp <0 : str1>str2, strcmp>0 : str1<str2, else equal
-                    while (j >= 0 && strcmp(str1,str2)<0) {
+                    // strcmp >0 : str1>str2, strcmp<0 : str1<str2, else equal
+                    while (j >= 0 && strcmp(str1,str2)>0) {
                         col->index[j + 1] = col->index[j];
                         j--;
                         if (j>=0){
@@ -291,8 +291,8 @@ void sort_insertion_col(COLUMN* col){
                     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];
                     convert_value(col, col->index[j], str1, REALLOC_SIZE);
                     convert_value(col, col->index[tmp_index], str2, REALLOC_SIZE);
-                    // strcmp <0 : str1>str2, strcmp>0 : str1<str2, else equal
-                    while (j >= 0 && strcmp(str1, str2) > 0) {
+                    // strcmp <0 : str1<str2, strcmp>0 : str1>str2, else equal
+                    while (j >= 0 && strcmp(str1, str2) < 0) {
                         col->index[j + 1] = col->index[j];
                         j--;
                         if (j>=0){
@@ -325,10 +325,6 @@ void sort(COLUMN* col, int sort_dir){
         case(-1):{ // almost sorted
             col->sort_dir = sort_dir;
             sort_insertion_col(col);
-            break;
-        }
-        case(1):{ // sorted
-            printf("The column %s is already sorted.", col->title);
             break;
         }
     }

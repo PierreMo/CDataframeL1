@@ -77,6 +77,9 @@ int insert_value(COLUMN *col, void *value) {
         col->data[col->size] = NULL;
     }
     col->size++;
+    if(col->valid_index == 1){
+        col->valid_index = -1;
+    }
     return 1;
 }
 
@@ -112,11 +115,11 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
             break;
         }
         case FLOAT:{
-            snprintf(str, size, "%f", *((float*)col->data[i]));
+            snprintf(str, size, "%.2f", *((float*)col->data[i]));
             break;
         }
         case DOUBLE:{
-            snprintf(str, size, "%lf", *((double*)col->data[i]));
+            snprintf(str, size, "%.2lf", *((double*)col->data[i]));
             break;
         }
         case STRING:{
@@ -145,16 +148,16 @@ void delete_value(COLUMN *col, int index) {
 void change_value(COLUMN *col, void *value, int index) {
     if (value != NULL) {
         switch (col->column_type) {
+            case UINT: {
+                *((unsigned int *) col->data[index]) = *((unsigned int *) value);
+                break;
+            }
             case INT: {
-                *((int *) col->data[index]) = *((int *) value); //convert
+                *( (int*) col->data[index]) = (int)*((int*) value); //convert    pb avec la deuxième partie de l'égalité
                 break;
             }
             case CHAR: {
                 *((char *) col->data[index]) = *((char *) value);
-                break;
-            }
-            case UINT: {
-                *((unsigned int *) col->data[index]) = *((unsigned int *) value);
                 break;
             }
             case FLOAT: {
@@ -201,16 +204,11 @@ void print_col_by_index(COLUMN* col){
     int j;
     printf("%s\n", col->title);
     for(int i=0; i<col->size; i++){
-        j=0;
-        // to display the sorted col according to the index order
-        while(col->index[i]!=j) {
-            j++;
-        }
-        if(col->data[j]==NULL){
+        if(col->data[col->index[i]]==NULL){
             printf("[%d] NULL\n",i);
         }
         else{
-            convert_value(col, j,str, REALLOC_SIZE);
+            convert_value(col, col->index[i],str, REALLOC_SIZE);
             printf("[%d] %s\n", i, str);
         }
     }

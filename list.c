@@ -92,16 +92,25 @@ void lst_delete_tail(list * lst) {
 }
 
 void lst_delete_lnode(list * lst, lnode * ptr) {
-    if (ptr == NULL)
+    printf("in the fonction\n");
+    printf("ptr: %p\n", ptr);
+    printf("tail: %p\n",lst->tail);
+    printf("head: %p\n",lst->head);
+    if (ptr == NULL){
+        printf("case NULL\n");
         return;
+    }
     if (ptr == lst->head) {
+        printf("head");
         lst_delete_head(lst);
         return;
     }
     if (ptr == lst->tail) {
+        printf("tail");
         lst_delete_tail(lst);
         return;
     }
+    printf("case other");
     ptr->next->prev = ptr->prev;
     ptr->prev->next = ptr->next;
     free(ptr);

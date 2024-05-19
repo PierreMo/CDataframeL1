@@ -5,11 +5,13 @@
 #ifndef CDATAFRAMEL1_LIST_H
 #define CDATAFRAMEL1_LIST_H
 
+typedef struct column COLUMN;
+
 /**
 * Élément lnode
 */
 typedef struct lnode_ {
-    void *data;
+    COLUMN* data;
     struct lnode_ *prev;
     struct lnode_ *next;
 } lnode;
@@ -21,6 +23,8 @@ typedef struct list_ {
     lnode *head;
     lnode *tail;
 } list;
+
+typedef list CDATAFRAME;
 
 /**
 * create a node

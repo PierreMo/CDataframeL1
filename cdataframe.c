@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cdataframe.h"
-#include "list.h"
 #include "column.h"
+
 
 #define MAX_LINE_LENGTH 1024
 #include <unistd.h>
@@ -49,7 +49,7 @@ void choose_title_inside(CDATAFRAME* cdf, char* title){
 }
 
 int title_in_dataframe(CDATAFRAME* cdf, char* title) {
-    LNODE* tmp = cdf->head;
+    lnode* tmp = cdf->head;
     int size = cdataframe_size(cdf);
     for (int i = 0; i < size; i++){
         // if strings equal strcmp = 0
@@ -90,7 +90,7 @@ void choose_type(ENUM_TYPE* cdftype, int size){
 
 int longest_col(CDATAFRAME* cdf){
     int max=0;
-    LNODE* tmp = cdf->head;
+    lnode* tmp = cdf->head;
     int nb_col = cdataframe_size(cdf);
     for(int i=0; i<nb_col;i++){
         if (((COLUMN*)tmp->data)->size> max){
@@ -200,7 +200,7 @@ CDATAFRAME *create_cdataframe(ENUM_TYPE *cdftype, int size){
 
 int cdataframe_size(CDATAFRAME *cdf){
     int size = 0;
-    LNODE* tmp_lnode = cdf->head;
+    lnode* tmp_lnode = cdf->head;
     while(tmp_lnode->next != NULL){
         tmp_lnode = tmp_lnode->next;
         size++;
@@ -209,9 +209,8 @@ int cdataframe_size(CDATAFRAME *cdf){
     return size;
 }
 
-// a retester
 void delete_cdataframe(CDATAFRAME **cdf){
-    LNODE* tmp = (*cdf)->head;
+    lnode* tmp = (*cdf)->head;
     while(tmp->next != NULL){
         delete_column(&(tmp->data));
         tmp = tmp->next;
@@ -222,16 +221,16 @@ void delete_cdataframe(CDATAFRAME **cdf){
     *cdf= NULL;
 }
 
-// à tester -> ne fonctionnne pas
 void delete_column_by_name(CDATAFRAME **cdf, char *col_name){
     int deleted = 0;
-    LNODE* tmp = (*cdf)->head;
-    int size = cdataframe_size(cdf);
-    for(int i =0; i < size && !deleted ; i++){
+    lnode* tmp = (*cdf)->head;
+    int size = cdataframe_size(*cdf);
+    for(int i =0; i < size && !deleted; i++){
+        printf("boucle i : %d\n",i);
         // strcmp return 0 if col_name correspond to a column name in cdf
-        if( strcmp(((COLUMN*)tmp->data)->title, col_name) == 0){
-            delete_column((COLUMN **) &(tmp->data));
-            lst_delete_lnode((list*)cdf,(lnode*)tmp);
+        if( strcmp(tmp->data->title, col_name) == 0){
+            delete_column(&tmp->data);
+            lst_delete_lnode((list*)*cdf,(lnode*)tmp);
             deleted = 1;
         }
         tmp = tmp->next;
@@ -245,7 +244,7 @@ void delete_column_by_name(CDATAFRAME **cdf, char *col_name){
 }
 
 void hard_fill_dataframe(CDATAFRAME * cdf, ENUM_TYPE* cdftype){
-    LNODE* tmp = cdf->head;
+    lnode* tmp = cdf->head;
     int size = cdataframe_size(cdf);
     int nbr_val = 5;
     for(int i = 0; i < size; i++){
@@ -298,9 +297,11 @@ void hard_fill_dataframe(CDATAFRAME * cdf, ENUM_TYPE* cdftype){
 void display_titles(CDATAFRAME* cdf, int size){
     if (size==0)
         size = cdataframe_size(cdf);
-    LNODE * tmp = (LNODE *) cdf->head;
+    lnode * tmp = (lnode *) cdf->head;
     for (int i=0; i<size; i++){
-        printf("%s\t", ((COLUMN*)tmp->data)->title);
+        int max = max_str((COLUMN*)tmp->data);
+        int space = max +4 - strlen(((COLUMN*)tmp->data)->title)+3;
+        printf("%s%*s", ((COLUMN*)tmp->data)->title, space, "");
         tmp = tmp->next;
     }
 }
@@ -314,24 +315,40 @@ void display_dataframe(CDATAFRAME* cdf, int nb_lines, int nb_col){
     if (nb_col==0){
         nb_col = cdataframe_size(cdf);
     }
+    printf("\n");
+
     display_titles(cdf, nb_col);
     //display values and index
     printf("\n");
     char str[REALLOC_SIZE];//buffer
     for(int i = 0; i < nb_lines; i++) {
-        LNODE * tmp = cdf->head;
+        lnode * tmp = cdf->head;
         for(int j = 0;j < nb_col; j++) {
             if(i < ((COLUMN*)tmp->data)->size){
                 convert_value((COLUMN *) tmp->data, i, str, REALLOC_SIZE);
-                printf("[%d] %s\t",i, str);
+                int max= max_str((COLUMN *) tmp->data);
+                int space = max - strlen(str);
+                printf("[%d] %s %*s",i, str,2+space,"");
             }else{
-                printf("[%d] /\t", i);
+                int max = max_str((COLUMN *) tmp->data);
+                printf("[%d] / %*s",i, max,"");
             }
             tmp = tmp->next;
         }
         printf("\n");
     }
     printf("\n");
+}
+int max_str(COLUMN* col){
+    char str[REALLOC_SIZE];
+    int max = 0;
+    for(int i = 0; i<col->size; i++){
+        convert_value(col, i, str, REALLOC_SIZE);
+        if(max<strlen(str)){
+            max = strlen(str);
+        }
+    }
+    return max;
 }
 
 void display_sorted_cdf(CDATAFRAME* cdf, int nb_lines, int nb_col){
@@ -344,34 +361,52 @@ void display_sorted_cdf(CDATAFRAME* cdf, int nb_lines, int nb_col){
     if (nb_col==0){
         nb_col = cdataframe_size(cdf);
     }
-    display_titles(cdf, nb_col);
-
-    LNODE * tmp = cdf->head;
-    int column;
-    int size = cdataframe_size(cdf);
-    int index=0;
-    printf("In function of which column do you want to display the dataframe?");
+    lnode * tmp = cdf->head;
+    // display the name of all sorted col in cdf
+    printf("The following columns are sorted :\n");
+    for(int i=0; i<nb_col; i++){
+        if(check_index((COLUMN*)tmp->data)==1){
+            printf("%s\n",((COLUMN*)tmp->data)->title);
+        }
+        tmp = tmp->next;
+    }
+    // ask to choose a sorted col
+    int index;
     do{
-        int choice_col;
-        printf("Enter the index of the column:");
+        int choice_col, i=0;
+        tmp = cdf->head;
+        printf("In function of which column do you want to display the dataframe?\n");
+        display_titles(cdf,0);
+        printf("\nEnter the index of the column:");
         choice_col = valid_input(0,nb_col);
+        while(i!=choice_col){
+            tmp = tmp->next;// save the chosen lnode
+            i++;
+        }
         index = check_index((COLUMN*)tmp->data);
+        if(index!=1){
+            printf("This column is not sorted yet!");
+        }
     }while(index != 1);
 
-    column = valid_input(0, size-1);
+    display_titles(cdf, nb_col);
+
     //display values and index
     printf("\n");
     char str[REALLOC_SIZE];//buffer
     for(int i = 0; i < nb_lines; i++) {
-        LNODE * tmp = cdf->head;
+        lnode* ptr = cdf->head; // to move on cdf
         for(int j = 0;j < nb_col; j++) {
-            if(i < ((COLUMN*)tmp->data)->size){
-                convert_value((COLUMN *) tmp->data, i, str, REALLOC_SIZE);
-                printf("[%d] %s\t",i, str);
+            if(i < ((COLUMN*)ptr->data)->size){
+                convert_value((COLUMN *) ptr->data,((COLUMN *) tmp->data)->index[i], str, REALLOC_SIZE);
+                int max= max_str((COLUMN *) ptr->data);
+                int space = max - strlen(str);
+                printf("[%d] %s %*s",i, str,2+space,"");
             }else{
-                printf("[%d] /\t", i);
+                int max = max_str((COLUMN *) ptr->data);
+                printf("[%d] / %*s",i, max,"");
             }
-            tmp = tmp->next;
+            ptr = ptr->next;
         }
         printf("\n");
     }
@@ -391,7 +426,7 @@ CDATAFRAME* is_cdataframe(CDATAFRAME* cdf, ENUM_TYPE* cdftype){
 }
 
 void fill_cdataframe(CDATAFRAME* cdf){
-    LNODE* tmp = cdf->head;
+    lnode* tmp = cdf->head;
     int size = cdataframe_size(cdf);
     while(size>0){
         int nbr_val;
@@ -419,7 +454,7 @@ int check_type(COLUMN* col){
 
 void add_line_dataframe(CDATAFRAME* cdf){
     char* types[] = {"UINT", "INT", "CHAR", "FLOAT", "DOUBLE", "STRING", "STRUCTURE"};
-    LNODE* tmp = cdf->head;
+    lnode* tmp = cdf->head;
     int size = cdataframe_size(cdf);
     for(int i= 0;i < size ;i++){
         printf("Insert the new value for the column %s (of type %s) ", ((COLUMN*)tmp->data)->title, types[check_type(((COLUMN*)tmp->data))-1]);
@@ -432,7 +467,7 @@ void add_line_dataframe(CDATAFRAME* cdf){
 }
 
 void delete_line_cdataframe(CDATAFRAME* cdf, int index){
-    LNODE* tmp = cdf->head;
+    lnode* tmp = cdf->head;
     printf("%s ", cdf->head->data->title);
     int size = cdataframe_size(cdf);
     while (tmp != NULL){
@@ -464,7 +499,7 @@ int add_column(CDATAFRAME* cdf, char* title){
         case(1):{ // insert at the tail
             lst_insert_tail((list *) cdf, ptr_col);
             int nbr_val;
-            LNODE *tmp = cdf->tail;
+            lnode *tmp = cdf->tail;
             printf("How many value do you want in your column: ");
             nbr_val = valid_input(1, REALLOC_SIZE);
             for(int j=0; j< nbr_val; j++){
@@ -478,7 +513,7 @@ int add_column(CDATAFRAME* cdf, char* title){
         case(2):{ // insert at the head
             lst_insert_head((list *) cdf, ptr_col);
             int nbr_val;
-            LNODE *tmp = cdf->head;
+            lnode *tmp = cdf->head;
             printf("How many value do you want in your column:");
             nbr_val = valid_input(1, REALLOC_SIZE);
             for(int j=0; j< nbr_val; j++){
@@ -494,7 +529,7 @@ int add_column(CDATAFRAME* cdf, char* title){
             display_titles(cdf,0);printf("\n");
             char* title_in = (char*)malloc(100*sizeof(char));
             choose_title_inside(cdf,title_in);
-            LNODE *tmp = cdf->head;
+            lnode *tmp = cdf->head;
             int i = 0;
             while(i <size && success == 0){
                 if(strcmp(((COLUMN*)tmp->data)->title, title_in) ==0 ){
@@ -556,17 +591,17 @@ void convert_chosen_value(ENUM_TYPE type, char* str, void* value){
 }
 
 int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value) {
-    LNODE *tmp = cdf->head;
+    lnode *tmp = cdf->head;
     int size = cdataframe_size(cdf);
     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
     int cpt = 0;
-    convert_chosen_value(type, str2, value);
+    convert_chosen_value((ENUM_TYPE)type, str2, &value);
     for (int i = 0; i < size; i++) {
         if (((COLUMN *) tmp->data)->column_type == type) {
             for (int j = 0; j < ((COLUMN *) tmp->data)->size; j++) {
                 convert_value((COLUMN *) tmp->data, j, str1, REALLOC_SIZE);
-                printf("2 strings :%s, %s", str1, str2);
-                if (strcmp(str1, str2) == 0) {
+                // strcmp = 0 => str1 = str2 (value)
+                if (strcmp(str1, str2)==0) {
                     cpt++;
                 }
             }
@@ -586,7 +621,7 @@ void rename_col_dataframe(CDATAFRAME * cdf){
     choose_title_not_inside(cdf, new_title);
 
     int renamed = 0;
-    LNODE* tmp = cdf->head;
+    lnode* tmp = cdf->head;
     int size = cdataframe_size(cdf);
     for(int i =0; i < size && !renamed ; i++){
         // strcmp return 0 if col_name correspond to a column name in cdf
@@ -602,7 +637,7 @@ void rename_col_dataframe(CDATAFRAME * cdf){
 }
 
 int greater(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
-    LNODE *tmp = cdf->head;
+    lnode *tmp = cdf->head;
     int size = cdataframe_size(cdf);
     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
     int cpt = 0;
@@ -624,34 +659,41 @@ int greater(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
 
 
 int is_sorted_column(CDATAFRAME* cdf){
-    LNODE *tmp = cdf->head;
+    lnode *tmp = cdf->head;
     int size = cdataframe_size(cdf);
-    int sorted = 0;
+    int sorted = 1;
     // check if there is a sorted list
     for(int i = 0; i<size; i++){
         if (check_type((COLUMN *) tmp->data)== 1){
-            sorted++;
+            return sorted;;
         }
     }
-    return sorted;
+    return 0;
 }
 
 void access_replace(CDATAFRAME* cdf){
-    display_dataframe(cdf,0,0);
     int column, row;
     int size = cdataframe_size(cdf);
+    lnode* tmp = cdf->head;
+    // display index columns
+    for(int i=0; i< size; i++){
+        int max = max_str((COLUMN*)tmp->data);
+        int space = max +4 - strlen(((COLUMN*)tmp->data)->title)+3;
+        printf("[%d] %*s", i, space, "");
+    }
+    display_dataframe(cdf,0,0);
     printf("Enter the index of the column:");
     column = valid_input(0, size-1);
     // find the chosen column
-    LNODE *tmp = cdf->head;
+    tmp = cdf->head;
     for(int i=0; i<column; i++){
         tmp = tmp -> next;
     }
     char str[REALLOC_SIZE];
     printf("Enter the index of the row:");
-    row = valid_input(0,((COLUMN *) tmp->data)->size);
-    convert_value((COLUMN *) tmp->data,row, str, REALLOC_SIZE);
-    printf("The value at this position is %s.",str);
+    row = valid_input(0,(int)tmp->data->size);
+    convert_value( tmp->data,row, str, REALLOC_SIZE);
+    printf("\nThe value at this position is %s.\n",str);
     int answer;
     do {
         printf("Do you want to replace it? 1 for yes 0 for no: ");
@@ -659,22 +701,18 @@ void access_replace(CDATAFRAME* cdf){
         if(answer==1){
             // search the type in the list
             char* types[] = {"UINT", "INT", "CHAR", "FLOAT", "DOUBLE", "STRING", "STRUCTURE"};
-            int i = 2;
-            while(((COLUMN *) tmp->data)->column_type != i){
-                i++;
-            }
+            int typ = tmp->data->column_type;
             void *value;
-            printf("\nEnter the value of type %s to put instead: ", types[i-1]);
-            input_value(((COLUMN *) tmp->data)->column_type, &value);
-            //delete_value(((COLUMN *)tmp->data), row);
-            printf("ok");
-            change_value((COLUMN *)tmp->data, value, row);
+            printf("\nEnter the value of type %s to put instead: ", types[typ-2]);
+            input_value(tmp->data->column_type, &value);
+            change_value(tmp->data, &value, row);
         }
     }while(answer!=1 && answer != 0);
+    // proposer de remplacer une autre valeur si answer == 0, rappel de la fonction
 }
 
 int smaller(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
-    LNODE *tmp = cdf->head;
+    lnode *tmp = cdf->head;
     int size = cdataframe_size(cdf);
     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
     int cpt = 0;
@@ -833,7 +871,7 @@ CDATAFRAME* load_from_csv(char *file_name){
     while (fgets(line, MAX_LINE_LENGTH, csv_file)) {
         line[strcspn(line, "\n")] = 0;
         token = strtok(line, limit);
-        LNODE* temp = cdf->head;
+        lnode* temp = cdf->head;
         for(int i = 0; i<size; i++){
             void* val = input_str_to_typed(temp->data->column_type, token);
             if(val==NULL){
@@ -858,6 +896,7 @@ CDATAFRAME* load_from_csv(char *file_name){
         printf("marche pas");
 
     fclose(csv_file);
+    display_dataframe(cdf,0,0);
     return cdf;
 }
 
@@ -875,7 +914,7 @@ void save_into_csv(CDATAFRAME *cdf, char *file_name){
         return;
     }
     int size = cdataframe_size(cdf);
-    LNODE* tmp;
+    lnode* tmp;
 
 
 

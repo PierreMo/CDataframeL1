@@ -9,6 +9,7 @@
 #define DESC 1
 #include <stdlib.h>
 
+
 enum enum_type{
     NULLVAL = 1, UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE
 };
@@ -102,7 +103,7 @@ void print_col_by_index(COLUMN *col);
 /**
 * @brief : Free allocated memory
 * @param1 : Pointer to a column
-*@param2 : intege
+*@param2 : integer, index
 */
 void delete_value(COLUMN *col, int index);
 

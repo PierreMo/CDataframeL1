@@ -5,25 +5,26 @@
 #ifndef CDATAFRAMEL1_CDATAFRAME_H
 #define CDATAFRAMEL1_CDATAFRAME_H
 #include "column.h"
+#include "list.h"
 
 /**
 * element lnode
 */
-typedef struct lnode {
+/*typedef struct lnode {
     COLUMN *data; // Pointer to a column
     struct lnode *prev;
     struct lnode *next;
-} LNODE;
+} LNODE;*/
 
 /**
 * a list
 */
-typedef struct list {
+/*typedef struct list {
     LNODE *head;
     LNODE *tail;
 } LIST;
 
-typedef LIST CDATAFRAME;
+typedef LIST CDATAFRAME;*/
 
 /**
  *
@@ -76,7 +77,7 @@ void choose_type(ENUM_TYPE* cdftype, int size);
 void input_value(ENUM_TYPE type_col, void* choice);
 
 /**
- * breif : print titles of dataframe columns according to a chosen limit, 0 for the whole
+ * brief : print titles of dataframe columns according to a chosen limit, 0 for the whole
  * @param1 : pointer on the dataframe
  * @param2: limit
  */
@@ -260,6 +261,13 @@ void save_into_csv(CDATAFRAME *cdf, char *file_name);
 * @param1: char* to modify
 */
 void remove_newline(char*);
+
+/**
+ *
+ * @param col
+ * @return
+ */
+int max_str(COLUMN* col);
 
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
