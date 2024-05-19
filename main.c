@@ -7,22 +7,21 @@
 
 
 int main() {
-
     int choice;
     CDATAFRAME *cdf = NULL;
     ENUM_TYPE cdftype[] = {};
     do {
         printf("\n-- Principal menu --\n");
-        printf("\n1. Filling\n2. Basic Displaying\n3. Usual Operations \n4. Analysis and Statistics\n5. Amazing sort and display\n0. Exit\n");
-        choice = valid_input(0, 5);
+        printf("\n1. Filling\n2. Basic Displaying\n3. Usual Operations \n4. Analysis and Statistics\n5. Amazing sort and display\n6. Save and load (CSV)\n0. Exit\n");
+        choice = valid_input(0, 7);
         // must create a cdf before any action
-        if (choice != 1 && cdf == NULL) {
+        if (choice != 1 && choice!=6 && cdf == NULL) {
             choice = -1;
         }
         switch (choice) {
 
             case -1: {
-                printf("You must create a dataframe first!\n");
+                perror("You must create or load a dataframe first!\n");
                 break;
             }
             case 1: {
@@ -278,7 +277,7 @@ int main() {
             }
             case(5):{
                 printf("1. Sort a column by ascending order\n2. Sort a column by decreasing order\n3. Go back to the principal menu\n");
-                choice = valid_input(1, 6);
+                choice = valid_input(1, 4);
                 switch(choice){
                     case(1):{
                         int index, i=0;
@@ -332,15 +331,58 @@ int main() {
                         break;
                     }
                 }
+            }
+            case(6):{// Loading and saving in CSV files
+                printf("1. Load from a file (CSV)\n2. \n3. \n");
+                choice = valid_input(1, 4);
 
+                if (choice != 1 && cdf == NULL) {
+                    choice = -1;
+                }
+
+                switch(choice){
+                    case -1: {
+                        perror("You must create or load a dataframe first!\n");
+                        break;
+                    }
+                    case(1):{ //Loading from a file
+                        char* name;
+                        /*printf("What is the name of your file?");
+                        scanf("%s", name);*/
+                        name="../test.csv";
+                        if(cdf!=NULL) { // already have a dataframe
+                            printf("This will delete your current dataframe. Are you sure? 1. yes 2. no\n");
+                            int answ = valid_input(1, 2);
+                            if (answ) {
+                                //delete_cdataframe(&cdf); -> to fix
+                                printf("pas vraiment deleted\n");
+                                cdf = NULL;
+                            } else { break; }
+                        }
+                        cdf = load_from_csv(name);
+                        break;
+                    }
+                    case(2):{
+
+                        break;
+                    }
+                    case(3):{
+
+                        break;
+                    }
+                    case(4):{// Go back to the previous menu
+                        break;
+                    }
+                }
+                break;
             }
         }
     }
     while (choice != 0);
-    /*
+
     if (cdf!=NULL){
         delete_cdataframe(&cdf);
-    }*/
+    }
 
 /*
     //TEST with number ok

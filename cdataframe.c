@@ -8,6 +8,9 @@
 #include "list.h"
 #include "column.h"
 
+#define MAX_LINE_LENGTH 1024
+#include <unistd.h>
+
 void choose_title(char* title){
     printf("Choose the title of the column: ");
     scanf("%s",title);
@@ -675,3 +678,178 @@ int smaller(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
     }
     return cpt;
 }
+
+void* input_str_to_typed(ENUM_TYPE type_col, char *choice){
+    int type;
+    switch(type_col){
+        case UINT:{
+            char *endptr;
+            long int value = strtol(choice, &endptr, 10);
+            if (endptr == choice) {
+                printf("Conversion error, problem in data supposed to be uint\n");
+                return NULL;
+            } else {
+                int* res= malloc(sizeof(unsigned int));
+                *res = (unsigned int)value;
+                printf("uint: %d\n", *res);
+                return res;
+            }
+            break;
+        }
+        case INT:{
+            char *endptr;
+            long int value = strtol(choice, &endptr, 10);
+            if (endptr == choice) {
+                printf("Conversion error, problem in data supposed to be int\n");
+                return NULL;
+            } else {
+                int* res= malloc(sizeof(int));
+                *res = (int)value;
+                printf("int: %d\n", *res);
+                return res;
+            }
+            break;
+        }
+        case CHAR:{
+            char* res = malloc(sizeof(char));
+            *res = choice[0];
+            printf("char: %c\n", *res);
+            return res;
+        }
+        case FLOAT:{
+            char *endptr;
+            float value = strtof(choice, &endptr);
+            if (endptr == choice) {
+                printf("Conversion error, problem in data supposed to be float\n");
+                return NULL;
+            } else {
+                float* res = malloc(sizeof(float));
+                *res = value;
+                printf("float: %f\n", *res);
+                return res;
+            }
+        }
+        case DOUBLE:{
+            char *endptr;
+            double value = strtod(choice, &endptr);
+            if (endptr == choice) {
+                printf("Conversion error, problem in data supposed to be double\n");
+                return NULL;
+            } else {
+                double* res = malloc(sizeof(double));
+                *res = value;
+                printf("double: %lf\n", *res);
+                return res;
+            }
+        }
+        case STRING:{
+            char* res = strdup(choice);
+            printf("string: %s\n", res);
+            return res;
+        }
+        case STRUCTURE:
+            // pass this one
+            break;
+    }
+}
+
+
+
+
+CDATAFRAME* load_from_csv(char *file_name){
+    FILE* csv_file;
+    char line[MAX_LINE_LENGTH];
+    char *token ; // pointer to go through the sub-chaine obtained
+    char* limit = ",";
+    short unsigned int size=0;
+    //----------------------- ouverture du fichier de donnÃ©es CSV ------------------------------
+
+    csv_file = fopen( file_name, "rt") ;
+    if (csv_file==NULL)
+    {
+        perror("Can't open file!\n");
+        return NULL;
+    }
+    //----------------------- Reading the data from the CSV file ------------------------------
+
+    // Reading the first line -> types of the column
+    ENUM_TYPE* types = malloc(REALLOC_SIZE*sizeof(ENUM_TYPE));
+
+    fgets( line, MAX_LINE_LENGTH, csv_file); // getting the line
+    if (line==NULL)perror("Empty file"); //if it's empty
+
+    token = strtok(line, limit); // Initial call to strtok
+    while (token != NULL) {
+        size++;
+        char *endptr;
+        long int value = strtol(token, &endptr, 10);
+        if (endptr == token) {
+            printf("Conversion error, types not properly defined, can't load file\n");
+            return NULL;
+        } else {
+            types[size - 1] = (ENUM_TYPE)value+1;
+        }
+        token = strtok(NULL, limit);
+    }
+    printf("size: %d\n", size);
+
+    // Reading the titles of the columns and creating the dataframe
+    CDATAFRAME * cdf = (CDATAFRAME *) lst_create_list();
+    fgets( line, MAX_LINE_LENGTH, csv_file); // getting the line
+    token = strtok(line, limit); // Initial call to strtok
+    for(int i = 0; i<size; i++){
+        char *title = strdup(token);
+        COLUMN* col = (COLUMN *) create_column(types[i], title);
+        lnode* ptr_col = lst_create_lnode(col);
+        lst_insert_tail((list *) cdf, ptr_col);
+        token = strtok(NULL, limit);
+    }
+
+    int works;
+    while (fgets(line, MAX_LINE_LENGTH, csv_file)) {
+        line[strcspn(line, "\n")] = 0;
+        token = strtok(line, limit);
+        LNODE* temp = cdf->head;
+        for(int i = 0; i<size; i++){
+            void* val = input_str_to_typed(temp->data->column_type, token);
+            if(val==NULL){
+                perror("import failed: no memory?");
+                delete_cdataframe(&cdf);
+                return NULL;
+            } else{
+                works = insert_value(temp->data, val);
+                free(val);
+                if (!works){
+                    perror("import failed: fail to add in column");
+                    delete_cdataframe(&cdf);
+                    return NULL;
+                }
+            }
+            token = strtok(NULL, limit);
+            printf("type col %d: %d\n",i, temp->data->column_type);
+            temp = temp->next;
+        }
+    }
+    printf("col type: ");
+    printf("%d", cdf->tail->data->column_type);
+
+    if(cdf==NULL)
+        printf("marche pas");
+
+    fclose(csv_file);
+    return cdf;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

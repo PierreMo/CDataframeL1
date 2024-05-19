@@ -226,5 +226,31 @@ void access_replace(CDATAFRAME* cdf);
 */
 int smaller(CDATAFRAME* cdf, ENUM_TYPE type, void* value);
 
+
+/**
+* @brief: Transform a string into other types
+* @param1: type of data
+* @param2: string containing the desired data
+* @return: return the pointer to the desired data
+*/
+void* input_str_to_typed(ENUM_TYPE type_col, char *choice);
+
+/**
+* @brief: Create a CDataframe from csvfile
+* @param1: CSV filename
+* @param2: Array of types
+* @param3: Size of array in param2
+*/
+CDATAFRAME* load_from_csv(char *file_name);
+
+/**
+* @brief: Export into a csvfile
+* @param1: Pointer to the CDataframe
+* @param2: csv filename where export file, if the file exists it will be overwritten
+*/
+void save_into_csv(CDATAFRAME *cdf, char *file_name);
+
+
+
 #endif //CDATAFRAMEL1_CDATAFRAME_H
 
