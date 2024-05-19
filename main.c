@@ -32,7 +32,7 @@ int main() {
                 }
                 switch (choice) {
                     case -1: {
-                        printf("You have already created a dataframe!\n");
+                        perror("You have already created a dataframe!\n");
                         break;
                     }
                     case 1://Creation of an empty CDataframe
@@ -144,16 +144,22 @@ int main() {
                     }
                     case 6: // Check the existence of a value (search) in the CDataframe
                     {
-                        int res;
+                        void* value;
+                        int res=0;
                         ENUM_TYPE cdftype_1[] = {};
                         choose_type(cdftype_1, 1);
-                        void* value;
                         input_value(cdftype_1[0], &value);
                         res = equal(cdf,cdftype_1[0],value);
                         if (res) {
-                            printf("The value %d is in the dataframe.\n", value);
+                            if(res>1){
+                                printf("There are %d cells with the value %d.\n", res, value);
+                            }
+                            else{
+                                printf("There is 1 cell with the value %d.\n", value);
+                            }
+
                         } else {
-                            printf("The value %d is not in the dataframe.", value);
+                            printf("%d is not in the dataframe.", value);
                         }
                         break;
                     }

@@ -568,7 +568,12 @@ int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value) {
     int size = cdataframe_size(cdf);
     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
     int cpt = 0;
-    convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    if (type!=7){
+        convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    }
+    else{
+        strcpy(str2, value);
+    }
     for (int i = 0; i < size; i++) {
         if (((COLUMN *) tmp->data)->column_type == type) {
             for (int j = 0; j < ((COLUMN *) tmp->data)->size; j++) {
@@ -630,14 +635,13 @@ int greater(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
     return cpt;
 }
 
-
 int is_sorted_column(CDATAFRAME* cdf){
     lnode *tmp = cdf->head;
     int size = cdataframe_size(cdf);
     int sorted = 1;
     // check if there is a sorted list
     for(int i = 0; i<size; i++){
-        if (check_type((COLUMN *) tmp->data)== 1){
+        if (check_index((COLUMN *) tmp->data)== 1){
             return sorted;;
         }
     }
