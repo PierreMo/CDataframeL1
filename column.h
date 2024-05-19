@@ -51,12 +51,6 @@ typedef struct{
     int year;
 }DATE;
 
-typedef struct{
-    char name[30];
-    char firstname[30];
-    DATE dateBirth;
-}PERSON;
-
 /**
 * Create a column
 * @param1 : Column type
@@ -144,5 +138,19 @@ void update_index(COLUMN *col);
 1: value found
 */
 int search_value_in_column(COLUMN *col, void *val);
+
+/**
+ * @brief: check the type
+ * @param column
+ * @return -1, 0, 1
+ */
+int check_type(COLUMN* col);
+
+
+/**
+ * @param col
+ * @return the length of the longest element of the column
+ */
+int max_str(COLUMN* col);
 
 #endif //CDATAFRAMEL1_COLUMN_H

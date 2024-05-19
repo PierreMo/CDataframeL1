@@ -15,18 +15,7 @@ void choose_title(char* title){
     printf("Choose the title of the column: ");
     scanf("%s",title);
 }
-/*
-int is_string_equal(char* a, char* b){
-    int i=0;
-    while(a[i]!='\0' && b[i]!='\0' && a[i]==b[i]){
-        i++;
-    }
-    if(a[i]== '\0' && b[i]=='\0'){
-        return 1;
-    }else{
-        return 0;
-    }
-}*/
+
 
 void choose_title_not_inside(CDATAFRAME* cdf, char* title){
     do{
@@ -339,17 +328,7 @@ void display_dataframe(CDATAFRAME* cdf, int nb_lines, int nb_col){
     }
     printf("\n");
 }
-int max_str(COLUMN* col){
-    char str[REALLOC_SIZE];
-    int max = 0;
-    for(int i = 0; i<col->size; i++){
-        convert_value(col, i, str, REALLOC_SIZE);
-        if(max<strlen(str)){
-            max = strlen(str);
-        }
-    }
-    return max;
-}
+
 
 void display_sorted_cdf(CDATAFRAME* cdf, int nb_lines, int nb_col){
 
@@ -441,15 +420,6 @@ void fill_cdataframe(CDATAFRAME* cdf){
         size--;
         tmp = tmp->next;
     }
-}
-
-int check_type(COLUMN* col){
-    ENUM_TYPE type = col->column_type;
-    int i = 2;
-    while(i<7 && type!=i){
-        i++;
-    }
-    return i-1;
 }
 
 void add_line_dataframe(CDATAFRAME* cdf){
@@ -591,7 +561,10 @@ void convert_chosen_value(ENUM_TYPE type, char* str, void* value){
 }
 
 int equal(CDATAFRAME* cdf, ENUM_TYPE type, void* value) {
+    printf("avant title\n");
+    printf("%s", cdf->head->data->title);
     lnode *tmp = cdf->head;
+    printf("apres");
     int size = cdataframe_size(cdf);
     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
     int cpt = 0;
@@ -955,14 +928,4 @@ void save_into_csv(CDATAFRAME *cdf, char *file_name){
 
     fclose(csv_file); // close
 }
-
-
-
-
-
-
-
-
-
-
 

@@ -24,7 +24,7 @@ typedef struct list_ {
     lnode *tail;
 } list;
 
-typedef list CDATAFRAME;
+
 
 /**
 * create a node

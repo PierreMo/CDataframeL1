@@ -26,10 +26,11 @@ COLUMN *create_column(ENUM_TYPE type,char* title){
 int insert_value(COLUMN *col, void *value) {
     if (value != NULL) {
         if (col->size == col->max_size) {
-            col->data = realloc(col->data, (col->max_size + REALLOC_SIZE) * sizeof(void *));
-            if (col->data == NULL) {
+            COL_TYPE** new =realloc(col->data, (col->max_size + REALLOC_SIZE) * sizeof(void *));
+            if (new == NULL) {
                 return 0;
             }
+            col->data = new;
             col->max_size += REALLOC_SIZE;
         }
         switch (col->column_type) {
@@ -403,3 +404,26 @@ int search_value_in_column(COLUMN *col, void *val){
         }
     }
 }
+
+
+int check_type(COLUMN* col){
+    ENUM_TYPE type = col->column_type;
+    int i = 2;
+    while(i<7 && type!=i){
+        i++;
+    }
+    return i-1;
+}
+
+int max_str(COLUMN* col){
+    char str[REALLOC_SIZE];
+    int max = 0;
+    for(int i = 0; i<col->size; i++){
+        convert_value(col, i, str, REALLOC_SIZE);
+        if(max<strlen(str)){
+            max = strlen(str);
+        }
+    }
+    return max;
+}
+

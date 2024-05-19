@@ -7,24 +7,7 @@
 #include "column.h"
 #include "list.h"
 
-/**
-* element lnode
-*/
-/*typedef struct lnode {
-    COLUMN *data; // Pointer to a column
-    struct lnode *prev;
-    struct lnode *next;
-} LNODE;*/
-
-/**
-* a list
-*/
-/*typedef struct list {
-    LNODE *head;
-    LNODE *tail;
-} LIST;
-
-typedef LIST CDATAFRAME;*/
+typedef list CDATAFRAME;
 
 /**
  *
@@ -148,12 +131,7 @@ CDATAFRAME* is_cdataframe(CDATAFRAME* cdf, ENUM_TYPE* cdftype);
  * @param1 : dataframe to fill
  */
 void fill_cdataframe(CDATAFRAME* cdf);
-/**
- *
- * @param cdf
- * @return
- */
-int check_type(COLUMN* col);
+
 /**
  * @brief: Add a row of values to the dataframe
  * @param1: Pointer to the dataframe
@@ -262,12 +240,7 @@ void save_into_csv(CDATAFRAME *cdf, char *file_name);
 */
 void remove_newline(char*);
 
-/**
- *
- * @param col
- * @return
- */
-int max_str(COLUMN* col);
+
 
 
 #endif //CDATAFRAMEL1_CDATAFRAME_H
