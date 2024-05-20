@@ -179,6 +179,14 @@ void input_value(ENUM_TYPE type_col, void *choice){
                     }
                 }while (type!=1);
                 do{
+                    printf("Enter month: ");
+                    type= scanf("%d", &new_date->month);
+                    if (type != 1) {
+                        printf("Invalid input.");
+                        while (getchar() != '\n'); // to clear out the input buffer
+                    }
+                }while (type!=1);
+                do{
                     printf("Enter year: ");
                     type= scanf("%d", &new_date->year);
                     if (type != 1) {
@@ -186,6 +194,7 @@ void input_value(ENUM_TYPE type_col, void *choice){
                         while (getchar() != '\n'); // to clear out the input buffer
                     }
                 }while (type!=1);
+
 
                 if (new_date->month < 1 || new_date->month > 12) {
                     printf("Invalid month. Please try again.\n");

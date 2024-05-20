@@ -148,12 +148,10 @@ int main() {
                         choose_type(cdftype_2, 1);
                         // fill tab of coord
                         if (cdftype_2[0]!= STRING ){
-                            printf("lgd");
                             input_value(cdftype_2[0], &value);
                             tab = search_value_index(cdf, cdftype_2[0], value, tab);
                             convert_chosen_value(cdftype_2[0], str, &value);
                             if (tab){
-                                printf("OK");
                                 for(int i=0; i< tab->ls; i++){
                                     printf("(%d;%d)", tab[i].col, tab[i].line);
                                 }
@@ -163,12 +161,10 @@ int main() {
                             }
                         }
                         else{
-                            printf("lgdsdgdsg");
                             char value[REALLOC_SIZE];
                             input_value(cdftype_2[0], &value);
                             tab = search_value_index(cdf, cdftype_2[0], value, tab);
                             if (tab){
-                                printf("OK");
                                 for(int i=0; i< tab->ls; i++){
                                     printf("(%d;%d)", tab[i].col, tab[i].line);
                                 }
@@ -234,7 +230,6 @@ int main() {
                             void *value;
                             input_value(cdftype_1[0], &value);
                             lnode* tmp = (lnode*)cdf->head;
-                            printf("node passe\n");
                             for (int i = 0; i < cdataframe_size(cdf); i++) {
                                 if (((COLUMN *) tmp->data)->column_type == cdftype_1[0]) {
                                     res = equal((COLUMN *) tmp->data, cdftype_1[0], value);
@@ -278,7 +273,6 @@ int main() {
                         if(cdftype_1[0]!=STRING){// not a type string
                             input_value(cdftype_1[0], &value);
                             res = greater(cdf,cdftype_1[0],value);
-                            printf("oki");
                             convert_chosen_value(cdftype_1[0], str, &value);
                         }
                         else{
