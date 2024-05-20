@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-#include "column.h"
 #include "cdataframe.h"
-#include "sort.h"
-#include "list.h"
 
 
 int main() {
@@ -12,7 +10,7 @@ int main() {
     CDATAFRAME *cdf = NULL;
     ENUM_TYPE cdftype[] = {};
     do {
-        printf("\n--- Principal Menu ---\n");
+        printf("\n ----  Principal  Menu ---- \n");
         printf("\n1. Filling\n2. Basic Displaying\n3. Usual Operations \n4. Analysis and Statistics\n5. Amazing sort and display\n6. Save and load (CSV)\n0. Exit\n");
         choice = valid_input(0, 6);
         // must create a cdf before any action
@@ -20,7 +18,6 @@ int main() {
             choice = -1;
         }
         switch (choice) {
-
             case -1: {
                 perror("You must create or load a dataframe first!\n");
                 break;
@@ -150,26 +147,35 @@ int main() {
                         COORD* tab = NULL;
                         choose_type(cdftype_2, 1);
                         // fill tab of coord
-                        if (cdftype_2[0]!= 7 ){
+                        if (cdftype_2[0]!= STRING ){
+                            printf("lgd");
                             input_value(cdftype_2[0], &value);
                             tab = search_value_index(cdf, cdftype_2[0], value, tab);
-                            convert_chosen_value(cdftype_2[0], str, value);
-                        }
-                        else{
-                            char value[REALLOC_SIZE];
-                            input_value(cdftype_2[0], &value);
-                            tab = search_value_index(cdf, cdftype_2[0], value, tab);
-                            printf("OK");
-                        }
-                        // display result
-                        if (tab!=NULL){
-                            printf("OK");
-                            for(int i=0; i< tab->ls; i++){
-                                printf("(%d;%d)", tab[i].col, tab[i].line);
+                            convert_chosen_value(cdftype_2[0], str, &value);
+                            if (tab){
+                                printf("OK");
+                                for(int i=0; i< tab->ls; i++){
+                                    printf("(%d;%d)", tab[i].col, tab[i].line);
+                                }
+                            }
+                            else{
+                                printf("%s is not in the dataframe.", value);
                             }
                         }
                         else{
-                            printf("%s is not in the dataframe.", value);
+                            printf("lgdsdgdsg");
+                            char value[REALLOC_SIZE];
+                            input_value(cdftype_2[0], &value);
+                            tab = search_value_index(cdf, cdftype_2[0], value, tab);
+                            if (tab){
+                                printf("OK");
+                                for(int i=0; i< tab->ls; i++){
+                                    printf("(%d;%d)", tab[i].col, tab[i].line);
+                                }
+                            }
+                            else{
+                                printf("%s is not in the dataframe.", value);
+                            }
                         }
                         break;
                     }
@@ -207,11 +213,10 @@ int main() {
                     }
                     case 2: // Display the number of columns
                     {
-                        int cdf_size =  cdataframe_size(cdf);
-                        if(cdf_size>1){
+                        int cdf_size = cdataframe_size(cdf);
+                        if (cdf_size > 1) {
                             printf("There are %d columns in the dataframe.\n", cdf_size);
-                        }
-                        else{
+                        } else {
                             printf("There is 1 column in the dataframe.\n");
                         }
 
@@ -219,34 +224,48 @@ int main() {
                     }
                     case 3: // Display the number of cells equal to x (x given as parameter)
                     {
-                        void* value;
-                        char str[REALLOC_SIZE];
+                        void *value;
                         int res;
+                        char str[REALLOC_SIZE];
                         ENUM_TYPE cdftype_1[] = {};
                         choose_type(cdftype_1, 1);
-                        if(cdftype_1[0]!=7){// not a type string
+                        // search for other type than string
+                        if (cdftype_1[0] != STRING) {
+                            void *value;
                             input_value(cdftype_1[0], &value);
-                            res = equal(cdf,cdftype_1[0],value);
-                            convert_chosen_value(cdftype_1[0], str, value);
+                            lnode* tmp = (lnode*)cdf->head;
+                            printf("node passe\n");
+                            for (int i = 0; i < cdataframe_size(cdf); i++) {
+                                if (((COLUMN *) tmp->data)->column_type == cdftype_1[0]) {
+                                    res = equal((COLUMN *) tmp->data, cdftype_1[0], value);
+                                    convert_chosen_value(cdftype_1[0], str, &value);
+                                }
+                                tmp = tmp->next;
+                            }
                         }
-                        else{
-                            char value[REALLOC_SIZE];
-                            input_value(cdftype_1[0], &value);
-                            res = equal(cdf,cdftype_1[0],value);
-                            strcpy(str, value);
+                        else { // for type STRING
+                            char *value = (char *) malloc(REALLOC_SIZE * sizeof(char));
+                            input_value(STRING, value);
+                            cdftype_1[0] = STRING;
+                            lnode *tmp = cdf->head;
+                            for (int i = 0; i < cdataframe_size(cdf); i++) {
+                                if (((COLUMN *) tmp->data)->column_type == cdftype_1[0]) {
+                                    res = equal((COLUMN *) tmp->data, STRING, value);
+                                    strcpy(str, (char*)value);
+                                }
+                                tmp = tmp->next;
+                            }
                         }
-                        // display res
                         if (res) {
-                            if(res>1){
-                                printf("There are %d cells with the value %d.\n", res, str);
+                            if (res > 1) {
+                                printf("There are %d cells with the value %s.\n", res, str);
+                            } else {
+                                printf("There is 1 cell with the value %s.\n", str);
                             }
-                            else{
-                                printf("There is 1 cell with the value %d.\n", str);
-                            }
-
                         } else {
-                            printf("%d is not in the dataframe.", str);
+                            printf("%s is not in the dataframe.", str);
                         }
+                        free(value);
                         break;
                     }
                     case 4: // Display the number of cells containing a value greater than a chosen value
@@ -255,25 +274,18 @@ int main() {
                         int res;
                         char str[REALLOC_SIZE];
                         ENUM_TYPE cdftype_1[] = {};
-                        lnode* tmp = cdf->head;
-                        for(int i =0; i< cdataframe_size(cdf); i++){
-                            if(is_sorted_column(cdf)==1) { // sorted col
-                                if (((COLUMN *) tmp->data)->column_type == cdftype_1[0]) {
-                                    search_value_in_column((COLUMN *) tmp->data, value);
-                                }
-                            }
-                            else{
-                                if (((COLUMN *) tmp->data)->column_type == cdftype_1[0]) {
-                                    if (cdftype_1[0] != 7) { // not type string
-                                        res = greater(cdf, cdftype_1[0], value);
-                                        convert_chosen_value(cdftype_1[0], str, &value);
-                                    } else {
-                                        res = equal(cdf, cdftype_1[0], value);
-                                        strcpy(str, value);
-                                    }
-                                }
-                            }
-                            tmp = tmp->next;
+                        choose_type(cdftype_1, 1);
+                        if(cdftype_1[0]!=STRING){// not a type string
+                            input_value(cdftype_1[0], &value);
+                            res = greater(cdf,cdftype_1[0],value);
+                            printf("oki");
+                            convert_chosen_value(cdftype_1[0], str, &value);
+                        }
+                        else{
+                            char value[REALLOC_SIZE];
+                            input_value(STRING, &value);
+                            res = greater(cdf,STRING,value);
+                            strcpy(str, value);
                         }
                         if (res){
                             if(res>1){
@@ -293,22 +305,23 @@ int main() {
                         int res;
                         char str[REALLOC_SIZE];
                         ENUM_TYPE cdftype_1[] = {};
-                        if(cdftype_1[0]!=7){// not a type string
+                        choose_type(cdftype_1,1);
+                        if(cdftype_1[0]!= STRING){// not a type string
                             input_value(cdftype_1[0], &value);
                             res = smaller(cdf,cdftype_1[0],value);
-                            convert_chosen_value(cdftype_1[0], str, value);
+                            convert_chosen_value(cdftype_1[0], str, &value);
                         }
                         else{
                             char value[REALLOC_SIZE];
                             input_value(cdftype_1[0], &value);
-                            res = equal(cdf,cdftype_1[0],value);
+                            res = smaller(cdf,cdftype_1[0],value);
                             strcpy(str, value);
                         }
                         if (res){
                             if(res>1){
-                                printf("There are %d cells with smaller values than %d.\n", res,str);
+                                printf("There are %d cells with smaller values than %s.\n", res,str);
                             }else{
-                                printf("There is 1 cell with a smaller value than %d.\n",str);
+                                printf("There is 1 cell with a smaller value than %s.\n",str);
                             }
                         }
                         else {
@@ -417,18 +430,18 @@ int main() {
                                 break;
                             }
                         }
-
                         char name[REALLOC_SIZE];
-                        printf("What is the name of your file?");
+                        printf("What is the name of your file? (must be store in the folder csv_data)");
                         scanf("%s", name);
                         cdf = load_from_csv(name);
                         break;
                     }
                     case(2):{
                         char name[REALLOC_SIZE];
-                        printf("You want to save under what name?");
+                        printf("You want to save under what name? (will be store in the csv_data folder, it overwrite) ");
                         scanf("%s", name);
                         save_into_csv(cdf, name);
+
                         break;
                     }
                     case(3):{

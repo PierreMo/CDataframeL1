@@ -5,6 +5,7 @@
 #ifndef CDATAFRAMEL1_SORT_H
 #define CDATAFRAMEL1_SORT_H
 #include "column.h"
+#include <stdlib.h>
 
 /**
  * @brief: sort a column by insertion

@@ -24,8 +24,6 @@ typedef struct list_ {
     lnode *tail;
 } list;
 
-
-
 /**
 * create a node
 */

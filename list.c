@@ -5,7 +5,6 @@
 #include "list.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 lnode *lst_create_lnode(void *dat) {
     lnode *ptmp = (lnode *) malloc(sizeof(lnode));
@@ -140,14 +139,14 @@ lnode *get_last_node(list * lst) {
     return lst->tail;
 }
 
-lnode *get_next_node(list * lst, lnode * lnode) {
-    if (lnode == NULL)
+lnode *get_next_node(list * lst, lnode * node) {
+    if (node == NULL)
         return NULL;
-    return lnode->next;
+    return node->next;
 }
 
-void *get_previous_elem(list * lst, lnode * lnode) {
-    if (lnode == NULL)
+void *get_previous_elem(list * lst, lnode * node) {
+    if (node == NULL)
         return NULL;
-    return lnode->prev;
+    return node->prev;
 }

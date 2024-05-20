@@ -7,11 +7,10 @@
 #define REALLOC_SIZE 256
 #define ASC 0
 #define DESC 1
-#include <stdlib.h>
 
 
 enum enum_type{
-    NULLVAL = 1, UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE
+    NULLVAL = 1, UINT, INT, CHAR, FLOAT, DOUBLE, STRING, TYPE_DATE
 };
 typedef enum enum_type ENUM_TYPE;
 
@@ -141,21 +140,31 @@ void update_index(COLUMN *col);
 int search_value_in_column(COLUMN *col, void *val);
 
 /**
- * @brief: check the type
- * @param column
- * @return -1, 0, 1
+ * @brief: allow to give the index of the type in a list of type
+ * @param1: pointer on a column
+ * @return: return the index of the type
  */
 int check_type(COLUMN* col);
 
 
 /**
- * @param col
+ * @brief: give the longest str in a column
+ * @param1: pointer on a colum
  * @return the length of the longest element of the column
  */
 int max_str(COLUMN* col);
 
-
+/**
+ * @brief: predic if the yare is leap or not
+ * @param1: the year
+ * @return: 1 if leap else 0
+ */
 int isLeapYear(int year);
+
+/**
+ * @brief : compare dates
+ * @return : return 0 if equal, 1 if date1 > date2, -1 if date1 < date2
+ */
 int compareDates(DATE*,DATE*);
 
 #endif //CDATAFRAMEL1_COLUMN_H

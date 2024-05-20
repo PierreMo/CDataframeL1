@@ -3,7 +3,7 @@
 //
 
 #include "sort.h"
-#include "stdio.h"
+#include <stdio.h>
 #include <string.h>
 
 void swap(int* p1, int* p2){
@@ -92,6 +92,18 @@ int partition(COLUMN* col, int left, int right){
                 swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
+            case (TYPE_DATE):{
+                DATE* pivot = (DATE*) col->data[col->index[right]];
+                i = (left - 1);
+                for (int j = left; j <= right-1; j++) {
+                    if (compareDates((DATE *) col->data[col->index[j]], (DATE *) pivot) == -1){
+                        i++;
+                        swap((int *) &col->index[i], (int *) &col->index[j]);
+                    }
+                }
+                swap((int *) &col->index[i + 1], (int *) &col->index[right]);
+                break;
+            }
         }
     }
     else{// decreasing order
@@ -171,6 +183,18 @@ int partition(COLUMN* col, int left, int right){
                 swap(&col->index[i + 1], &col->index[right]);
                 break;
             }
+            case (TYPE_DATE): {
+                DATE* pivot = (DATE*) col->data[col->index[right]];
+                i = (left - 1);
+                for (int j = left; j <= right; j++) {
+                    if (compareDates((DATE *) col->data[col->index[j]], (DATE *) pivot) == 1) {
+                        i++;
+                        swap(&col->index[i], &col->index[j]);
+                    }
+                }
+                swap(&col->index[i + 1], &col->index[right]);
+                break;
+            }
         }
     }
     return (i + 1);
@@ -243,6 +267,13 @@ void sort_insertion_col(COLUMN* col){
                     }
                     break;
                 }
+                case(TYPE_DATE):{
+                    while (j >= 0 && compareDates((DATE *) col->data[col->index[j]], (DATE *) col->data[tmp_index]) == 1) {
+                        col->index[j + 1] = col->index[j];
+                        j--;
+                    }
+                    break;
+                }
             }
             col->index[j + 1] = tmp_index;
         }
@@ -301,12 +332,16 @@ void sort_insertion_col(COLUMN* col){
                     }
                     break;
                 }
-                case(STRUCTURE):{
+                case(TYPE_DATE): {
+                    while (j >= 0 && compareDates((DATE *) col->data[col->index[j]], (DATE *) col->data[tmp_index]) == -1) {
+                        col->index[j + 1] = col->index[j];
+                        j--;
+                    }
                     break;
                 }
             }
-            col->index[j + 1] = tmp_index;
         }
+        col->index[j + 1] = tmp_index;
     }
 }
 

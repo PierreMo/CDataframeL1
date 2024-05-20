@@ -67,7 +67,7 @@ int insert_value(COLUMN *col, void *value) {
                 strcpy((char *) col->data[col->size], str);
                 break;
             }
-            case STRUCTURE: {
+            case TYPE_DATE: {
                 col->data[col->size] = (DATE*) malloc(sizeof(DATE *));
                 *((DATE *) col->data[col->size]) = *((DATE*) value);
                 break;
@@ -127,8 +127,7 @@ void convert_value(COLUMN* col, unsigned long long int i, char* str, int size){
             snprintf(str, size, "%s", ((char*)col->data[i]));
             break;
         }
-        case STRUCTURE:{
-            // here we have to do a switch for the different structures
+        case TYPE_DATE:{
             char date[size], buffer[size];
 
             snprintf(date, size, "%d", ((DATE*)col->data[i])->month);
@@ -188,7 +187,7 @@ void change_value(COLUMN *col, void *value, int index) {
                 strcpy((char *) col->data[index], str);
                 break;
             }
-            case STRUCTURE: {
+            case TYPE_DATE: {
                 *((DATE *) col->data[index]) = *((DATE *) value);
                 break;
             }
@@ -402,7 +401,7 @@ int search_value_in_column(COLUMN *col, void *val){
                 }while(stop != 1);
                 break;
             }
-            case(STRUCTURE):{
+            case(TYPE_DATE):{
                 break;
             }
         }

@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cdataframe.h"
-#include "column.h"
 
 
 #define MAX_LINE_LENGTH 1024
@@ -64,7 +63,7 @@ int valid_input(int lower_bound, int upper_bound){
 }
 
 void choose_type(ENUM_TYPE* cdftype, int size){
-    char* types[] = {"1. UINT", "2. INT", "3. CHAR", "4. FLOAT", "5. DOUBLE", "6. STRING", "7. STRUCTURE"};
+    char* types[] = {"1. UINT", "2. INT", "3. CHAR", "4. FLOAT", "5. DOUBLE", "6. STRING", "7. TYPE_DATE"};
     printf("All the types available are:\n ");
     for(int i=0; i<7; i++){
         printf("%s\n",types[i]);
@@ -165,18 +164,28 @@ void input_value(ENUM_TYPE type_col, void *choice){
             }while (type!=1);
             break;
         }
-        case STRUCTURE: {
+        case TYPE_DATE: {
             DATE *new_date = (DATE*) choice;
             int daysInMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
             int entering = 1;
             while (entering) {
-                printf("Enter day: ");
-                scanf("%d", &new_date->day);
-                printf("Enter month: ");
-                scanf("%d", &new_date->month);
-                printf("Enter year: ");
-                scanf("%d", &new_date->year);
+                do{
+                    printf("Enter day: ");
+                    type= scanf("%d", &new_date->day);
+                    if (type != 1) {
+                        printf("Invalid input.");
+                        while (getchar() != '\n'); // to clear out the input buffer
+                    }
+                }while (type!=1);
+                do{
+                    printf("Enter year: ");
+                    type= scanf("%d", &new_date->year);
+                    if (type != 1) {
+                        printf("Invalid input.");
+                        while (getchar() != '\n'); // to clear out the input buffer
+                    }
+                }while (type!=1);
 
                 if (new_date->month < 1 || new_date->month > 12) {
                     printf("Invalid month. Please try again.\n");
@@ -302,7 +311,7 @@ void hard_fill_dataframe(CDATAFRAME * cdf, ENUM_TYPE* cdftype){
                 }
                 break;
             }
-            case(STRUCTURE):{
+            case(TYPE_DATE):{
                 int day = 1, year=2000;
                 DATE val[nbr_val];
                 for(int j=0; j< nbr_val; j++){;
@@ -311,7 +320,6 @@ void hard_fill_dataframe(CDATAFRAME * cdf, ENUM_TYPE* cdftype){
                     val[j].year=year;year++;
                     insert_value(tmp ->data, &val[j]);
                 }
-
 
                 break;
             }
@@ -469,7 +477,7 @@ void fill_cdataframe(CDATAFRAME* cdf){
 }
 
 void add_line_dataframe(CDATAFRAME* cdf){
-    char* types[] = {"UINT", "INT", "CHAR", "FLOAT", "DOUBLE", "STRING", "STRUCTURE"};
+    char* types[] = {"UINT", "INT", "CHAR", "FLOAT", "DOUBLE", "STRING", "TYPE_DATE"};
     lnode* tmp = cdf->head;
     int size = cdataframe_size(cdf);
     for(int i= 0;i < size ;i++){
@@ -594,11 +602,7 @@ void convert_chosen_value(ENUM_TYPE type, char* str, void* value){
             snprintf(str, size, "%f", *((double*)value));
             break;
         }
-        case STRING:{
-            snprintf(str, size, "%s", ((char*)value));
-            break;
-        }
-        case STRUCTURE:{
+        case TYPE_DATE:{
             char date[size], buffer[size];
 
             snprintf(date, size, "%d", ((DATE*)value)->month);
@@ -612,8 +616,6 @@ void convert_chosen_value(ENUM_TYPE type, char* str, void* value){
 
             snprintf(str, size, "%s", date);
             break;
-            // here we have to do a switch for the different structures
-            break;
         }
     }
 }
@@ -621,19 +623,18 @@ void convert_chosen_value(ENUM_TYPE type, char* str, void* value){
 int equal(COLUMN* col, ENUM_TYPE type, void* value) { // only for a column
     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
     int cpt = 0;
-    if (type!=7){
-        convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    if (type == STRING){
+        strcpy(str2, (char*)value);
     }
     else{
-        strcpy(str2, value);
+        convert_chosen_value((ENUM_TYPE)type, str2, &value);
     }
-    if (col->column_type == type) {
-        for (int j = 0; j < col->size; j++) {
-            convert_value(col, j, str1, REALLOC_SIZE);
-            // strcmp = 0 => str1 = str2 (value)
-            if (strcmp(str1, str2)==0) {
-                cpt++;
-            }
+    for (int j = 0; j < col->size; j++) {
+        convert_value(col, j, str1, REALLOC_SIZE);
+        // strcmp = 0 => str1 = str2 (value)
+        printf("%s %s\n", str1, str2);
+        if (strcmp(str1, str2)==0) {
+            cpt++;
         }
     }
     return cpt;
@@ -643,7 +644,12 @@ COORD* search_value_index(CDATAFRAME* cdf,ENUM_TYPE type, void* value, COORD* ta
     lnode *tmp = cdf->head;
     int size = cdataframe_size(cdf);
     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
-    convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    if (type == STRING){
+        strcpy(str2, (char*)value);
+    }
+    else{
+        convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    }
     for(int i =0; i<size; i++){
         if (((COLUMN *) tmp->data)->column_type == type) {
             for (int j = 0; j < ((COLUMN *) tmp->data)->size; j++) {
@@ -687,7 +693,7 @@ void rename_col_dataframe(CDATAFRAME * cdf){
         tmp = tmp->next;
     }
 
-    printf("Column successfuly renamed (～￣▽￣)～");
+    printf("Column successfuly renamed!");
 }
 
 int greater(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
@@ -695,7 +701,12 @@ int greater(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
     int size = cdataframe_size(cdf);
     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
     int cpt = 0;
-    convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    if (type == STRING){
+        strcpy(str2, (char*)value);
+    }
+    else{
+        convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    }
     for (int i = 0; i < size; i++) {
         if (((COLUMN *) tmp->data)->column_type == type) {
             for (int j = 0; j < ((COLUMN *) tmp->data)->size; j++) {
@@ -718,7 +729,7 @@ int is_sorted_column(CDATAFRAME* cdf){
     // check if there is a sorted list
     for(int i = 0; i<size; i++){
         if (check_index((COLUMN *) tmp->data)== 1){
-            return sorted;;
+            return sorted;
         }
     }
     return 0;
@@ -753,7 +764,7 @@ void access_replace(CDATAFRAME* cdf){
         scanf("%d", &answer);
         if(answer==1){
             // search the type in the list
-            char* types[] = {"UINT", "INT", "CHAR", "FLOAT", "DOUBLE", "STRING", "STRUCTURE"};
+            char* types[] = {"UINT", "INT", "CHAR", "FLOAT", "DOUBLE", "STRING", "TYPE_DATE"};
             int typ = tmp->data->column_type;
             void *value;
             printf("\nEnter the value of type %s to put instead: ", types[typ-2]);
@@ -769,7 +780,12 @@ int smaller(CDATAFRAME* cdf, ENUM_TYPE type, void* value){
     int size = cdataframe_size(cdf);
     char str1[REALLOC_SIZE], str2[REALLOC_SIZE];//buffer
     int cpt = 0;
-    convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    if (type == STRING){
+        strcpy(str2, (char*)value);
+    }
+    else{
+        convert_chosen_value((ENUM_TYPE)type, str2, &value);
+    }
     for (int i = 0; i < size; i++) {
         if (((COLUMN *) tmp->data)->column_type == type) {
             for (int j = 0; j < ((COLUMN *) tmp->data)->size; j++) {
@@ -852,7 +868,7 @@ void* input_str_to_typed(ENUM_TYPE type_col, char *choice){
             //printf("string: %s\n", res);
             return res;
         }
-        case STRUCTURE: {
+        case TYPE_DATE: {
             char *limit = "/";
             char *token ; // pointer to go through the sub-chaine obtained
             int day, month, year;
@@ -896,6 +912,7 @@ void* input_str_to_typed(ENUM_TYPE type_col, char *choice){
             date->month = month;
             date->day = day;
             date->year = year;
+            return date;
             break;
         }
     }
@@ -935,6 +952,7 @@ CDATAFRAME* load_from_csv(char *file_name){
     fgets( line, MAX_LINE_LENGTH, csv_file); // getting the line
     if (line==NULL)perror("Empty file"); //if it's empty
 
+
     token = strtok(line, limit); // Initial call to strtok
     while (token != NULL) {
         size++;
@@ -948,7 +966,6 @@ CDATAFRAME* load_from_csv(char *file_name){
         }
         token = strtok(NULL, limit);
     }
-
     // Reading the titles of the columns and creating the dataframe
     CDATAFRAME * cdf = (CDATAFRAME *) lst_create_list();
     fgets( line, MAX_LINE_LENGTH, csv_file); // getting the line
@@ -961,6 +978,7 @@ CDATAFRAME* load_from_csv(char *file_name){
         lst_insert_tail((list *) cdf, ptr_col);
         token = strtok(NULL, limit);
     }
+
 
     int works;
     while (fgets(line, MAX_LINE_LENGTH, csv_file)) {
@@ -1011,8 +1029,6 @@ void save_into_csv(CDATAFRAME *cdf, char *file_name){
     int size = cdataframe_size(cdf);
     lnode* tmp;
 
-
-
     // writing the types
     tmp = cdf->head;
     for(int i =0; i<size-1; i++){
@@ -1050,4 +1066,3 @@ void save_into_csv(CDATAFRAME *cdf, char *file_name){
 
     fclose(csv_file); // close
 }
-
