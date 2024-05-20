@@ -6,6 +6,7 @@
 * Aube RAMASSAMY - [@auberamas](https://github.com/auberamas)
 
 [***➜ Link of our project : CDataframeL1 ***](https://github.com/PierreMo/CDataframeL1/tree/part2)
+(the main branch is the part I that we initially did and the branch part2 is our final project)
 
 ## Description of the project
 
