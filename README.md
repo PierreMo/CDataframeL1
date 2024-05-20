@@ -5,7 +5,7 @@
 * Pierre MOURIES - [@PierreMo](https://github.com/PierreMo)
 * Aube RAMASSAMY - [@auberamas](https://github.com/auberamas)
 
-[***➜ Link of our project : CDataframeL1 ***](https://github.com/PierreMo/CDataframeL1)
+[***➜ Link of our project : CDataframeL1 ***](https://github.com/PierreMo/CDataframeL1/tree/part2)
 
 ## Description of the project
 
